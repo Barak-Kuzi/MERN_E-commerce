@@ -12,6 +12,14 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use((req, res, next) => {
+    res.cookie('cookieName', 'cookieValue', {
+        sameSite: 'strict',
+        secure: true,
+        httpOnly: true
+    });
+    next();
+});
 app.use("/api", router);
 const PORT = process.env.PORT;
 connectDB().then(() => {

@@ -1,16 +1,18 @@
 import {Router} from "express";
 
-import userSignUpController from "../controller/userSignUpController.js";
-import userSignInController from "../controller/userSignInController.js";
-import userDetailsController from "../controller/userDetailsController.js";
+import userSignUpController from "../controller/user/userSignUpController.js";
+import userSignInController from "../controller/user/userSignInController.js";
+import userDetailsController from "../controller/user/userDetailsController.js";
 import authToken from "../middleware/authToken.js";
-import userLogoutController from "../controller/userLogoutController.js";
-import allUsersController from "../controller/allUsersController.js";
-import updateUserController from "../controller/updateUserController.js";
-import uploadProductController from "../controller/uploadProductController.js";
-import getAllProductsController from "../controller/getAllProductsController.js";
-import updateProductController from "../controller/updateProductContorller.js";
-import deleteProductController from "../controller/deleteProductController.js";
+import userLogoutController from "../controller/user/userLogoutController.js";
+import allUsersController from "../controller/user/allUsersController.js";
+import updateUserController from "../controller/user/updateUserController.js";
+import uploadProductController from "../controller/product/uploadProductController.js";
+import getAllProductsController from "../controller/product/getAllProductsController.js";
+import updateProductController from "../controller/product/updateProductContorller.js";
+import deleteProductController from "../controller/product/deleteProductController.js";
+import getProductsByCategoryController from "../controller/product/getProductsByCategoryController.js";
+import getProductByIdController from "../controller/product/getProductByIdController.js";
 
 const router = Router();
 
@@ -26,9 +28,11 @@ router.post('/update-user', authToken, updateUserController);
 
 // Product routes
 router.post('/upload-product', authToken, uploadProductController);
-router.get('/all-products', getAllProductsController);
 router.post('/update-product', authToken, updateProductController);
 router.delete('/delete-product/:productId', authToken, deleteProductController);
+router.get('/all-products', getAllProductsController);
+router.get('/products-by-category', getProductsByCategoryController);
+router.get('/product-details/:productId', getProductByIdController);
 
 
 export default router;

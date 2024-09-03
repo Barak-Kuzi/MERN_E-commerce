@@ -1,6 +1,6 @@
-import {CustomRequest, CustomResponse} from "../utils";
-import AdminPermission from "../utils/AdminPermission.js";
-import productModel from "../models/productModel.js";
+import {CustomRequest, CustomResponse} from "../../utils";
+import AdminPermission from "../../utils/AdminPermission.js";
+import productModel from "../../models/productModel.js";
 
 const deleteProductController = async (req: CustomRequest, res: CustomResponse) => {
     try {

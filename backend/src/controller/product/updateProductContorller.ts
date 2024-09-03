@@ -1,6 +1,6 @@
-import {CustomRequest, CustomResponse} from "../utils";
-import productModel from "../models/productModel.js";
-import AdminPermission from "../utils/AdminPermission.js";
+import {CustomRequest, CustomResponse} from "../../utils";
+import productModel from "../../models/productModel.js";
+import AdminPermission from "../../utils/AdminPermission.js";
 
 const updateProductController = async (req: CustomRequest, res: CustomResponse) => {
     try {

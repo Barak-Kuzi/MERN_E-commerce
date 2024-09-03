@@ -1,5 +1,5 @@
-import {CustomRequest, CustomResponse} from "../utils";
-import productModel from "../models/productModel.js";
+import {CustomRequest, CustomResponse} from "../../utils";
+import productModel from "../../models/productModel.js";
 
 const getAllProductsController = async (req: CustomRequest, res: CustomResponse) => {
     try {

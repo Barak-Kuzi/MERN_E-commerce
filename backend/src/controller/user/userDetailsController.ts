@@ -1,6 +1,5 @@
-
-import userModel from "../models/userModel.js";
-import {CustomRequest, CustomResponse} from "../utils";
+import userModel from "../../models/userModel.js";
+import {CustomRequest, CustomResponse} from "../../utils";
 
 async function userDetailsController(req: CustomRequest, res: CustomResponse) {
     try {

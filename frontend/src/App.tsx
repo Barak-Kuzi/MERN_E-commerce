@@ -29,7 +29,7 @@ function App() {
 
     useEffect(() => {
         fetchUser();
-    }, []);
+    }, [fetchUser]);
 
     return (
         <>

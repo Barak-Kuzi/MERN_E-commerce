@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import userModel from "../models/userModel.js";
+import userModel from "../../models/userModel.js";
 
 async function userSignInController(req: Request, res: Response) {
     try {
