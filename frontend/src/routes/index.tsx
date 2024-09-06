@@ -9,6 +9,8 @@ import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
 import CategoryProducts from "../pages/CategoryProducts";
 import ProductDetails from "../pages/ProductDetails";
+import Cart from "../pages/Cart";
+import React from "react";
 
 const router = createBrowserRouter([
     {
@@ -16,7 +18,7 @@ const router = createBrowserRouter([
         element: <App/>,
         children: [
             {
-                path: "",
+                index: true,
                 element: <Home/>
             },
             {
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
             {
               path: "product-details/:productId",
                 element: <ProductDetails />
+            },
+            {
+                path: "cart",
+                element: <Cart />
             },
             {
                 path: "admin-panel",

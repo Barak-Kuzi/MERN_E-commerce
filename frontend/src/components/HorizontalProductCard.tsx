@@ -1,17 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
+import {Link} from "react-router-dom";
 import {FaAngleLeft, FaAngleRight} from 'react-icons/fa6'
 
-import {CustomResponse} from "../utils/CustomResponse";
-import {fetchProductsByCategory} from "../utils/fetchProductsByCategory";
-import {Product} from "../models";
-
-import styles from './css/HorizontalProductCard.module.css';
+import styles from '../styles/HorizontalProductCard.module.css';
 import heart from "../assest/assest_new/love.svg";
 import star from "../assest/assest_new/star.svg";
 import half_star from "../assest/assest_new/star-half-fill.svg";
 import empty_star from "../assest/assest_new/star-no-fill.svg";
-import {Link} from "react-router-dom";
 import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
+import {Product} from "../models";
+import handleAddToCart from "../utils/handleAddToCart";
+import useUpdateCartQuantity from "../hooks/useUpdateCartQuantity";
+
+
 
 interface HorizontalProductCardProps {
     title: string;
@@ -22,6 +23,7 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
     const {products, isLoading, error} = useFetchProductsByCategory(category);
     const loadingList = new Array(8).fill(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    // const updateCartQuantity = useUpdateCartQuantity();
 
     const scrollLeft = () => {
         if (containerRef.current) {
@@ -34,6 +36,16 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
             containerRef.current.scrollLeft += 300;
         }
     };
+
+    const handleAddToCartButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const productId = e.currentTarget.getAttribute('product-id');
+        if (!productId) {
+            return;
+        }
+        // await handleAddToCart({productId, updateCartQuantity});
+        await handleAddToCart({productId});
+    }
 
     return (
         <div className={styles.horizontal_product_card_container}>
@@ -82,7 +94,8 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
                     )
                     : (products.map((product: Product, index: number) => {
                             return (
-                                <Link to={`/product-details/${product?._id}`} className={styles.product_card} key={index}>
+                                <Link to={`/product-details/${product?._id}`} className={styles.product_card}
+                                      key={index}>
                                     <div className={styles.product_card_image_container}>
                                         <img src={product.productImages[0]} alt={"name"}
                                              className={styles.product_card_image}/>
@@ -116,7 +129,8 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
                                         </div>
 
                                         <div className={styles.product_card_details_buttons}>
-                                            <button className={styles.add_to_cart_button}>
+                                            <button className={styles.add_to_cart_button}
+                                                    onClick={handleAddToCartButton} product-id={product?._id}>
                                                 Add To Cart
                                             </button>
                                             <button className={styles.heart_icon_button}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../css/ProductDetails.module.css';
+import styles from '../styles/ProductDetails.module.css';
 
 export default function LoadingImagesProductDetails(): React.JSX.Element {
     const productImageListLoading = new Array(4).fill(null);

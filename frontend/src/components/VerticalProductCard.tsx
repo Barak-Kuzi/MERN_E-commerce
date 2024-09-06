@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './css/VerticalProductCard.module.css';
+import styles from '../styles/VerticalProductCard.module.css';
 
 import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
 
@@ -9,6 +9,8 @@ import half_star from '../assest/assest_new/star-half-fill.svg';
 import empty_star from '../assest/assest_new/star-no-fill.svg';
 import heart from '../assest/assest_new/love.svg';
 import eye from '../assest/assest_new/eye.svg';
+import handleAddToCart from "../utils/handleAddToCart";
+import useUpdateCartQuantity from "../hooks/useUpdateCartQuantity";
 
 interface VerticalProductCardProps {
     title: string;
@@ -18,6 +20,17 @@ interface VerticalProductCardProps {
 export default function VerticalProductCard({title, category}: VerticalProductCardProps): React.JSX.Element {
     const {products, isLoading, error} = useFetchProductsByCategory(category);
     const loadingList = new Array(8).fill(null);
+    // const updateCartQuantity = useUpdateCartQuantity();
+
+    const handleAddToCartButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const productId = e.currentTarget.getAttribute('product-id');
+        if (!productId) {
+            return;
+        }
+        // await handleAddToCart({productId, updateCartQuantity});
+        await handleAddToCart({productId});
+    }
 
     return (
         <div className={styles.vertical_product_card_container}>
@@ -26,7 +39,7 @@ export default function VerticalProductCard({title, category}: VerticalProductCa
                 {
                     products.map((product, index) => {
                         return (
-                            <div className={styles.product_card}>
+                            <div className={styles.product_card} key={`${product.productName}_${index}`}>
                                 <div className={styles.product_image_container}>
                                     <img src={product?.productImages[0]} alt={product?.productName}
                                          className={styles.product_image}/>
@@ -58,7 +71,8 @@ export default function VerticalProductCard({title, category}: VerticalProductCa
                                     </div>
 
                                     <div className={styles.buttons_container}>
-                                        <button className={styles.add_to_cart_button}>
+                                        <button className={styles.add_to_cart_button} product-id={product?._id}
+                                                onClick={handleAddToCartButton}>
                                             Add To Cart
                                         </button>
                                         <button className={styles.icon_button}>

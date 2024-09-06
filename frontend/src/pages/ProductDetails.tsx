@@ -1,72 +1,35 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback} from 'react';
 import {useParams} from "react-router-dom";
 
-import styles from './css/ProductDetails.module.css';
-
-import {Product} from "../models";
-import {fetchProductById} from "../utils/fetchProductById";
-import {CustomResponse} from "../utils/CustomResponse";
-import LoadingImagesProductDetails from "./util_components/LoadingImagesProductDetails";
-import LoadingProductDetails from "./util_components/LoadingProductDetails";
-import ZoomedImage from './util_components/ZoomedImage';
-
+import styles from '../styles/ProductDetails.module.css';
 import star from "../assest/assest_new/star.svg";
 import half_star from "../assest/assest_new/star-half-fill.svg";
 import empty_star from "../assest/assest_new/star-no-fill.svg";
-import displayCurrency from "../utils/displayCurrency";
-import VerticalProductCard from "../components/VerticalProductCard";
 
-export interface zoomImageCoordinateStruct {
-    x: number,
-    y: number
-}
+import LoadingProductDetails from "../components/LoadingProductDetails";
+import displayCurrency from "../utils/displayCurrency";
+import handleAddToCart from "../utils/handleAddToCart";
+import ProductImages from "../components/ProductImages";
+import VerticalProductCard from "../components/VerticalProductCard";
+import useFetchProductById from "../hooks/useFetchProductById";
 
 const ProductDetails: React.FC = () => {
     const {productId} = useParams();
-    const [product, setProduct] = useState<Product | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState('');
-    const [activeProductImage, setActiveProductImage] = useState<string>('');
-    const [zoomImage, setZoomImage] = useState<boolean>(false);
-    const [zoomImageCoordinate, setZoomImageCoordinate] = useState<zoomImageCoordinateStruct>({x: 0, y: 0});
+    const {product, isLoading, error} = useFetchProductById(productId!);
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            setIsLoading(true);
-            const response: CustomResponse = await fetchProductById(productId!);
+    console.log('ProductDetails component re-rendered');
 
-            if (response.success) {
-                setProduct(response.data);
-                setActiveProductImage(response.data.productImages[0]);
-            }
-
-            if (response.error) {
-                setError(response.message!);
-                console.log(response.message!);
-            }
-            setIsLoading(false);
-        }
-        fetchProduct();
-    }, [productId]);
-
-    const handleZoomImage = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
-        setZoomImage(true);
-        const {left, top, width, height} = e.currentTarget.getBoundingClientRect();
-
-        const x: number = (e.clientX - left) / width;
-        const y: number = (e.clientY - top) / height;
-
-        setZoomImageCoordinate({x, y});
-    }, []);
-
-    const handleLeaveImageZoom = useCallback(() => {
-        setZoomImage(false);
-    }, []);
-
-    const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
+    const handleAddToCartButton = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setActiveProductImage(e.currentTarget.src);
-    }
+        const productId = e.currentTarget.getAttribute('product-id');
+        if (!productId) {
+            return;
+        }
+        await handleAddToCart({productId});
+    }, []);
+
+    if (isLoading)
+        return (<p>Loading...</p>);
 
     return (
         <div className={styles.page_container}>
@@ -79,41 +42,7 @@ const ProductDetails: React.FC = () => {
             </div>
 
             <div className={styles.inner_page_container}>
-                <div className={styles.product_images_container}>
-                    {
-                        isLoading ? (
-                            <div className={`${styles.loading_product_image} ${styles.animate}`}></div>
-                        ) : (
-                            <div className={styles.active_product_image}>
-                                <img src={activeProductImage} alt={product?.productName} onMouseMove={handleZoomImage}
-                                     onMouseLeave={handleLeaveImageZoom}/>
-                                <ZoomedImage
-                                    imageUrl={activeProductImage}
-                                    zoomImageCoordinate={zoomImageCoordinate}
-                                    zoomImage={zoomImage}
-                                />
-                            </div>
-                        )
-                    }
-                    <div className={styles.other_product_images_container}>
-                        {
-                            isLoading ? (<LoadingImagesProductDetails/>) : (
-                                <div className={styles.other_product_images_inner_container}>
-                                    {
-                                        product?.productImages.map((image, index) => {
-                                            return (
-                                                <div className={`${styles.product_image}`} key={`image_${index}`}>
-                                                    <img src={image} alt={product.productName}
-                                                         onClick={handleImageClick}/>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
+                <ProductImages isLoading={isLoading} product={product}/>
 
                 {
                     isLoading ? (<LoadingProductDetails/>) : (
@@ -141,17 +70,21 @@ const ProductDetails: React.FC = () => {
                             </div>
 
                             <div className={styles.buttons_container}>
-                                <button className={styles.add_to_cart_button}>Add To Cart</button>
+                                <button className={styles.add_to_cart_button} product-id={product?._id}
+                                        onClick={handleAddToCartButton}>
+                                    Add To Cart
+                                </button>
                                 <button className={styles.buy_button}>Buy Now</button>
                             </div>
                         </div>
                     )
                 }
-
             </div>
-            <VerticalProductCard title={'Recommended Products'} category={'phones'}/>
+            {
+                product && (<VerticalProductCard title={'Recommended Products'} category={product?.productCategory}/>)
+            }
         </div>
     );
 }
 
-export default React.memo(ProductDetails);
+export default ProductDetails;

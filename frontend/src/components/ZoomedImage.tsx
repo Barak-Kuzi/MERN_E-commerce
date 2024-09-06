@@ -1,7 +1,7 @@
 import React from 'react';
 
-import styles from '../css/ProductDetails.module.css';
-import {zoomImageCoordinateStruct} from "../ProductDetails";
+import styles from '../styles/ProductDetails.module.css';
+import {zoomImageCoordinateStruct} from "./ProductImages";
 
 interface ZoomedImageProps {
     imageUrl: string;

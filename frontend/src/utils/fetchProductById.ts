@@ -3,7 +3,6 @@ import SummaryApi from "../common";
 
 export const fetchProductById = async (productId: string) => {
 
-    console.log("React Product ID: ", productId);
     const response: CustomResponse = await fetch(SummaryApi.productDetails.url.replace('productId', productId), {
         method: SummaryApi.productDetails.method,
         headers: {

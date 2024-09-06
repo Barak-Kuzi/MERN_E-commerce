@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import {Product} from "./productModel";
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -22,6 +23,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "GENERAL",
     },
+    cart: [
+        {
+            productId: {
+                type: String,
+                unique: true,
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            },
+        },
+    ],
 }, {
     timestamps: true
 });
@@ -37,6 +50,7 @@ export interface User {
     password?: string;
     profileImage?: string;
     role?: string;
+    cart?: Product[];
     createdAt?: Date;
     updatedAt?: Date;
 }

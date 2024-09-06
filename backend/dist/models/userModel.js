@@ -21,6 +21,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "GENERAL",
     },
+    cart: [
+        {
+            productId: {
+                type: String,
+                unique: true,
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            },
+        },
+    ],
 }, {
     timestamps: true
 });
