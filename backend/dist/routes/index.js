@@ -13,7 +13,7 @@ import deleteProductController from "../controller/product/deleteProductControll
 import getProductsByCategoryController from "../controller/product/getProductsByCategoryController.js";
 import getProductByIdController from "../controller/product/getProductByIdController.js";
 import addToCartController from "../controller/user/addToCartController.js";
-import getQuantityProductsInCart from "../controller/user/getQuantityProductsInCart.js";
+import deleteFromCartController from "../controller/user/deleteFromCartController.js";
 const router = Router();
 // User routes
 router.post("/signup", userSignUpController);
@@ -32,5 +32,5 @@ router.get('/products-by-category', getProductsByCategoryController);
 router.get('/product-details/:productId', getProductByIdController);
 // Cart routes
 router.post('/add-to-cart', authToken, addToCartController);
-router.get('/get-quantity-products-in-cart', authToken, getQuantityProductsInCart);
+router.post('/delete-product-from-cart', authToken, deleteFromCartController);
 export default router;

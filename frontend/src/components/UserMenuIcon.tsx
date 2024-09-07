@@ -6,14 +6,12 @@ import {FaRegCircleUser} from "react-icons/fa6";
 import styles from '../styles/UserMenuIcon.module.css';
 import ROLE from "../common/role";
 
-interface UserMenuIconProps {
-    userId: string | undefined;
-}
-
-function UserMenuIcon({userId}: UserMenuIconProps): React.JSX.Element {
+function UserMenuIcon(): React.JSX.Element {
     const [menuDisplay, setMenuDisplay] = useState<boolean>(false);
     const userRole = useSelector((state: any) => state.user?.user?.role, shallowEqual);
+    const userId = useSelector((state: any) => state.user?.user?._id, shallowEqual);
     const user = useSelector((state: any) => state.user?.user, shallowEqual);
+    const userProfileImage = useSelector((state: any) => state.user?.user?.profileImage, shallowEqual);
 
     console.log(user)
 

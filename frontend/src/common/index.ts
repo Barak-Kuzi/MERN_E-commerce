@@ -53,9 +53,9 @@ const SummaryApi = {
         url: `${backendDomain}/api/add-to-cart`,
         method: 'POST'
     },
-    quantityProductsInCart: {
-        url: `${backendDomain}/api/get-quantity-products-in-cart`,
-        method: 'GET'
+    deleteProductFromCart: {
+        url: `${backendDomain}/api/delete-product-from-cart`,
+        method: 'POST'
     }
 }
 

@@ -1,16 +1,15 @@
 import React from 'react';
 
 import styles from '../styles/VerticalProductCard.module.css';
-
-import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
-
 import star from '../assest/assest_new/star.svg';
 import half_star from '../assest/assest_new/star-half-fill.svg';
 import empty_star from '../assest/assest_new/star-no-fill.svg';
 import heart from '../assest/assest_new/love.svg';
 import eye from '../assest/assest_new/eye.svg';
-import handleAddToCart from "../utils/handleAddToCart";
-import useUpdateCartQuantity from "../hooks/useUpdateCartQuantity";
+
+import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
+import useAddToCart from "../hooks/useAddToCart";
+
 
 interface VerticalProductCardProps {
     title: string;
@@ -20,17 +19,7 @@ interface VerticalProductCardProps {
 export default function VerticalProductCard({title, category}: VerticalProductCardProps): React.JSX.Element {
     const {products, isLoading, error} = useFetchProductsByCategory(category);
     const loadingList = new Array(8).fill(null);
-    // const updateCartQuantity = useUpdateCartQuantity();
-
-    const handleAddToCartButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        const productId = e.currentTarget.getAttribute('product-id');
-        if (!productId) {
-            return;
-        }
-        // await handleAddToCart({productId, updateCartQuantity});
-        await handleAddToCart({productId});
-    }
+    const {handleAddToCartButton} = useAddToCart();
 
     return (
         <div className={styles.vertical_product_card_container}>

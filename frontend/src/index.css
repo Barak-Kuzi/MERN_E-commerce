@@ -10,8 +10,6 @@ body {
 
 main {
     padding-top: 4rem;
-    padding-bottom: 4.5rem;
-    min-height: calc(100vh - 4.5rem);
 }
 
 code {

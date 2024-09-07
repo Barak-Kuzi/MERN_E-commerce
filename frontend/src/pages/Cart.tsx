@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {MdClear} from "react-icons/md";
 
 import styles from '../styles/Cart.module.css';
 
 import {fetchProductById} from "../utils/fetchProductById";
+import useDeleteProductFromCart from "../hooks/useRemoveFromCart";
 import {Product} from "../models";
 
 interface ProductsCart extends Product{
@@ -12,9 +13,10 @@ interface ProductsCart extends Product{
 }
 
 function Cart(): React.JSX.Element {
-    const userCart = useSelector((state:any) => state.user?.user?.cart);
+    const userCart = useSelector((state:any) => state.user?.cart);
     const [productsCart, setProductsCart] = useState<ProductsCart[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { deleteProductFromCart, isLoading: isDeleting, error } = useDeleteProductFromCart();
 
     useEffect(() => {
         const fetchCartDetails = async () => {
@@ -35,6 +37,16 @@ function Cart(): React.JSX.Element {
             fetchCartDetails();
         } 
     }, [userCart]);
+
+    const handleRemoveProduct = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
+        try {
+            const productId = e.currentTarget.getAttribute('product-id');
+            await deleteProductFromCart(productId!);
+            setProductsCart(productsCart.filter(product => product._id !== productId));
+        } catch (error) {
+            console.error('Failed to remove product from cart', error);
+        }
+    }, [deleteProductFromCart, productsCart]);
 
     const handleCalculateSubtotal = () => {
         return productsCart.reduce((acc, item) => acc + (item.productSellingPrice as number * item.quantity), 0).toFixed(2);
@@ -72,7 +84,12 @@ function Cart(): React.JSX.Element {
                                 <p>${product.productSellingPrice}</p>
                                 <p>{product.quantity}</p>
                                 <p>${product.quantity * (product.productSellingPrice as number)}</p>
-                                <div className={styles.remove_icon}><MdClear/></div>
+                                <div className={styles.remove_icon}
+                                     product-id={product?._id}
+                                     onClick={handleRemoveProduct}
+                                >
+                                    <MdClear/>
+                                </div>
                             </div>
                             <hr/>
                         </div>

@@ -10,7 +10,7 @@ import AllProducts from "../pages/AllProducts";
 import CategoryProducts from "../pages/CategoryProducts";
 import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
-import React from "react";
+import SearchProduct from "../pages/SearchProduct";
 
 const router = createBrowserRouter([
     {
@@ -38,12 +38,16 @@ const router = createBrowserRouter([
                 element: <CategoryProducts/>
             },
             {
-              path: "product-details/:productId",
-                element: <ProductDetails />
+                path: "product-details/:productId",
+                element: <ProductDetails/>
             },
             {
                 path: "cart",
-                element: <Cart />
+                element: <Cart/>
+            },
+            {
+                path: "search",
+                element: <SearchProduct/>
             },
             {
                 path: "admin-panel",

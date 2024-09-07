@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema({
         {
             productId: {
                 type: String,
-                unique: true,
             },
             quantity: {
                 type: Number,

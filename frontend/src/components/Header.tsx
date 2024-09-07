@@ -1,21 +1,34 @@
-import React from 'react';
-import {shallowEqual, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import React, {useCallback, useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 import {GrSearch} from "react-icons/gr";
 
 import Logo from "./Logo";
 import LoginButton from "./LoginButton";
 import CartIcon from "./CartIcon";
 import UserMenuIcon from "./UserMenuIcon";
-
+import {debounce} from "../utils/debounce";
 
 function Header(): React.JSX.Element {
-    const user = useSelector((state: any) => state.user?.user?._id, shallowEqual);
-    const quantityProductsInCart = useSelector((state: any) => state.user?.user?.cart.length, shallowEqual);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const navigate = useNavigate();
+
+    const debouncedSetSearchQuery = useCallback(debounce((query: string) => {
+        setSearchQuery(query);
+    }, 2000), []);
+
+    const handleSearch = useCallback(() => {
+        if (searchQuery.trim()) {
+            navigate(`/search?query=${searchQuery}`);
+        }
+    }, [searchQuery, navigate]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const query = e.target.value;
+        debouncedSetSearchQuery(query);
+    };
 
     console.log('Header component re-rendered');
-    console.log('User:', user);
-    console.log('Quantity in Cart:', quantityProductsInCart);
+    console.log('searchQuery:', searchQuery);
 
     return (
         <header className="my_header">
@@ -27,18 +40,22 @@ function Header(): React.JSX.Element {
                 </div>
 
                 <div className="search_bar_container">
-                    <input type="text" placeholder="Search Product Here..." className="search_bar_input"/>
-                    <div className="search_bar_icon">
+                    <input type="text"
+                           placeholder="Search Product Here..."
+                           className="search_bar_input"
+                           onChange={handleInputChange}
+                    />
+                    <div className="search_bar_icon" onClick={handleSearch}>
                         <GrSearch/>
                     </div>
                 </div>
 
                 <div className="header_icons_container">
-                    <UserMenuIcon userId={user} />
+                    <UserMenuIcon/>
 
-                    <CartIcon quantityProductsInCart={quantityProductsInCart} />
+                    <CartIcon/>
 
-                    <LoginButton userId={user}/>
+                    <LoginButton/>
                 </div>
 
             </div>

@@ -1,21 +1,15 @@
-import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {useDispatch} from "react-redux";
 import {toast} from 'react-toastify';
-import {useNavigate} from "react-router-dom";
-
-import {FaEye} from "react-icons/fa";
-import {FaEyeSlash} from "react-icons/fa";
-import {Link} from 'react-router-dom';
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 import loginIcon from "../assest/signin.gif";
-import SummaryApi from "../common";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../store/store";
-// import {login, setUserDetails} from "../store/userSlice";
-import {setUserConnection, setUserDetails} from "../store/userSlice";
-// import {fetchCartQuantity} from "../store/cartSlice";
-import {CustomResponse} from "../utils/CustomResponse";
-import useUpdateCartQuantity from "../hooks/useUpdateCartQuantity";
 
+import SummaryApi from "../common";
+import {AppDispatch} from "../store/store";
+import {setUserCart, setUserConnection, setUserDetails} from "../store/userSlice";
+import {CustomResponse} from "../utils/CustomResponse";
 
 interface data {
     email: string;
@@ -25,8 +19,7 @@ interface data {
 export default function Login(): React.JSX.Element {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
-    const updateCartQuantity = useUpdateCartQuantity();
-    const {userConnected} = useSelector((state: any) => state.user);
+
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [userData, setUserData] = useState<data>({
@@ -54,7 +47,6 @@ export default function Login(): React.JSX.Element {
         e.preventDefault();
 
         try {
-            // await dispatch(login(userData)).unwrap();
             const response: Response = await fetch(SummaryApi.signIn.url, {
                 method: SummaryApi.signIn.method,
                 credentials: 'include',
@@ -76,14 +68,10 @@ export default function Login(): React.JSX.Element {
                 const secondResData: CustomResponse = await secondResponse.json();
                 if (secondResData.success) {
                     dispatch(setUserDetails(secondResData.data));
+                    dispatch(setUserCart(secondResData.data.cart));
+                    dispatch(setUserConnection(true));
                     toast.success('Login successful');
-                    navigate('/cart');
-                    // const res = await updateCartQuantity();
-                    // if (res.success || userConnected) {
-                    //     toast.success('Login successful');
-                    //     navigate('/cart');
-                    // }
-                    // dispatch(fetchCartQuantity());
+                    navigate('/');
                 }
             } else {
                 toast.error(resData.message);

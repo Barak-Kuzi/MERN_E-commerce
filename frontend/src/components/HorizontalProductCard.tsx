@@ -7,12 +7,10 @@ import heart from "../assest/assest_new/love.svg";
 import star from "../assest/assest_new/star.svg";
 import half_star from "../assest/assest_new/star-half-fill.svg";
 import empty_star from "../assest/assest_new/star-no-fill.svg";
-import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
+
 import {Product} from "../models";
-import handleAddToCart from "../utils/handleAddToCart";
-import useUpdateCartQuantity from "../hooks/useUpdateCartQuantity";
-
-
+import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
+import useAddToCart from "../hooks/useAddToCart";
 
 interface HorizontalProductCardProps {
     title: string;
@@ -23,7 +21,8 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
     const {products, isLoading, error} = useFetchProductsByCategory(category);
     const loadingList = new Array(8).fill(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    // const updateCartQuantity = useUpdateCartQuantity();
+    const {handleAddToCartButton} = useAddToCart();
+
 
     const scrollLeft = () => {
         if (containerRef.current) {
@@ -36,16 +35,6 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
             containerRef.current.scrollLeft += 300;
         }
     };
-
-    const handleAddToCartButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        const productId = e.currentTarget.getAttribute('product-id');
-        if (!productId) {
-            return;
-        }
-        // await handleAddToCart({productId, updateCartQuantity});
-        await handleAddToCart({productId});
-    }
 
     return (
         <div className={styles.horizontal_product_card_container}>

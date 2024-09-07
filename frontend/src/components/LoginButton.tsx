@@ -1,20 +1,16 @@
 import React, {useCallback} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 
 import styles from '../styles/LoginButton.module.css';
 import SummaryApi from "../common";
-import {setUserDetails} from "../store/userSlice";
+import {setUserCart, setUserConnection, setUserDetails} from "../store/userSlice";
 
-interface LoginButtonProps {
-    userId: string | undefined;
-}
-
-function LoginButton({userId}: LoginButtonProps): React.JSX.Element {
-
+function LoginButton(): React.JSX.Element {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const userConnected = useSelector((state: any) => state.user?.userConnected, shallowEqual);
 
     const handleLogout = useCallback(async () => {
         const dataResponse = await fetch(SummaryApi.userLogout.url, {
@@ -26,13 +22,15 @@ function LoginButton({userId}: LoginButtonProps): React.JSX.Element {
         if (dataApi.success) {
             toast(dataApi.message);
             dispatch(setUserDetails(null));
+            dispatch(setUserCart([]));
+            dispatch(setUserConnection(false));
             navigate('/');
         } else {
             toast.error(dataApi.message);
         }
     }, [dispatch, navigate]);
 
-    if (userId) {
+    if (userConnected) {
         return (<button onClick={handleLogout} className={styles.login_button}>Logout</button>)
     }
 

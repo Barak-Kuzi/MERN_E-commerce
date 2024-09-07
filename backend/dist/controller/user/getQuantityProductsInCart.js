@@ -43,7 +43,7 @@ const getQuantityProductsInCart = async (req, res) => {
             });
         }
         const user = await UserModel.findOne({ _id: currentUserId });
-        const quantityProducts = user ? user.products.reduce((total, product) => total + product.quantity, 0) : 0;
+        const quantityProducts = user ? user.cart.reduce((total, product) => total + product.quantity, 0) : 0;
         return res.status(200).json({
             error: false,
             success: true,

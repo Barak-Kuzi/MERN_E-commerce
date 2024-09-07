@@ -1,13 +1,10 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {FaShoppingCart} from "react-icons/fa";
+import {shallowEqual, useSelector} from "react-redux";
 
-interface CartIconProps {
-    quantityProductsInCart: number | undefined;
-}
-
-function CartIcon({quantityProductsInCart}: CartIconProps): React.JSX.Element {
-
+function CartIcon(): React.JSX.Element {
+    const quantityProductsInCart = useSelector((state: any) => state.user?.cart.length, shallowEqual);
 
     return (
         <Link to={"/cart"} className="cart_icon">

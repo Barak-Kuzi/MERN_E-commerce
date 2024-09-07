@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {useParams} from "react-router-dom";
 
 import styles from '../styles/ProductDetails.module.css';
@@ -8,25 +8,17 @@ import empty_star from "../assest/assest_new/star-no-fill.svg";
 
 import LoadingProductDetails from "../components/LoadingProductDetails";
 import displayCurrency from "../utils/displayCurrency";
-import handleAddToCart from "../utils/handleAddToCart";
 import ProductImages from "../components/ProductImages";
 import VerticalProductCard from "../components/VerticalProductCard";
 import useFetchProductById from "../hooks/useFetchProductById";
+import useAddToCart from "../hooks/useAddToCart";
 
 const ProductDetails: React.FC = () => {
     const {productId} = useParams();
     const {product, isLoading, error} = useFetchProductById(productId!);
+    const {handleAddToCartButton} = useAddToCart();
 
     console.log('ProductDetails component re-rendered');
-
-    const handleAddToCartButton = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        const productId = e.currentTarget.getAttribute('product-id');
-        if (!productId) {
-            return;
-        }
-        await handleAddToCart({productId});
-    }, []);
 
     if (isLoading)
         return (<p>Loading...</p>);
