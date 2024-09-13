@@ -1,6 +1,6 @@
-import {Request, Response} from 'express';
+import {CustomRequest, CustomResponse} from "../../utils";
 
-async function userLogoutController(req: Request, res: Response) {
+async function userLogoutController(req: CustomRequest, res: CustomResponse) {
     try {
         res.clearCookie('token');
         res.status(200).json({

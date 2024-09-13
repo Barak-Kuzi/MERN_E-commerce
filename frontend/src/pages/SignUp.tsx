@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import styles from '../styles/Login.module.css';
 import {FaEye} from "react-icons/fa";
 import {FaEyeSlash} from "react-icons/fa";
 
@@ -91,64 +92,64 @@ export default function SignUp(): React.JSX.Element {
 
     return (
         <section id="sign_up">
-            <div className="login_container">
-                <div className="login_form_container">
-                    <div className="login_icon">
+            <div className={styles.login_page_container}>
+                <div className={styles.login_form_container}>
+                    <div className={styles.login_icon}>
                         <div>
                             <img src={userData.profileImage || loginIcon} alt='login icons'/>
                         </div>
                         <form>
                             <label>
-                                <div className="upload_image">
+                                <div className={styles.upload_image}>
                                     Upload Photo
                                 </div>
-                                <input type='file' className="upload_image_button" onChange={handleUploadPic}/>
+                                <input type='file' className={styles.upload_image_button} onChange={handleUploadPic}/>
                             </label>
                         </form>
                     </div>
-                    <form className="form_container" onSubmit={handleSubmit}>
-                        <div className="form_group">
+                    <form className={styles.form_container} onSubmit={handleSubmit}>
+                        <div className={styles.form_group}>
                             <label htmlFor="name">Name</label>
                             <input type="text" id="name" name="name" placeholder="Enter Your Name"
                                    value={userData.name} onChange={handleOnChange} required/>
                         </div>
-                        <div className="form_group">
+                        <div className={styles.form_group}>
                             <label htmlFor="email">Email</label>
                             <input type="email" id="email" name="email" placeholder="Enter Your Email"
                                    value={userData.email} onChange={handleOnChange} required/>
                         </div>
-                        <div className="form_group">
+                        <div className={styles.form_group}>
                             <label htmlFor="password">Password</label>
-                            <div className="input_password">
+                            <div className={styles.input_password}>
                                 <input type={showPassword ? "text" : "password"} id="password" name="password"
                                        placeholder="Enter Your Password" value={userData.password}
                                        onChange={handleOnChange}/>
-                                <div className="eye_icon" onClick={handleShowPassword}>
+                                <div className={styles.eye_icon} onClick={handleShowPassword}>
                                     <span>
                                         {showPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div className="form_group">
+                        <div className={styles.form_group}>
                             <label htmlFor="confirmPassword">Confirm Password</label>
-                            <div className="input_password">
+                            <div className={styles.input_password}>
                                 <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword"
                                        name="confirmPassword"
                                        placeholder="Enter Your Confirm Password" value={userData.confirmPassword}
                                        onChange={handleOnChange}/>
-                                <div className="eye_icon" onClick={handleShowConfirmPassword}>
+                                <div className={styles.eye_icon} onClick={handleShowConfirmPassword}>
                                     <span>
                                         {showConfirmPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" className="form_button">Sign Up</button>
+                        <button type="submit" className={styles.form_button}>Sign Up</button>
                     </form>
-                    <div className="signup_container">
+                    <div className={styles.signup_container}>
                         <p>Already have an account?</p>
-                        <Link to={"/login"} className="signup_button">Sign In</Link>
+                        <Link to={"/login"} className={styles.signup_button}>Sign In</Link>
                     </div>
                 </div>
             </div>

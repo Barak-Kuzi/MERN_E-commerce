@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import styles from "../styles/ProductDetails.module.css";
 
@@ -17,10 +17,15 @@ export interface zoomImageCoordinateStruct {
 }
 
 export default function ProductImages({isLoading, product}: ProductImagesProps): React.JSX.Element {
-
     const [activeProductImage, setActiveProductImage] = useState<string>(product?.productImages[0] as string || '');
     const [zoomImage, setZoomImage] = useState<boolean>(false);
     const [zoomImageCoordinate, setZoomImageCoordinate] = useState<zoomImageCoordinateStruct>({x: 0, y: 0});
+
+    useEffect(() => {
+        if (product?.productImages[0]) {
+            setActiveProductImage(product.productImages[0]);
+        }
+    }, [product]);
 
     const handleZoomImage = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
         setZoomImage(true);

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { CustomResponse } from '../utils/CustomResponse';
-import { fetchProductsByCategory } from '../utils/fetchProductsByCategory';
-import { Product } from '../models';
+import {useEffect, useState} from 'react';
+import {CustomResponse} from '../utils/CustomResponse';
+import {fetchProductsByCategory} from '../utils/fetchProductsByCategory';
+import {Product} from '../models';
 
 export const useFetchProductsByCategory = (category: string) => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -9,6 +9,8 @@ export const useFetchProductsByCategory = (category: string) => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        if (!category) return;
+
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
@@ -33,5 +35,5 @@ export const useFetchProductsByCategory = (category: string) => {
         fetchProducts();
     }, [category]);
 
-    return { products, isLoading, error };
+    return {products, isLoading, error};
 };

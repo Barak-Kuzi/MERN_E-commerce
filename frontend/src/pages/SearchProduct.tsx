@@ -1,53 +1,73 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
 import styles from '../styles/SearchProduct.module.css';
+
 import VerticalProductCard from "../components/VerticalProductCard";
-import {useLocation} from "react-router-dom";
 import {Product} from "../models";
+import SummaryApi from "../common";
+import {RootState} from "../store/store";
 
 function SearchProduct(): React.JSX.Element {
-    const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
-    const location = useLocation();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
+    const searchQuery = useSelector((state: RootState) => state.search.query);
+
+    const fetchProducts = useCallback(async (query: string) => {
+        if (!query) return;
+
+        try {
+            const path = SummaryApi.search.url;
+            const response = await fetch(`${path}?query=${query}`, {
+                method: SummaryApi.search.method,
+            });
+
+            const resData = await response.json();
+
+            if (resData.success) {
+                setProducts(resData.data);
+            } else {
+                setError(resData.message);
+            }
+        } catch (err) {
+            setError("Failed to fetch products");
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            const query = new URLSearchParams(location.search).get("query");
-            if (!query) return;
-
-            try {
-                const response = await fetch(`/api/products/search?query=${query}`);
-                const data = await response.json();
-
-                if (data.success) {
-                    setProducts(data.data);
-                } else {
-                    setError(data.message);
-                }
-            } catch (err) {
-                setError("Failed to fetch products");
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchProducts();
-    }, [location.search]);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+        fetchProducts(searchQuery);
+    }, [searchQuery, fetchProducts]);
 
     if (error) {
         return <div>{error}</div>;
     }
 
+    console.log('SearchProduct component re-rendered');
+
     return (
-        <div className={styles.search_product}>
-            {products.map((product: Product) => (
-                <VerticalProductCard key={product?._id} title={product.productName} category={product.productCategory} />
-            ))}
+        <div className={styles.search_product_container}>
+            <p className={styles.search_result_title}>Search Result: {products.length}</p>
+
+            {
+                isLoading && (
+                    <p className={styles.loading}>Loading...</p>
+                )
+            }
+
+            {
+                products.length === 0 && !isLoading && (
+                    <p className={styles.not_found_message}>Not Found Products...</p>
+                )
+            }
+
+            {
+                products.length !== 0 && !isLoading && (
+                    <VerticalProductCard products={products}/>
+                )
+            }
         </div>
     );
 }

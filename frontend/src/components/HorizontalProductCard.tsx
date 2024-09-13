@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 import {FaAngleLeft, FaAngleRight} from 'react-icons/fa6'
 
 import styles from '../styles/HorizontalProductCard.module.css';
-import heart from "../assest/assest_new/love.svg";
-import star from "../assest/assest_new/star.svg";
-import half_star from "../assest/assest_new/star-half-fill.svg";
-import empty_star from "../assest/assest_new/star-no-fill.svg";
+import heart from "../assest/love.svg";
+import star from "../assest/star.svg";
+import half_star from "../assest/star-half-fill.svg";
+import empty_star from "../assest/star-no-fill.svg";
 
 import {Product} from "../models";
 import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";

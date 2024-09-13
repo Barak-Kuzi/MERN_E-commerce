@@ -1,34 +1,45 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 import styles from '../styles/VerticalProductCard.module.css';
-import star from '../assest/assest_new/star.svg';
-import half_star from '../assest/assest_new/star-half-fill.svg';
-import empty_star from '../assest/assest_new/star-no-fill.svg';
-import heart from '../assest/assest_new/love.svg';
-import eye from '../assest/assest_new/eye.svg';
+import star from '../assest/star.svg';
+import half_star from '../assest/star-half-fill.svg';
+import empty_star from '../assest/star-no-fill.svg';
+import heart from '../assest/love.svg';
+import eye from '../assest/eye.svg';
 
 import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
 import useAddToCart from "../hooks/useAddToCart";
+import {Product} from "../models";
+import ScrollTopPage from "../utils/scrollTopPage";
 
 
 interface VerticalProductCardProps {
-    title: string;
-    category: string;
+    title?: string;
+    category?: string;
+    products?: Product[];
 }
 
-export default function VerticalProductCard({title, category}: VerticalProductCardProps): React.JSX.Element {
-    const {products, isLoading, error} = useFetchProductsByCategory(category);
+export default function VerticalProductCard({
+                                                title,
+                                                category,
+                                                products: propProducts
+                                            }: VerticalProductCardProps): React.JSX.Element {
+
+    const {products: productsByCategory, isLoading, error} = useFetchProductsByCategory(category || '');
+    const products = (category ? productsByCategory : propProducts) || [];
     const loadingList = new Array(8).fill(null);
     const {handleAddToCartButton} = useAddToCart();
 
     return (
         <div className={styles.vertical_product_card_container}>
-            <h2 className={styles.title_page}>{title}</h2>
+            {title && <h2 className={styles.title_page}>{title}</h2>}
             <div className={styles.product_card_inner_container}>
                 {
                     products.map((product, index) => {
                         return (
-                            <div className={styles.product_card} key={`${product.productName}_${index}`}>
+                            <Link className={styles.product_card} key={`${product.productName}_${index}`}
+                                  to={`/product-details/${product?._id}`}>
                                 <div className={styles.product_image_container}>
                                     <img src={product?.productImages[0]} alt={product?.productName}
                                          className={styles.product_image}/>
@@ -72,7 +83,7 @@ export default function VerticalProductCard({title, category}: VerticalProductCa
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         )
                     })
                 }

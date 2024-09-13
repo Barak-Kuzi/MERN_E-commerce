@@ -10,7 +10,11 @@ import AllProducts from "../pages/AllProducts";
 import CategoryProducts from "../pages/CategoryProducts";
 import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
+import PlaceOrder from "../pages/PlaceOrder";
 import SearchProduct from "../pages/SearchProduct";
+
+import UserOrders from "../pages/UserOrders";
+import Verify from "../pages/Verify";
 
 const router = createBrowserRouter([
     {
@@ -34,7 +38,7 @@ const router = createBrowserRouter([
                 element: <SignUp/>
             },
             {
-                path: "product-category/:categoryName",
+                path: "product-category",
                 element: <CategoryProducts/>
             },
             {
@@ -44,6 +48,18 @@ const router = createBrowserRouter([
             {
                 path: "cart",
                 element: <Cart/>
+            },
+            {
+                path: "place-order",
+                element: <PlaceOrder/>
+            },
+            {
+                path: "verify",
+                element: <Verify/>
+            },
+            {
+                path: "user-orders", // Maybe this should be changed
+                element: <UserOrders/>
             },
             {
                 path: "search",

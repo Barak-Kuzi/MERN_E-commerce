@@ -15,6 +15,9 @@ import getProductsByCategoryController from "../controller/product/getProductsBy
 import getProductByIdController from "../controller/product/getProductByIdController.js";
 import addToCartController from "../controller/user/addToCartController.js";
 import deleteFromCartController from "../controller/user/deleteFromCartController.js";
+import searchProductController from "../controller/product/searchProductController.js";
+import getFilteredProductsController from "../controller/product/getFilteredProductsController.js";
+import {placeOrder, verifyOrder, fetchOrders} from "../controller/order/orderController.js";
 
 const router = Router();
 
@@ -35,9 +38,16 @@ router.delete('/delete-product/:productId', authToken, deleteProductController);
 router.get('/all-products', getAllProductsController);
 router.get('/products-by-category', getProductsByCategoryController);
 router.get('/product-details/:productId', getProductByIdController);
+router.get('/search', searchProductController);
+router.post('/filter-products', getFilteredProductsController);
 
 // Cart routes
 router.post('/add-to-cart', authToken, addToCartController);
 router.post('/delete-product-from-cart', authToken, deleteFromCartController);
+
+// Order routes
+router.post('/place-order', authToken, placeOrder);
+router.post('/verify', verifyOrder);
+router.get('/user-orders', authToken, fetchOrders);
 
 export default router;

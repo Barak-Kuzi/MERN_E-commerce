@@ -48,4 +48,5 @@ export interface Product {
     productBrand: string;
     createdAt?: Date;
     updatedAt?: Date;
+    quantity?: number;
 }

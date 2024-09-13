@@ -9,11 +9,8 @@ import ROLE from "../common/role";
 function UserMenuIcon(): React.JSX.Element {
     const [menuDisplay, setMenuDisplay] = useState<boolean>(false);
     const userRole = useSelector((state: any) => state.user?.user?.role, shallowEqual);
-    const userId = useSelector((state: any) => state.user?.user?._id, shallowEqual);
-    const user = useSelector((state: any) => state.user?.user, shallowEqual);
     const userProfileImage = useSelector((state: any) => state.user?.user?.profileImage, shallowEqual);
-
-    console.log(user)
+    const userConnected = useSelector((state: any) => state.user?.userConnected, shallowEqual);
 
     const handleMenuDisplay = useCallback(() => {
         setMenuDisplay((prevState) => !prevState);
@@ -22,11 +19,11 @@ function UserMenuIcon(): React.JSX.Element {
     return (
         <div className={styles.user_menu_icons_container}>
             {
-                userId &&
+                userConnected &&
                 <div className={styles.user_icon} onClick={handleMenuDisplay}>
                     {
-                        user?.profileImage ?
-                            (<img src={user?.profileImage} alt={user?.name}/>)
+                        userProfileImage ?
+                            (<img src={userProfileImage} alt="User Panel"/>)
                             :
                             (<FaRegCircleUser/>)
                     }
@@ -37,13 +34,15 @@ function UserMenuIcon(): React.JSX.Element {
                 menuDisplay && (
                     <div className={styles.user_menu}>
                         <nav>
+                            <Link to={"/user-orders"} className={styles.user_menu_link} onClick={handleMenuDisplay}>
+                                My Orders
+                            </Link>
                             {
                                 userRole === ROLE.ADMIN && (
                                     <Link to={"/admin-panel/all-products"} className={styles.user_menu_link}
                                           onClick={handleMenuDisplay}>Admin Panel</Link>
                                 )
                             }
-
                         </nav>
                     </div>
                 )
@@ -52,4 +51,4 @@ function UserMenuIcon(): React.JSX.Element {
     )
 }
 
-export default UserMenuIcon;
+export default React.memo(UserMenuIcon);

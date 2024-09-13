@@ -1,0 +1,26 @@
+.search_product_container {
+    margin: auto;
+    padding: 1rem;
+}
+
+.loading {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    text-align: center;
+}
+
+.search_result_title {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+}
+
+.not_found_message {
+    padding: 1rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    text-align: center;
+    background-color: #ffffff;
+}

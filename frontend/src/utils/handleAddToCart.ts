@@ -1,5 +1,3 @@
-import {toast} from "react-toastify";
-
 import {CustomResponse} from "./CustomResponse";
 import SummaryApi from "../common";
 
@@ -19,14 +17,6 @@ const handleAddToCart = async ({productId}: handleAddToCartProps) => {
 
     const resData: CustomResponse = await response.json();
     return resData;
-    // if (resData.success) {
-    //     toast.success(resData.message);
-    //     dispatch(setUserDetails({ cart: resData.cart }));
-    // }
-    //
-    // if (resData.error) {
-    //     toast.error(resData.message);
-    // }
 }
 
 export default handleAddToCart;

@@ -2,9 +2,9 @@ import React from 'react';
 import {useParams} from "react-router-dom";
 
 import styles from '../styles/ProductDetails.module.css';
-import star from "../assest/assest_new/star.svg";
-import half_star from "../assest/assest_new/star-half-fill.svg";
-import empty_star from "../assest/assest_new/star-no-fill.svg";
+import star from "../assest/star.svg";
+import half_star from "../assest/star-half-fill.svg";
+import empty_star from "../assest/star-no-fill.svg";
 
 import LoadingProductDetails from "../components/LoadingProductDetails";
 import displayCurrency from "../utils/displayCurrency";

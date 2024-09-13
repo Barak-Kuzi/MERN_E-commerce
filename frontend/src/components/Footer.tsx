@@ -1,21 +1,22 @@
 import React from 'react';
 
 import styles from '../styles/Footer.module.css';
-import Logo from '../components/Logo';
+
+import my_logo from '../assest/my_logo.png';
 import Facebook from '../assest/facebook_icon.png';
 import Twitter from '../assest/twitter_icon.png';
 import Linkedin from '../assest/linkedin_icon.png';
 
 export default function Footer(): React.JSX.Element {
 
+    const content: string = `Tech-Market provides a pleasant and secure shopping experience for technology enthusiasts. By offering a wide variety of high-quality technological and new products that have come to the market, providing information about the product, and saving time in online shopping.`;
+
     return (
         <div className={styles.footer} id='footer'>
             <div className={styles.footer_content}>
                 <div className={styles.footer_content_left}>
-                    <Logo width={90} height={50}/>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda ea exercitationem
-                        ipsa iusto molestias perferendis quidem saepe. Ab ad amet architecto blanditiis deleniti
-                        exercitationem facilis odit quia suscipit voluptates?</p>
+                    <img src={my_logo} alt="logo" className={styles.logo}/>
+                    <p>{content}</p>
                     <div className={styles.social_media_icons}>
                         <img src={Facebook} alt="Facebook icon"/>
                         <img src={Twitter} alt="Twitter icon"/>

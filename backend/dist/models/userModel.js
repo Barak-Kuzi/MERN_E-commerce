@@ -1,4 +1,16 @@
 import mongoose from "mongoose";
+const cartItemSchema = new mongoose.Schema({
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true,
+        default: 1
+    }
+});
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -21,19 +33,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "GENERAL",
     },
-    cart: [
-        {
-            productId: {
-                type: String,
-            },
-            quantity: {
-                type: Number,
-                default: 1
-            },
-        },
-    ],
+    cart: [cartItemSchema],
 }, {
     timestamps: true
 });
-const userModer = mongoose.model("user", userSchema);
-export default userModer;
+// this line guarantees that a specific product can appear only once in a user's cart, preventing duplication.
+// userSchema.index({ 'cart.productId': 1, _id: 1 }, { unique: true });
+const userModel = mongoose.model("user", userSchema);
+export default userModel;

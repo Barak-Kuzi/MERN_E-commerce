@@ -1,66 +1,39 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import React, {useCallback} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 import {MdClear} from "react-icons/md";
 
 import styles from '../styles/Cart.module.css';
 
-import {fetchProductById} from "../utils/fetchProductById";
-import useDeleteProductFromCart from "../hooks/useRemoveFromCart";
+import useDeleteProductFromCart from "../hooks/useDeleteFromCart";
 import {Product} from "../models";
-
-interface ProductsCart extends Product{
-    quantity: number;
-}
+import CartTotalDetails from "../components/CartTotalDetails";
+import {setUserCart} from "../store/userSlice";
+import {AppDispatch, RootState} from "../store/store";
 
 function Cart(): React.JSX.Element {
-    const userCart = useSelector((state:any) => state.user?.cart);
-    const [productsCart, setProductsCart] = useState<ProductsCart[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const { deleteProductFromCart, isLoading: isDeleting, error } = useDeleteProductFromCart();
-
-    useEffect(() => {
-        const fetchCartDetails = async () => {
-            const details = await Promise.all(userCart.map(async (item: { productId: string, quantity: number }) => {
-                try {
-                    const productDetails = await fetchProductById(item.productId);
-                    return { ...productDetails.data, quantity: item.quantity };
-                } catch (error) {
-                    console.error(`Failed to fetch details for product ID: ${item.productId}`, error);
-                    return null;
-                }
-            }));
-            setProductsCart(details.filter(detail => detail !== null));
-            setIsLoading(false);
-        };
-
-        if (userCart && userCart.length > 0) {
-            fetchCartDetails();
-        } 
-    }, [userCart]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const products = useSelector((state: RootState) => state.user?.cart.products);
+    const {deleteProductFromCart, isLoading: isDeleting, error} = useDeleteProductFromCart();
 
     const handleRemoveProduct = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
         try {
             const productId = e.currentTarget.getAttribute('product-id');
             await deleteProductFromCart(productId!);
-            setProductsCart(productsCart.filter(product => product._id !== productId));
+            dispatch(setUserCart(products.filter((item: Product) => item._id !== productId)));
         } catch (error) {
             console.error('Failed to remove product from cart', error);
         }
-    }, [deleteProductFromCart, productsCart]);
+    }, [deleteProductFromCart, dispatch, products]);
 
-    const handleCalculateSubtotal = () => {
-        return productsCart.reduce((acc, item) => acc + (item.productSellingPrice as number * item.quantity), 0).toFixed(2);
+
+    const handleCheckout = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        navigate('/place-order');
     }
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    console.log(productsCart);
-
-    const subtotal = handleCalculateSubtotal();
-    const deliveryFee = 10;
-    const total = parseFloat(subtotal) + deliveryFee;
+    console.log('Cart component rendered');
 
     return (
         <div className={styles.cart_page_container}>
@@ -75,15 +48,15 @@ function Cart(): React.JSX.Element {
                 </div>
                 <br/>
                 <hr/>
-                {productsCart.map((product: ProductsCart, index: number) => {
+                {products.map((product: Product, index: number) => {
                     return (
                         <div key={`${product.productName}_${index}`}>
                             <div className={`${styles.cart_items_title} ${styles.cart_items_item}`}>
-                                <img src={product.productImages[0]} alt={product.productName}/>
+                                <img src={product.productImages[0] || ''} alt={product.productName}/>
                                 <p>{product.productName}</p>
                                 <p>${product.productSellingPrice}</p>
                                 <p>{product.quantity}</p>
-                                <p>${product.quantity * (product.productSellingPrice as number)}</p>
+                                <p>${product.quantity! * (product.productSellingPrice as number)}</p>
                                 <div className={styles.remove_icon}
                                      product-id={product?._id}
                                      onClick={handleRemoveProduct}
@@ -97,26 +70,7 @@ function Cart(): React.JSX.Element {
                 })}
             </div>
             <div className={styles.cart_summary}>
-                <div className={styles.cart_total}>
-                    <h2>Cart Totals</h2>
-                    <div>
-                        <div className={styles.cart_total_details}>
-                            <p>Subtotal</p>
-                            <p>${subtotal}</p>
-                        </div>
-                        <hr/>
-                        <div className={styles.cart_total_details}>
-                            <p>Delivery Fee</p>
-                            <p>${deliveryFee}</p>
-                        </div>
-                        <hr/>
-                        <div className={styles.cart_total_details}>
-                            <b>Total</b>
-                            <b>${total}</b>
-                        </div>
-                    </div>
-                    <button>Proceed to Checkout</button>
-                </div>
+                <CartTotalDetails buttonText={'Proceed to Checkout'} onClick={handleCheckout}/>
                 <div className={styles.cart_promo_code}>
                     <div>
                         <p>If you have a promo code, Enter it here</p>

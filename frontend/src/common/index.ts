@@ -56,6 +56,26 @@ const SummaryApi = {
     deleteProductFromCart: {
         url: `${backendDomain}/api/delete-product-from-cart`,
         method: 'POST'
+    },
+    search: {
+        url: `${backendDomain}/api/search`,
+        method: 'GET'
+    },
+    filterProducts: {
+        url: `${backendDomain}/api/filter-products`,
+        method: 'POST'
+    },
+    placeOrder: {
+        url: `${backendDomain}/api/place-order`,
+        method: 'POST'
+    },
+    verifyOrder: {
+        url: `${backendDomain}/api/verify`,
+        method: 'POST'
+    },
+    userOrders: {
+        url: `${backendDomain}/api/user-orders`,
+        method: 'GET'
     }
 }
 

@@ -4,12 +4,15 @@ import {useDispatch} from "react-redux";
 import {toast} from 'react-toastify';
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 
+import styles from '../styles/Login.module.css';
 import loginIcon from "../assest/signin.gif";
 
 import SummaryApi from "../common";
 import {AppDispatch} from "../store/store";
-import {setUserCart, setUserConnection, setUserDetails} from "../store/userSlice";
+import {setUserCart, setUserConnection, setUserDetails, setUserOrders} from "../store/userSlice";
 import {CustomResponse} from "../utils/CustomResponse";
+import {fetchCartProducts} from "../utils/fetchCartProducts";
+import fetchUserOrders from "../utils/fetchUserOrders";
 
 interface data {
     email: string;
@@ -68,15 +71,18 @@ export default function Login(): React.JSX.Element {
                 const secondResData: CustomResponse = await secondResponse.json();
                 if (secondResData.success) {
                     dispatch(setUserDetails(secondResData.data));
-                    dispatch(setUserCart(secondResData.data.cart));
                     dispatch(setUserConnection(true));
+                    const detailedCartProducts = await fetchCartProducts(secondResData.data.cart);
+                    dispatch(setUserCart(detailedCartProducts));
+                    const userOrders = await fetchUserOrders();
+                    dispatch(setUserOrders(userOrders.data));
+
                     toast.success('Login successful');
                     navigate('/');
                 }
             } else {
                 toast.error(resData.message);
             }
-
 
         } catch (error: any) {
             toast.error(error.message);
@@ -85,40 +91,40 @@ export default function Login(): React.JSX.Element {
 
     return (
         <section id="login">
-            <div className="login_container">
-                <div className="login_form_container">
-                    <div className="login_icon">
+            <div className={styles.login_page_container}>
+                <div className={styles.login_form_container}>
+                    <div className={styles.login_icon}>
                         <img src={loginIcon} alt="Login Icon"/>
                     </div>
-                    <form className="form_container" onSubmit={handleSubmit}>
-                        <div className="form_group">
+                    <form className={styles.form_container} onSubmit={handleSubmit}>
+                        <div className={styles.form_group}>
                             <label htmlFor="email">Email</label>
                             <input type="email" id="email" name="email" placeholder="Enter Your Email"
                                    value={userData.email} onChange={handleOnChange}/>
                         </div>
 
-                        <div className="form_group">
-                            <label htmlFor="password" className="form_label">Password</label>
-                            <div className="input_password">
+                        <div className={styles.form_group}>
+                            <label htmlFor="password" className={styles.form_label}>Password</label>
+                            <div className={styles.input_password}>
                                 <input type={showPassword ? "text" : "password"} id="password" name="password"
                                        placeholder="Enter Your Password" value={userData.password}
                                        onChange={handleOnChange}/>
-                                <div className="eye_icon" onClick={handleShowPassword}>
+                                <div className={styles.eye_icon} onClick={handleShowPassword}>
                                     <span>
                                         {showPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
                                     </span>
                                 </div>
                             </div>
-                            <Link to={'/forgot-password'} className="forgot_password">
+                            <Link to={'/forgot-password'} className={styles.forgot_password}>
                                 Forgot password
                             </Link>
                         </div>
 
-                        <button type="submit" className="form_button">Login</button>
+                        <button type="submit" className={styles.form_button}>Login</button>
                     </form>
-                    <div className="signup_container">
+                    <div className={styles.signup_container}>
                         <p>Don't have an account?</p>
-                        <Link to={"/sign-up"} className="signup_button">Sign Up</Link>
+                        <Link to={"/sign-up"} className={styles.signup_button}>Sign Up</Link>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,73 @@
+.page_container {
+    margin: auto;
+    padding: 1rem;
+}
+
+.category_products_inner_container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+}
+
+.filter_menu {
+    overflow-y: scroll;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.filter_menu::-webkit-scrollbar {
+    display: none;
+}
+
+.filter_menu h3 {
+    padding-bottom: 0.25rem;
+    border-bottom-width: 1px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.filter_menu hr {
+    margin: -0.5rem 0 0.5rem 0;
+    height: 2px;
+    width: 11rem;
+    background-color: #e2e2e2;
+    border: none;
+}
+
+.filter_menu form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.filter_menu_label {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.products_container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.search_results_title {
+    margin: 0.5rem 0 1rem 1rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+}
+
+.filtered_products_container {
+    overflow-y: scroll;
+    min-height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
+    padding-bottom: 2rem;
+}

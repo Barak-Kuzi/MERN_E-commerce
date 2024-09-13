@@ -6,12 +6,11 @@ import { CustomResponse } from '../utils/CustomResponse';
 
 const useFetchProductById = (productId: string) => {
     const [product, setProduct] = useState<Product | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
         const fetchProduct = async () => {
-            setIsLoading(true);
             try {
                 const response: CustomResponse = await fetchProductById(productId);
 

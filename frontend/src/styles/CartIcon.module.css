@@ -1,0 +1,33 @@
+.cart_icon {
+    position: relative;
+    font-size: 1.7rem;
+    line-height: 1rem;
+    margin-right: 8px;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.amount_cart_products_container {
+    display: flex;
+    position: absolute;
+    top: -0.75rem;
+    right: -1rem;
+    padding: 0.25rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    color: #ffffff;
+    background-color: #DC2626;
+}
+
+.amount_cart_products_text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    margin-top: 0.8rem;
+}

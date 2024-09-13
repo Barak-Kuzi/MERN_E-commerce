@@ -50,33 +50,6 @@
     gap: max(12vw, 20px);
 }
 
-.cart_total {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cart_total hr {
-    margin: 10px 0;
-}
-
-.cart_total button {
-    border: none;
-    color: white;
-    background-color: tomato;
-    width: max(15vw, 200px);
-    padding: 12px 0;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.cart_total_details {
-    display: flex;
-    justify-content: space-between;
-    color: #555;
-}
-
 .cart_promo_code {
     flex: 1;
 }
@@ -105,6 +78,7 @@
     width: max(10vw, 150px);
     background-color: black;
     color: white;
+    font-size: 15px;
     border: none;
     padding: 12px 5px;
     border-radius: 4px;
