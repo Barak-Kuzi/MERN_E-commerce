@@ -1,9 +1,10 @@
 import {createBrowserRouter} from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
+
+import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
-import SignUp from "../pages/SignUp";
 import AdminPanel from "../pages/AdminPanel";
 import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
@@ -12,7 +13,6 @@ import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
 import PlaceOrder from "../pages/PlaceOrder";
 import SearchProduct from "../pages/SearchProduct";
-
 import UserOrders from "../pages/UserOrders";
 import Verify from "../pages/Verify";
 

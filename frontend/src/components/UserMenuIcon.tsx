@@ -1,20 +1,39 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import {shallowEqual, useSelector} from "react-redux";
 import {FaRegCircleUser} from "react-icons/fa6";
 
 import styles from '../styles/UserMenuIcon.module.css';
+
 import ROLE from "../common/role";
+import {RootState} from "../store/store";
 
 function UserMenuIcon(): React.JSX.Element {
     const [menuDisplay, setMenuDisplay] = useState<boolean>(false);
-    const userRole = useSelector((state: any) => state.user?.user?.role, shallowEqual);
-    const userProfileImage = useSelector((state: any) => state.user?.user?.profileImage, shallowEqual);
-    const userConnected = useSelector((state: any) => state.user?.userConnected, shallowEqual);
+    const userRole = useSelector((state: RootState) => state.user?.user?.role, shallowEqual);
+    const userProfileImage = useSelector((state: RootState) => state.user?.user?.profileImage, shallowEqual);
+    const userConnected = useSelector((state: RootState) => state.user?.userConnected, shallowEqual);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleMenuDisplay = useCallback(() => {
         setMenuDisplay((prevState) => !prevState);
     }, []);
+
+    const handleClickOutside = useCallback((event: MouseEvent) => {
+        if (dropdownRef.current &&
+            !dropdownRef.current.contains(event.target as Node) &&
+            !(event.target as Element).closest(`.${styles.user_icon}`)
+        ) {
+            setMenuDisplay(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [handleClickOutside]);
 
     return (
         <div className={styles.user_menu_icons_container}>
@@ -32,18 +51,123 @@ function UserMenuIcon(): React.JSX.Element {
 
             {
                 menuDisplay && (
-                    <div className={styles.user_menu}>
+                    <div className={styles.dropdown_container} ref={dropdownRef}>
                         <nav>
-                            <Link to={"/user-orders"} className={styles.user_menu_link} onClick={handleMenuDisplay}>
-                                My Orders
-                            </Link>
-                            {
-                                userRole === ROLE.ADMIN && (
-                                    <Link to={"/admin-panel/all-products"} className={styles.user_menu_link}
-                                          onClick={handleMenuDisplay}>Admin Panel</Link>
-                                )
-                            }
+                            <ul>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round"
+                                         className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                                        <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>
+                                        <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"/>
+                                    </svg>
+                                    <Link to={"/user-orders"} onClick={handleMenuDisplay}>
+                                        My Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25"
+                                         fill="none">
+                                        <mask id="mask0_2_7" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse"
+                                              x="0"
+                                              y="0"
+                                              width="24" height="24">
+                                            <rect x="0.5" y="1" width="24" height="24" fill="white" stroke="black"/>
+                                        </mask>
+                                        <g mask="url(#mask0_2_7)">
+                                            <path
+                                                d="M17.2714 15.9214C16.1797 17.0132 14.7951 18.3151 13.1157 19.8282C13.1156 19.8283 13.1155 19.8284 13.1153 19.8285L12 20.8285L10.8847 19.8285C10.8845 19.8284 10.8844 19.8283 10.8843 19.8282C9.20494 18.3151 7.82026 17.0132 6.72855 15.9214C5.63918 14.8321 4.78211 13.8634 4.15137 13.0143C3.52024 12.1647 3.09558 11.4052 2.85909 10.7339C2.61929 10.0531 2.5 9.35927 2.5 8.65C2.5 7.20783 2.97791 6.0292 3.92855 5.07855C4.8792 4.12791 6.05783 3.65 7.5 3.65C8.29356 3.65 9.04619 3.8173 9.76303 4.15285C10.4807 4.48876 11.0982 4.96113 11.619 5.57382L12 6.02202L12.381 5.57382C12.9018 4.96113 13.5193 4.48876 14.237 4.15285C14.9538 3.8173 15.7064 3.65 16.5 3.65C17.9422 3.65 19.1208 4.12791 20.0714 5.07855C21.0221 6.0292 21.5 7.20783 21.5 8.65C21.5 9.35927 21.3807 10.0531 21.1409 10.7339C20.9044 11.4052 20.4798 12.1647 19.8486 13.0143C19.2179 13.8634 18.3608 14.8321 17.2714 15.9214ZM11.6664 19.1724L12 19.4713L12.3336 19.1724C13.9373 17.7358 15.2607 16.5005 16.3021 15.4675C17.3433 14.4347 18.1752 13.5275 18.7921 12.7477C19.4085 11.9687 19.857 11.2504 20.1151 10.5959C20.3694 9.95115 20.5 9.30158 20.5 8.65C20.5 7.52632 20.1201 6.56301 19.3536 5.79645C18.587 5.02988 17.6237 4.65 16.5 4.65C15.6163 4.65 14.7956 4.90097 14.0489 5.39567C13.4082 5.8201 12.9257 6.3551 12.6182 7H11.3817C11.0743 6.3551 10.5918 5.8201 9.95115 5.39567C9.20442 4.90097 8.38371 4.65 7.5 4.65C6.37632 4.65 5.41301 5.02988 4.64645 5.79645C3.87988 6.56301 3.5 7.52632 3.5 8.65C3.5 9.30158 3.63058 9.95115 3.88486 10.5959C4.14296 11.2504 4.59154 11.9687 5.20789 12.7477C5.82483 13.5275 6.65666 14.4347 7.69788 15.4675C8.73932 16.5005 10.0627 17.7358 11.6664 19.1724Z"
+                                            />
+                                        </g>
+                                    </svg>
+                                    <Link to={"/"} onClick={handleMenuDisplay}>
+                                        My Wishlist
+                                    </Link>
+                                </li>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none">
+                                        <mask id="mask0_6_17" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse"
+                                              x="0"
+                                              y="0"
+                                              width="24" height="24">
+                                            <rect x="0.5" y="0.5" width="23" height="23" fill="white" stroke="black"/>
+                                        </mask>
+                                        <g mask="url(#mask0_6_17)">
+                                            <path
+                                                d="M10.7494 19.8577L11.5 20.2924V19.425V12.575V12.2868L11.2506 12.1423L5.25059 8.66733L4.5 8.23261V9.1V15.95V16.2382L4.74941 16.3827L10.7494 19.8577ZM12.5 19.425V20.2924L13.2506 19.8577L19.2506 16.3827L19.5 16.2382V15.95V9.1V8.23261L18.7494 8.66733L12.7494 12.1423L12.5 12.2868V12.575V19.425ZM11.2505 21.2923L11.2492 21.2915L4.25052 17.2673C4.25031 17.2672 4.2501 17.267 4.24989 17.2669C4.00449 17.1247 3.82317 16.9438 3.69439 16.7231C3.56651 16.5038 3.5 16.2583 3.5 15.975V8.025C3.5 7.74173 3.56651 7.49616 3.69439 7.27694C3.82317 7.05617 4.00449 6.87528 4.24989 6.73308C4.2501 6.73296 4.25031 6.73283 4.25052 6.73271L11.2492 2.70846L11.2505 2.70771C11.4947 2.56637 11.742 2.5 12 2.5C12.258 2.5 12.5053 2.56637 12.7495 2.70772L12.7508 2.70845L19.7495 6.73271C19.7496 6.7328 19.7498 6.7329 19.75 6.73299C19.9954 6.8752 20.1768 7.05612 20.3056 7.27694C20.4335 7.49615 20.5 7.74173 20.5 8.025V15.975C20.5 16.2583 20.4335 16.5038 20.3056 16.7231C20.1768 16.9439 19.9954 17.1248 19.75 17.267C19.7498 17.2671 19.7496 17.2672 19.7495 17.2673L12.7508 21.2915L12.7495 21.2923C12.5053 21.4336 12.258 21.5 12 21.5C11.742 21.5 11.4947 21.4336 11.2505 21.2923ZM15.7519 8.95912L16 9.10088L16.2481 8.95912L18.1731 7.85912L18.9284 7.4275L18.1752 6.99212L12.2502 3.56712L12.0002 3.42261L11.7501 3.56691L9.80014 4.69191L9.04585 5.12707L9.80193 5.55912L15.7519 8.95912ZM11.7498 11.2829L11.9998 11.4274L12.2499 11.2831L14.1999 10.1581L14.9498 9.72543L14.2002 9.29212L8.27523 5.86712L8.02525 5.72261L7.77514 5.86691L5.82514 6.99191L5.07518 7.42457L5.82477 7.85788L11.7498 11.2829Z"
+                                            />
+                                        </g>
+                                    </svg>
+                                    <Link to={"/user-orders"} onClick={handleMenuDisplay}>
+                                        My Orders
+                                    </Link>
+                                </li>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round"
+                                         className="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path
+                                            d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>
+                                        <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+                                    </svg>
+                                    <Link to={"/user-orders"} onClick={handleMenuDisplay}>
+                                        Account Settings
+                                    </Link>
+                                </li>
+                                {
+                                    userRole === ROLE.ADMIN && (
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 25"
+                                                 fill="none">
+                                                <mask id="mask0_2_7" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse"
+                                                      x="0"
+                                                      y="0"
+                                                      width="24" height="24">
+                                                    <rect x="0.5" y="1" width="24" height="24" fill="white" stroke="black"/>
+                                                </mask>
+                                                <g mask="url(#mask0_11_7)">
+                                                    <path
+                                                        d="M12.1756 3.65684L12 3.591L11.8244 3.65684L5.82444 5.90684L5.5 6.0285V6.375V11.1C5.5 12.047 5.63163 12.9695 5.89532 13.8661C6.15626 14.7533 6.51343 15.59 6.96707 16.3751L7.20257 16.7827L7.62361 16.5722C8.29212 16.238 8.99277 15.9751 9.72621 15.7838C10.4496 15.5951 11.2071 15.5 12 15.5C12.7929 15.5 13.5504 15.5951 14.2738 15.7838C15.0072 15.9751 15.7079 16.238 16.3764 16.5722L16.7974 16.7827L17.0329 16.3751C17.4866 15.59 17.8437 14.7533 18.1047 13.8661C18.3684 12.9695 18.5 12.047 18.5 11.1V6.375V6.0285L18.1756 5.90684L12.1756 3.65684ZM8.41921 17.2943L7.77174 17.5867L8.26551 18.0975C8.77448 18.624 9.32881 19.0818 9.92837 19.4698C10.532 19.8604 11.1727 20.1631 11.8494 20.3768L12 20.4243L12.1506 20.3768C12.8273 20.1631 13.468 19.8604 14.0716 19.4698C14.6712 19.0818 15.2255 18.624 15.7345 18.0975L16.2283 17.5867L15.5808 17.2943C15.034 17.0474 14.4617 16.8538 13.8645 16.7133C13.2592 16.5709 12.6374 16.5 12 16.5C11.3626 16.5 10.7408 16.5709 10.1355 16.7133C9.5383 16.8538 8.96601 17.0474 8.41921 17.2943ZM12 12.5C11.1448 12.5 10.4442 12.2121 9.86605 11.6339C9.28793 11.0558 9 10.3552 9 9.5C9 8.64481 9.28793 7.94417 9.86605 7.36605C10.4442 6.78793 11.1448 6.5 12 6.5C12.8552 6.5 13.5558 6.78793 14.1339 7.36605C14.7121 7.94417 15 8.64481 15 9.5C15 10.3552 14.7121 11.0558 14.1339 11.6339C13.5558 12.2121 12.8552 12.5 12 12.5ZM12 11.5C12.554 11.5 13.0433 11.3138 13.4286 10.9286C13.8138 10.5433 14 10.054 14 9.5C14 8.94598 13.8138 8.45666 13.4286 8.07145C13.0433 7.68624 12.554 7.5 12 7.5C11.446 7.5 10.9567 7.68624 10.5714 8.07145C10.1862 8.45666 10 8.94598 10 9.5C10 10.054 10.1862 10.5433 10.5714 10.9286C10.9567 11.3138 11.446 11.5 12 11.5ZM12 21.4836C9.86026 20.9156 8.085 19.6693 6.66694 17.7185C5.21987 15.7278 4.5 13.5263 4.5 11.1V5.3465L12 2.534L19.5 5.3465V11.1C19.5 13.5263 18.7801 15.7278 17.3331 17.7185C15.915 19.6693 14.1397 20.9156 12 21.4836Z"
+                                                    />
+                                                </g>
+                                            </svg>
+                                            <Link to={"/admin-panel/all-products"} onClick={handleMenuDisplay}>
+                                                Admin Panel
+                                            </Link>
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                            <hr className={styles.horizontal_line}/>
+                            <ul>
+                                <li>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round"
+                                         className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path
+                                            d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2"/>
+                                        <path d="M15 12h-12l3 -3"/>
+                                        <path d="M6 15l-3 -3"/>
+                                    </svg>
+                                    <Link to={"/"} onClick={handleMenuDisplay}>
+                                        Sign Out
+                                    </Link>
+                                </li>
+                            </ul>
                         </nav>
+
                     </div>
                 )
             }
@@ -52,3 +176,4 @@ function UserMenuIcon(): React.JSX.Element {
 }
 
 export default React.memo(UserMenuIcon);
+

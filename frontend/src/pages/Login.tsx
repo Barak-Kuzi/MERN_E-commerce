@@ -1,46 +1,48 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {toast} from 'react-toastify';
-import {FaEye, FaEyeSlash} from "react-icons/fa";
+import {toast} from "react-toastify";
 
 import styles from '../styles/Login.module.css';
-import loginIcon from "../assest/signin.gif";
+import google from "../assest/google.png";
+import apple from "../assest/apple.png";
+import emailIcon from "../assest/email_icon.svg";
+import passwordIcon from "../assest/password_icon.svg";
+import lock from "../assest/lock_icon.svg";
+import unlock from "../assest/unlock_icon.svg";
 
-import SummaryApi from "../common";
 import {AppDispatch} from "../store/store";
+import SummaryApi from "../common";
 import {setUserCart, setUserConnection, setUserDetails, setUserOrders} from "../store/userSlice";
 import {CustomResponse} from "../utils/CustomResponse";
 import {fetchCartProducts} from "../utils/fetchCartProducts";
 import fetchUserOrders from "../utils/fetchUserOrders";
+import Input from "../components/Input";
+import useInput from "../hooks/useInput";
+import {validateEmail, validatePassword} from "../utils/validation";
 
-interface data {
-    email: string;
-    password: string;
-}
-
-export default function Login(): React.JSX.Element {
+function Login() {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
-
-
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [userData, setUserData] = useState<data>({
-        email: '',
-        password: ''
-    });
 
+    const {
+        enteredValue: email,
+        isEdited: emailIsEdited,
+        valueIsValid: emailIsValid,
+        errorMessage: emailErrorMessage,
+        handleInputChange: handleEmailChange,
+        handleInputBlur: handleEmailBlur
+    } = useInput({initialValue: '', validationFunction: validateEmail});
 
-    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-
-        setUserData((prevState) => {
-            return {
-                ...prevState,
-                [name]: value
-            }
-        });
-    }
+    const {
+        enteredValue: password,
+        isEdited: passwordIsEdited,
+        valueIsValid: passwordIsValid,
+        errorMessage: passwordErrorMessage,
+        handleInputChange: handlePasswordChange,
+        handleInputBlur: handlePasswordBlur
+    } = useInput({initialValue: '', validationFunction: validatePassword});
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -56,7 +58,10 @@ export default function Login(): React.JSX.Element {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(userData)
+                body: JSON.stringify({
+                    email,
+                    password
+                })
             });
 
             const resData: CustomResponse = await response.json();
@@ -90,44 +95,78 @@ export default function Login(): React.JSX.Element {
     }
 
     return (
-        <section id="login">
-            <div className={styles.login_page_container}>
-                <div className={styles.login_form_container}>
-                    <div className={styles.login_icon}>
-                        <img src={loginIcon} alt="Login Icon"/>
+        <div className={styles.login_page_container}>
+            <form className={styles.login_form_container} onSubmit={handleSubmit}>
+                <div className={styles.welcome_row}>
+                    <h1>Welcome back! &#x1F44F;</h1>
+                    <p>Please enter your details!</p>
+                </div>
+                <div className={styles.text_field}>
+                    <Input
+                        name={"email"}
+                        type={"email"}
+                        value={email}
+                        placeholder={"Enter Your Email"}
+                        onChange={handleEmailChange}
+                        onBlur={handleEmailBlur}
+                    >
+                        Email:
+                    </Input>
+                    <img
+                        alt="Email Icon"
+                        src={emailIcon}
+                    />
+                    {(!emailIsValid && emailIsEdited) && <p className={styles.error_message}>{emailErrorMessage}</p>}
+                </div>
+                <div className={styles.text_field}>
+                    <Input
+                        name={"password"}
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        placeholder={"Enter Your Password"}
+                        onChange={handlePasswordChange}
+                        onBlur={handlePasswordBlur}
+                    >
+                        Password:
+                    </Input>
+                    <img
+                        alt="Password Icon"
+                        src={showPassword ? unlock : lock}
+                        onClick={handleShowPassword}
+                        style={{cursor: "pointer"}}
+                    />
+                    {(!passwordIsValid && passwordIsEdited) &&
+                        <p className={styles.error_message}>{passwordErrorMessage}</p>}
+                </div>
+                <button type="submit" className={styles.form_button}>Login</button>
+                <div className={styles.forgot_password_container}>
+                    <p>Didn't remember your password?</p>
+                    <Link to={'/forgot-password'} className={styles.forgot_password}>
+                        Reset password
+                    </Link>
+                </div>
+                <div className={styles.horizontal_line_container}>
+                    <div className={styles.horizontal_line}></div>
+                    Or
+                    <div className={styles.horizontal_line}></div>
+                </div>
+                <div className={styles.social_media_container}>
+                    <div>
+                        <img src={google} alt={"Google"}/>
+                        Sign in with Google
                     </div>
-                    <form className={styles.form_container} onSubmit={handleSubmit}>
-                        <div className={styles.form_group}>
-                            <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Enter Your Email"
-                                   value={userData.email} onChange={handleOnChange}/>
-                        </div>
-
-                        <div className={styles.form_group}>
-                            <label htmlFor="password" className={styles.form_label}>Password</label>
-                            <div className={styles.input_password}>
-                                <input type={showPassword ? "text" : "password"} id="password" name="password"
-                                       placeholder="Enter Your Password" value={userData.password}
-                                       onChange={handleOnChange}/>
-                                <div className={styles.eye_icon} onClick={handleShowPassword}>
-                                    <span>
-                                        {showPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
-                                    </span>
-                                </div>
-                            </div>
-                            <Link to={'/forgot-password'} className={styles.forgot_password}>
-                                Forgot password
-                            </Link>
-                        </div>
-
-                        <button type="submit" className={styles.form_button}>Login</button>
-                    </form>
-                    <div className={styles.signup_container}>
-                        <p>Don't have an account?</p>
-                        <Link to={"/sign-up"} className={styles.signup_button}>Sign Up</Link>
+                    <div>
+                        <img src={apple} alt={"Apple"}/>
+                        Sign in with Apple
                     </div>
                 </div>
-            </div>
-        </section>
+                <div className={styles.signup_container}>
+                    <p>Don't have an account?</p>
+                    <Link to={"/sign-up"} className={styles.signup_button}>Sign Up</Link>
+                </div>
+            </form>
+        </div>
     );
 }
+
+export default Login;

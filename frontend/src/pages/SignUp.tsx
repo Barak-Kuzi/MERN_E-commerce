@@ -1,14 +1,20 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 import styles from '../styles/Login.module.css';
-import {FaEye} from "react-icons/fa";
-import {FaEyeSlash} from "react-icons/fa";
+import emailIcon from "../assest/email_icon.svg";
+import google from "../assest/google.png";
+import apple from "../assest/apple.png";
+import lock from "../assest/lock_icon.svg";
+import unlock from "../assest/unlock_icon.svg";
 
-import loginIcon from "../assest/signin.gif";
 import imageToBase64 from "../utils/imageToBase64";
 import SummaryApi from "../common";
+import Input from "../components/Input";
+import useInput from "../hooks/useInput";
+import {validateName, validateEmail, validatePassword, validateConfirmPassword} from "../utils/validation";
 
 interface data {
     name: string;
@@ -30,16 +36,52 @@ export default function SignUp(): React.JSX.Element {
         profileImage: ""
     });
 
-    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
+    // const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     const {name, value} = e.target;
+    //
+    //     setUserData((prevState) => {
+    //         return {
+    //             ...prevState,
+    //             [name]: value
+    //         }
+    //     });
+    // }
 
-        setUserData((prevState) => {
-            return {
-                ...prevState,
-                [name]: value
-            }
-        });
-    }
+    const {
+        enteredValue: name,
+        isEdited: nameIsEdited,
+        valueIsValid: nameIsValid,
+        errorMessage: nameErrorMessage,
+        handleInputChange: handleNameChange,
+        handleInputBlur: handleNameBlur
+    } = useInput({initialValue: '', validationFunction: validateName});
+
+    const {
+        enteredValue: email,
+        isEdited: emailIsEdited,
+        valueIsValid: emailIsValid,
+        errorMessage: emailErrorMessage,
+        handleInputChange: handleEmailChange,
+        handleInputBlur: handleEmailBlur
+    } = useInput({initialValue: '', validationFunction: validateEmail});
+
+    const {
+        enteredValue: password,
+        isEdited: passwordIsEdited,
+        valueIsValid: passwordIsValid,
+        errorMessage: passwordErrorMessage,
+        handleInputChange: handlePasswordChange,
+        handleInputBlur: handlePasswordBlur
+    } = useInput({initialValue: '', validationFunction: validatePassword});
+
+    const {
+        enteredValue: confirmPassword,
+        isEdited: confirmPasswordIsEdited,
+        valueIsValid: confirmPasswordIsValid,
+        errorMessage: confirmPasswordErrorMessage,
+        handleInputChange: handleConfirmPasswordChange,
+        handleInputBlur: handleConfirmPasswordBlur
+    } = useInput({ initialValue: '', validationFunction: (value) => validateConfirmPassword(password, value) });
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -58,7 +100,13 @@ export default function SignUp(): React.JSX.Element {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(userData)
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                    confirmPassword,
+                    profileImage: ""
+                })
             });
 
             const dataApi = await dataResponse.json();
@@ -68,7 +116,7 @@ export default function SignUp(): React.JSX.Element {
                 navigate('/login');
             }
 
-            if(dataApi.error){
+            if (dataApi.error) {
                 toast.error(dataApi.message)
             }
 
@@ -76,9 +124,9 @@ export default function SignUp(): React.JSX.Element {
             toast.error("Password and Confirm Password should be same");
     }
 
+    // move to user profile
     const handleUploadPic = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
-
         if (file) {
             const imagePic = await imageToBase64(file);
             setUserData((prevState) => {
@@ -93,65 +141,130 @@ export default function SignUp(): React.JSX.Element {
     return (
         <section id="sign_up">
             <div className={styles.login_page_container}>
-                <div className={styles.login_form_container}>
-                    <div className={styles.login_icon}>
-                        <div>
-                            <img src={userData.profileImage || loginIcon} alt='login icons'/>
-                        </div>
-                        <form>
-                            <label>
-                                <div className={styles.upload_image}>
-                                    Upload Photo
-                                </div>
-                                <input type='file' className={styles.upload_image_button} onChange={handleUploadPic}/>
-                            </label>
-                        </form>
+                <form className={styles.login_form_container} onSubmit={handleSubmit}>
+                    {/*<div className={styles.login_icon}>*/}
+                    {/*    <div>*/}
+                    {/*        <img src={userData.profileImage || loginIcon} alt='login icons'/>*/}
+                    {/*    </div>*/}
+                    {/*    <form>*/}
+                    {/*        <label>*/}
+                    {/*            <div className={styles.upload_image}>*/}
+                    {/*                Upload Photo*/}
+                    {/*            </div>*/}
+                    {/*            <input type='file' className={styles.upload_image_button}*/}
+                    {/*                   onChange={handleUploadPic}/>*/}
+                    {/*        </label>*/}
+                    {/*    </form>*/}
+                    {/*</div>*/}
+                    <div className={styles.welcome_row}>
+                        <h1>Get Started Now</h1>
+                        <p>Enter your credentials to access your account</p>
                     </div>
-                    <form className={styles.form_container} onSubmit={handleSubmit}>
-                        <div className={styles.form_group}>
-                            <label htmlFor="name">Name</label>
-                            <input type="text" id="name" name="name" placeholder="Enter Your Name"
-                                   value={userData.name} onChange={handleOnChange} required/>
+                    <div className={styles.social_media_container_signup}>
+                        <div>
+                            <img src={google} alt={"Google"}/>
+                            Sign up with Google
                         </div>
-                        <div className={styles.form_group}>
-                            <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Enter Your Email"
-                                   value={userData.email} onChange={handleOnChange} required/>
+                        <div>
+                            <img src={apple} alt={"Apple"}/>
+                            Sign up with Apple
                         </div>
-                        <div className={styles.form_group}>
-                            <label htmlFor="password">Password</label>
-                            <div className={styles.input_password}>
-                                <input type={showPassword ? "text" : "password"} id="password" name="password"
-                                       placeholder="Enter Your Password" value={userData.password}
-                                       onChange={handleOnChange}/>
-                                <div className={styles.eye_icon} onClick={handleShowPassword}>
-                                    <span>
-                                        {showPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.form_group}>
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <div className={styles.input_password}>
-                                <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword"
-                                       name="confirmPassword"
-                                       placeholder="Enter Your Confirm Password" value={userData.confirmPassword}
-                                       onChange={handleOnChange}/>
-                                <div className={styles.eye_icon} onClick={handleShowConfirmPassword}>
-                                    <span>
-                                        {showConfirmPassword ? (<FaEyeSlash/>) : (<FaEye/>)}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" className={styles.form_button}>Sign Up</button>
-                    </form>
+                    </div>
+                    <div className={styles.horizontal_line_container}>
+                        <div className={styles.horizontal_line}></div>
+                        Or
+                        <div className={styles.horizontal_line}></div>
+                    </div>
+
+                    <div className={styles.text_field}>
+                        <Input
+                            name={"name"}
+                            type={"text"}
+                            value={name}
+                            placeholder={"Enter Your Name"}
+                            onChange={handleNameChange}
+                            onBlur={handleNameBlur}
+                        >
+                            Name:
+                        </Input>
+                        {(!nameIsValid && nameIsEdited) &&
+                            <p className={styles.error_message}>{nameErrorMessage}</p>}
+                    </div>
+
+                    <div className={styles.text_field}>
+                        <Input
+                            name={"email"}
+                            type={"email"}
+                            value={email}
+                            placeholder={"Enter Your Email"}
+                            onChange={handleEmailChange}
+                            onBlur={handleEmailBlur}
+                        >
+                            Email:
+                        </Input>
+                        <img src={emailIcon} alt="Email Icon"/>
+                        {(!emailIsValid && emailIsEdited) &&
+                            <p className={styles.error_message}>{emailErrorMessage}</p>}
+                    </div>
+
+                    <div className={styles.text_field}>
+                        <Input
+                            name={"password"}
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            placeholder={"Enter Your Password"}
+                            onChange={handlePasswordChange}
+                            onBlur={handlePasswordBlur}
+                        >
+                            Password:
+                        </Input>
+                        <img
+                            alt="Password Icon"
+                            src={showPassword ? unlock : lock}
+                            onClick={handleShowPassword}
+                            style={{cursor: "pointer"}}
+                        />
+                        {(!passwordIsValid && passwordIsEdited) &&
+                            <p className={styles.error_message}>{passwordErrorMessage}</p>}
+                    </div>
+
+                    <div className={styles.text_field}>
+                        <Input
+                            name={"confirmPassword"}
+                            type={showConfirmPassword ? "text" : "password"}
+                            value={confirmPassword}
+                            placeholder={"Confirm Your Password"}
+                            onChange={handleConfirmPasswordChange}
+                            onBlur={handleConfirmPasswordBlur}
+                        >
+                            Confirm Password:
+                        </Input>
+                        <img
+                            alt="Password Icon"
+                            src={showConfirmPassword ? unlock : lock}
+                            onClick={handleShowConfirmPassword}
+                            style={{cursor: "pointer"}}
+                        />
+                        {(!confirmPasswordIsValid && confirmPasswordIsEdited) &&
+                            <p className={styles.error_message}>{confirmPasswordErrorMessage}</p>}
+                    </div>
+
+                    <div className={styles.checkbox_field}>
+                        <input
+                            id="checkbox" type="checkbox"
+                            name="checkbox" placeholder="I agree to Terms & Privacy"
+                            required
+                        />
+                        <p>
+                            I agree to the <span>Terms and Privacy</span>
+                        </p>
+                    </div>
+                    <button type="submit" className={styles.form_button}>Sign Up</button>
                     <div className={styles.signup_container}>
                         <p>Already have an account?</p>
                         <Link to={"/login"} className={styles.signup_button}>Sign In</Link>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
     );

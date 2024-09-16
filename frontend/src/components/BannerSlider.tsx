@@ -2,18 +2,22 @@ import React, {useEffect, useState} from 'react';
 import {FaAngleRight} from "react-icons/fa6";
 import {FaAngleLeft} from "react-icons/fa6";
 
-import image1 from '../assest/banner/img1.webp'
-import image2 from '../assest/banner/img2.webp'
-import image3 from '../assest/banner/img3.jpg'
-import image4 from '../assest/banner/img4.jpg'
-import image5 from '../assest/banner/img5.webp'
+import banner1 from "../assest/bannersProjcet/banner_1.webp";
+import banner2 from "../assest/bannersProjcet/banner_2.webp";
+import banner3 from "../assest/bannersProjcet/banner_3.webp";
+import banner4 from "../assest/bannersProjcet/banner_4.webp";
+import banner5 from "../assest/bannersProjcet/banner_5.webp";
+import banner6 from "../assest/bannersProjcet/banner_6.webp";
+import banner7 from "../assest/bannersProjcet/banner_7.webp";
 
 const bannerImages = [
-    {img: image1},
-    {img: image2},
-    {img: image3},
-    {img: image4},
-    {img: image5}
+    {img: banner1},
+    {img: banner2},
+    {img: banner3},
+    {img: banner4},
+    {img: banner5},
+    {img: banner6},
+    {img: banner7}
 ];
 
 export default function BannerSlider(): React.JSX.Element {

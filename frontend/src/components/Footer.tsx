@@ -37,13 +37,13 @@ export default function Footer(): React.JSX.Element {
                     <ul>
                         <li>Address: 123 Street Name, City, England</li>
                         <li>Phone: +123 456 789</li>
-                        <li>Email: contant@tomato.com</li>
+                        <li>Email: contant@tech-market.com</li>
                     </ul>
                 </div>
             </div>
             <hr/>
             <p className={styles.footer_copyright}>
-                Copyright 2024 &copy; Tomato.com - All Right Reserved.
+                Copyright 2024 &copy; Tech-Market.com - All Right Reserved.
             </p>
         </div>
     );

@@ -37,8 +37,8 @@ function Header({onSearch}: HeaderProps): React.JSX.Element {
                 <SearchBar onSearch={handleSearch}/>
 
                 <div className={styles.header_icons_container}>
-                    <UserMenuIcon/>
                     <CartIcon/>
+                    <UserMenuIcon/>
                     <LoginButton/>
                 </div>
             </div>
