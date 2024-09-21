@@ -76,6 +76,10 @@ const SummaryApi = {
     userOrders: {
         url: `${backendDomain}/api/user-orders`,
         method: 'GET'
+    },
+    addToWishlist: {
+        url: `${backendDomain}/api/add-to-wishlist`,
+        method: 'POST'
     }
 }
 

@@ -1,18 +1,18 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import {useDispatch} from "react-redux";
-import { GrSearch } from "react-icons/gr";
+import {GrSearch} from "react-icons/gr";
 
 import styles from '../styles/SearchBar.module.css';
 
 import {AppDispatch} from "../store/store";
 import {setSearchQuery} from "../store/searchSlice";
-import { debounce } from "../utils/debounce";
+import {debounce} from "../utils/debounce";
 
 interface SearchBarProps {
     onSearch: (query: string) => void;
 }
 
-function SearchBar({ onSearch }: SearchBarProps): React.JSX.Element {
+function SearchBar({onSearch}: SearchBarProps): React.JSX.Element {
     const dispatch = useDispatch<AppDispatch>();
     const [searchQueryState, setSearchQueryState] = useState<string>("");
 
@@ -42,7 +42,7 @@ function SearchBar({ onSearch }: SearchBarProps): React.JSX.Element {
                    onChange={handleInputChange}
             />
             <div className={styles.search_bar_icon} onClick={handleSearch}>
-                <GrSearch />
+                <GrSearch/>
             </div>
         </div>
     );

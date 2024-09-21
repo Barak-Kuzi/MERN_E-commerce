@@ -14,6 +14,14 @@ const cartItemSchema = new mongoose.Schema({
     }
 });
 
+const wishlistSchema = new mongoose.Schema({
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+    }
+});
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -36,7 +44,21 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "GENERAL",
     },
+    phone: {
+        type: String,
+        default: "",
+    },
+    birthDate: {
+        type: Date,
+        default: '1970-01-01',
+    },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female', 'Unspecified'],
+        default: 'Unspecified',
+    },
     cart: [cartItemSchema],
+    wishlist: [wishlistSchema]
 }, {
     timestamps: true
 });
@@ -55,6 +77,7 @@ export interface User {
     password?: string;
     profileImage?: string;
     role?: string;
+    phone?: string;
     cart?: Product[];
     createdAt?: Date;
     updatedAt?: Date;

@@ -190,14 +190,26 @@
     width: 2.5rem;
 }
 
-.heart_icon_button img {
+.heart_icon_button:not(.in_wishlist) > svg {
     width: 1.5rem;
     height: 1.5rem;
     opacity: 50%;
 }
 
-.heart_icon_button:hover img {
+.heart_icon_button:not(.in_wishlist):hover > svg {
     opacity: 100%;
+}
+
+.in_wishlist {
+    opacity: 100%;
+    color: red;
+
+}
+
+.in_wishlist:hover > svg {
+    cursor: pointer;
+    transform: scale(1.125);
+    transition: 0.3s ease-in-out;
 }
 
 .animate {

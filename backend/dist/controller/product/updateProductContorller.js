@@ -11,7 +11,7 @@ const updateProductController = async (req, res) => {
             });
         }
         const { _id, ...resBody } = req.body;
-        const updatedProduct = await productModel.findByIdAndUpdate(_id, resBody);
+        const updatedProduct = await productModel.findByIdAndUpdate(_id, resBody, { new: true });
         res.status(200).json({
             data: updatedProduct,
             message: 'Product updated successfully',

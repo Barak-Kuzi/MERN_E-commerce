@@ -1,0 +1,26 @@
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border: 12px solid var(--bg);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 0.7s ease infinite;
+    transition: opacity 0.75s, visibility 0.75s;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

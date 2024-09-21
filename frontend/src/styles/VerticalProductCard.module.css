@@ -150,3 +150,25 @@
 .icon_button:hover img {
     opacity: 100%;
 }
+
+.icon_button:not(.in_wishlist) > svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    opacity: 50%;
+}
+
+.icon_button:not(.in_wishlist):hover > svg {
+    opacity: 100%;
+}
+
+.in_wishlist {
+    opacity: 100%;
+    color: red;
+
+}
+
+.in_wishlist:hover > svg {
+    cursor: pointer;
+    transform: scale(1.125);
+    transition: 0.3s ease-in-out;
+}

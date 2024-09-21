@@ -13,6 +13,7 @@ interface UserState {
     userConnected: boolean;
     cart: CartState;
     orders: Order[];
+    wishlist: Product[];
 }
 
 const initialState: UserState = {
@@ -25,6 +26,7 @@ const initialState: UserState = {
         total: 0,
     },
     orders: [],
+    wishlist: [],
 };
 
 export const userSlice = createSlice({
@@ -39,7 +41,7 @@ export const userSlice = createSlice({
         },
         setUserCart: (state, action) => {
             const products = action.payload;
-            const subtotal: number = products.reduce((acc:number, item: Product) => acc + (item.productSellingPrice as number * item.quantity!), 0);
+            const subtotal: number = products.reduce((acc: number, item: Product) => acc + (item.productSellingPrice as number * item.quantity!), 0);
             const deliveryFee: number = 10;
             const total: number = subtotal + deliveryFee;
 
@@ -52,10 +54,13 @@ export const userSlice = createSlice({
         },
         setUserOrders: (state, action) => {
             state.orders = action.payload;
+        },
+        setUserWishlist: (state, action) => {
+            state.wishlist = action.payload;
         }
     },
 });
 
-export const { setUserDetails, setUserConnection, setUserCart, setUserOrders } = userSlice.actions;
+export const {setUserDetails, setUserConnection, setUserCart, setUserOrders, setUserWishlist} = userSlice.actions;
 
 export default userSlice.reducer;

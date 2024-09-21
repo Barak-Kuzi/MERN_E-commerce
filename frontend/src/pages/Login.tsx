@@ -13,13 +13,14 @@ import unlock from "../assest/unlock_icon.svg";
 
 import {AppDispatch} from "../store/store";
 import SummaryApi from "../common";
-import {setUserCart, setUserConnection, setUserDetails, setUserOrders} from "../store/userSlice";
+import {setUserCart, setUserConnection, setUserDetails, setUserOrders, setUserWishlist} from "../store/userSlice";
 import {CustomResponse} from "../utils/CustomResponse";
 import {fetchCartProducts} from "../utils/fetchCartProducts";
 import fetchUserOrders from "../utils/fetchUserOrders";
 import Input from "../components/Input";
 import useInput from "../hooks/useInput";
 import {validateEmail, validatePassword} from "../utils/validation";
+import {fetchProducts} from "../utils/fetchProducts";
 
 function Login() {
     const navigate = useNavigate();
@@ -77,10 +78,13 @@ function Login() {
                 if (secondResData.success) {
                     dispatch(setUserDetails(secondResData.data));
                     dispatch(setUserConnection(true));
-                    const detailedCartProducts = await fetchCartProducts(secondResData.data.cart);
+                    // const detailedCartProducts = await fetchCartProducts(secondResData.data.cart);
+                    const detailedCartProducts = await fetchProducts(secondResData.data.cart);
                     dispatch(setUserCart(detailedCartProducts));
                     const userOrders = await fetchUserOrders();
                     dispatch(setUserOrders(userOrders.data));
+                    const userWishlist = await fetchProducts(secondResData.data.wishlist);
+                    dispatch(setUserWishlist(userWishlist));
 
                     toast.success('Login successful');
                     navigate('/');

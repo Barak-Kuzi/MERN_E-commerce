@@ -1,7 +1,7 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
-import {FaEye, FaEyeSlash} from "react-icons/fa";
+// import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 import styles from '../styles/Login.module.css';
 import emailIcon from "../assest/email_icon.svg";
@@ -10,31 +10,30 @@ import apple from "../assest/apple.png";
 import lock from "../assest/lock_icon.svg";
 import unlock from "../assest/unlock_icon.svg";
 
-import imageToBase64 from "../utils/imageToBase64";
 import SummaryApi from "../common";
 import Input from "../components/Input";
 import useInput from "../hooks/useInput";
 import {validateName, validateEmail, validatePassword, validateConfirmPassword} from "../utils/validation";
 
-interface data {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    profileImage?: string;
-}
+// interface data {
+//     name: string;
+//     email: string;
+//     password: string;
+//     confirmPassword: string;
+//     profileImage?: string;
+// }
 
 export default function SignUp(): React.JSX.Element {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-    const [userData, setUserData] = useState<data>({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        profileImage: ""
-    });
+    // const [userData, setUserData] = useState<data>({
+    //     name: "",
+    //     email: "",
+    //     password: "",
+    //     confirmPassword: "",
+    //     profileImage: ""
+    // });
 
     // const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     //     const {name, value} = e.target;
@@ -81,7 +80,7 @@ export default function SignUp(): React.JSX.Element {
         errorMessage: confirmPasswordErrorMessage,
         handleInputChange: handleConfirmPasswordChange,
         handleInputBlur: handleConfirmPasswordBlur
-    } = useInput({ initialValue: '', validationFunction: (value) => validateConfirmPassword(password, value) });
+    } = useInput({initialValue: '', validationFunction: (value) => validateConfirmPassword(password, value)});
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -94,7 +93,7 @@ export default function SignUp(): React.JSX.Element {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (userData.password === userData.confirmPassword) {
+        if (password === confirmPassword) {
             const dataResponse = await fetch(SummaryApi.signUp.url, {
                 method: SummaryApi.signUp.method,
                 headers: {
@@ -124,38 +123,10 @@ export default function SignUp(): React.JSX.Element {
             toast.error("Password and Confirm Password should be same");
     }
 
-    // move to user profile
-    const handleUploadPic = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files && e.target.files[0];
-        if (file) {
-            const imagePic = await imageToBase64(file);
-            setUserData((prevState) => {
-                return {
-                    ...prevState,
-                    profileImage: imagePic as string
-                }
-            });
-        }
-    };
-
     return (
         <section id="sign_up">
             <div className={styles.login_page_container}>
                 <form className={styles.login_form_container} onSubmit={handleSubmit}>
-                    {/*<div className={styles.login_icon}>*/}
-                    {/*    <div>*/}
-                    {/*        <img src={userData.profileImage || loginIcon} alt='login icons'/>*/}
-                    {/*    </div>*/}
-                    {/*    <form>*/}
-                    {/*        <label>*/}
-                    {/*            <div className={styles.upload_image}>*/}
-                    {/*                Upload Photo*/}
-                    {/*            </div>*/}
-                    {/*            <input type='file' className={styles.upload_image_button}*/}
-                    {/*                   onChange={handleUploadPic}/>*/}
-                    {/*        </label>*/}
-                    {/*    </form>*/}
-                    {/*</div>*/}
                     <div className={styles.welcome_row}>
                         <h1>Get Started Now</h1>
                         <p>Enter your credentials to access your account</p>

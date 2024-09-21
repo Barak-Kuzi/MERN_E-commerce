@@ -13,8 +13,12 @@ import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
 import PlaceOrder from "../pages/PlaceOrder";
 import SearchProduct from "../pages/SearchProduct";
-import UserOrders from "../pages/UserOrders";
 import Verify from "../pages/Verify";
+import ProtectedRoute from "../components/ProtectedRoute";
+import UserPanel from "../pages/UserPanel";
+import UserProfile from "../pages/UserProfile";
+import UserOrders from "../pages/UserOrders";
+import UserWishlist from "../pages/UserWishlist";
 
 const router = createBrowserRouter([
     {
@@ -58,12 +62,30 @@ const router = createBrowserRouter([
                 element: <Verify/>
             },
             {
-                path: "user-orders", // Maybe this should be changed
-                element: <UserOrders/>
-            },
-            {
                 path: "search",
                 element: <SearchProduct/>
+            },
+            {
+                path: "user-panel",
+                element: (
+                    <ProtectedRoute pathProtection={"/login"}>
+                        <UserPanel/>
+                    </ProtectedRoute>
+                ),
+                children: [
+                    {
+                        path: "user-profile",
+                        element: <UserProfile/>
+                    },
+                    {
+                        path: "user-orders",
+                        element: <UserOrders/>
+                    },
+                    {
+                        path: "user-wishlist",
+                        element: <UserWishlist/>
+                    },
+                ]
             },
             {
                 path: "admin-panel",

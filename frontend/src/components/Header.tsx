@@ -9,18 +9,19 @@ import CartIcon from "./CartIcon";
 import UserMenuIcon from "./UserMenuIcon";
 import SearchBar from "./SearchBar";
 
-interface HeaderProps {
-    onSearch?: (query: string) => void;
-}
+// interface HeaderProps {
+//     onSearch?: (query: string) => void;
+// }
 
-function Header({onSearch}: HeaderProps): React.JSX.Element {
+// function Header({onSearch}: HeaderProps): React.JSX.Element {
+function Header(): React.JSX.Element {
     const navigate = useNavigate();
 
     const handleSearch = (query: string) => {
         navigate(`/search?query=${query}`);
-        if (onSearch) {
-            onSearch(query);
-        }
+        // if (onSearch) {
+        //     onSearch(query);
+        // }
     };
 
     console.log('Header component re-rendered');
@@ -30,7 +31,7 @@ function Header({onSearch}: HeaderProps): React.JSX.Element {
             <div className={styles.header_inner_container}>
                 <div>
                     <Link to={'/'}>
-                        <img src={logo} alt="logo" className={styles.logo} />
+                        <img src={logo} alt="logo" className={styles.logo}/>
                     </Link>
                 </div>
 

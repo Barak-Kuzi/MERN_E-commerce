@@ -4,7 +4,12 @@ export interface User {
     email: string;
     role: string;
     profileImage?: string;
+    phone?: string;
+    gender?: string;
+    birthDate?: Date;
     createdAt?: Date;
+    firstName?: string;
+    lastName?: string;
 }
 
 export interface Product {
@@ -17,6 +22,7 @@ export interface Product {
     productImages: string[];
     productBrand: string;
     quantity?: number;
+    lovedProduct?: boolean;
 }
 
 interface ProductsOrder {
@@ -34,8 +40,7 @@ export interface Order {
     _id: string;
 }
 
-export interface Cart {
+export interface Wishlist {
     _id: string;
-    productId: string;
-    quantity: number;
+    products: Product[];
 }

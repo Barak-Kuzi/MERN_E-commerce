@@ -34,14 +34,14 @@
     gap: 0.25rem;
 }
 
-nav > ul {
+.navigation_list {
     list-style-type: none;
     padding: 0;
     margin: 0;
     gap: 0.25rem;
 }
 
-nav > ul > li {
+.navigation_list li {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -49,14 +49,13 @@ nav > ul > li {
     gap: 0.25rem;
 }
 
-nav > ul > li > svg {
+.navigation_list li > svg {
     stroke: var(--text-gray);
     height: 1.75rem;
     width: 1.75rem;
 }
 
-
-nav > ul > li > a {
+.navigation_list li > a {
     display: flex;
     flex-direction: row;
     height: 3rem;
@@ -72,16 +71,16 @@ nav > ul > li > a {
     transition: all 0.2s ease-in-out;
 }
 
-nav > ul > li:hover{
+.navigation_list li:hover {
     background: var(--hover);
     color: white;
 }
 
-nav > ul > li > a:hover {
+.navigation_list li > a:hover {
     color: white;
 }
 
-nav > ul > li:hover > svg {
+.navigation_list li:hover > svg {
     stroke: white;
 }
 

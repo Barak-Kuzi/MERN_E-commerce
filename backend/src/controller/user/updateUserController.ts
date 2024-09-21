@@ -6,17 +6,34 @@ async function updateUserController(req: CustomRequest, res: CustomResponse) {
 
         const sessionUser = req.user?.id;
 
-        const {id, role, name} = req.body;
-        console.log(id, role, name)
-
-        const payload = {
-            ...( name && { name : name}),
-            ...( role && { role : role}),
+        if (!sessionUser) {
+            return res.json({
+                message: "User not found",
+                error: true,
+                success: false
+            });
         }
 
-        const currentUser = await userModel.findById(sessionUser);
+        const {role, name, firstName, lastName, email, phone, birthDate, gender, profileImage} = req.body;
 
-        const updatedUser = await userModel.findByIdAndUpdate(id, payload);
+        let fullName: string = "";
+        if (firstName && lastName)
+            fullName = `${firstName} ${lastName}`;
+        else
+            fullName = name;
+
+        const payload = {
+            ...(name && {name: fullName}),
+            ...((firstName && lastName) && {name: fullName}),
+            ...(role && {role: role}),
+            ...(email && {email}),
+            ...(phone && {phone}),
+            ...(birthDate && {birthDate}),
+            ...(gender && {gender}),
+            ...(profileImage && ({profileImage}))
+        }
+
+        const updatedUser = await userModel.findByIdAndUpdate(sessionUser, payload, {new: true});
 
         res.status(200).json({
             message: "User updated successfully",

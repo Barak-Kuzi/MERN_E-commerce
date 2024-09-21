@@ -47,7 +47,7 @@ export default function BannerSlider(): React.JSX.Element {
             } else {
                 setCurrentImage(0);
             }
-        }, 5000);
+        }, 4000);
 
         return () => clearInterval(interval)
     }, [currentImage])

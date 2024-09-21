@@ -2,14 +2,30 @@ import userModel from "../../models/userModel.js";
 async function updateUserController(req, res) {
     try {
         const sessionUser = req.user?.id;
-        const { id, role, name } = req.body;
-        console.log(id, role, name);
+        if (!sessionUser) {
+            return res.json({
+                message: "User not found",
+                error: true,
+                success: false
+            });
+        }
+        const { role, name, firstName, lastName, email, phone, birthDate, gender, profileImage } = req.body;
+        let fullName = "";
+        if (firstName && lastName)
+            fullName = `${firstName} ${lastName}`;
+        else
+            fullName = name;
         const payload = {
-            ...(name && { name: name }),
+            ...(name && { name: fullName }),
+            ...((firstName && lastName) && { name: fullName }),
             ...(role && { role: role }),
+            ...(email && { email }),
+            ...(phone && { phone }),
+            ...(birthDate && { birthDate }),
+            ...(gender && { gender }),
+            ...(profileImage && ({ profileImage }))
         };
-        const currentUser = await userModel.findById(sessionUser);
-        const updatedUser = await userModel.findByIdAndUpdate(id, payload);
+        const updatedUser = await userModel.findByIdAndUpdate(sessionUser, payload, { new: true });
         res.status(200).json({
             message: "User updated successfully",
             data: updatedUser,

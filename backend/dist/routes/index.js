@@ -17,6 +17,7 @@ import deleteFromCartController from "../controller/user/deleteFromCartControlle
 import searchProductController from "../controller/product/searchProductController.js";
 import getFilteredProductsController from "../controller/product/getFilteredProductsController.js";
 import { placeOrder, verifyOrder, fetchOrders } from "../controller/order/orderController.js";
+import addToWishlistController from "../controller/user/addToWishlistController.js";
 const router = Router();
 // User routes
 router.post("/signup", userSignUpController);
@@ -35,6 +36,7 @@ router.get('/products-by-category', getProductsByCategoryController);
 router.get('/product-details/:productId', getProductByIdController);
 router.get('/search', searchProductController);
 router.post('/filter-products', getFilteredProductsController);
+router.post('/add-to-wishlist', authToken, addToWishlistController);
 // Cart routes
 router.post('/add-to-cart', authToken, addToCartController);
 router.post('/delete-product-from-cart', authToken, deleteFromCartController);
