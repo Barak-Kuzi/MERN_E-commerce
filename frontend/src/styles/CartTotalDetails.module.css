@@ -5,14 +5,32 @@
     gap: 20px;
 }
 
-.cart_total h2 {
+.cart_total_title {
     margin: 0;
+}
+
+.place_order_title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
 }
 
 .cart_total_details {
     display: flex;
     justify-content: space-between;
     color: #555;
+}
+
+.place_order_details {
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+}
+
+.place_order_details p {
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.03rem;
 }
 
 .cart_total hr {

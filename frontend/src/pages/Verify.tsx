@@ -30,7 +30,7 @@ function Verify(): React.JSX.Element {
         if (resData.success) {
             dispatch(setUserCart([]));
             dispatch(setUserConnection(true));
-            navigate('/user-orders');
+            navigate('/user-panel/user-orders');
         }
         if (resData.error) {
             console.error(resData.message);

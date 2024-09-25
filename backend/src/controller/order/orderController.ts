@@ -13,18 +13,20 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const placeOrder = async (req: CustomRequest, res: CustomResponse) => {
     try {
         const userId = req.user?.id;
-        const {products, amount, address} = req.body;
+        const {products, amount, discount, couponCode, address} = req.body;
 
         const newOrder = new orderModel({
             userId,
             products,
             amount,
+            discount,
+            couponCode,
             address
         });
 
         await newOrder.save();
 
-        await userModel.findByIdAndUpdate(userId, {cart: []});
+        await userModel.findByIdAndUpdate(userId, {cart: [], address: address});
 
         const line_items = products.map((product: Product) => (
             {
@@ -54,6 +56,7 @@ const placeOrder = async (req: CustomRequest, res: CustomResponse) => {
         const session = await stripe.checkout.sessions.create({
             line_items: line_items,
             mode: 'payment',
+            allow_promotion_codes: true,
             success_url: `${process.env.FRONTEND_URL}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url: `${process.env.FRONTEND_URL}/verify?success=false&orderId=${newOrder._id}`
         });

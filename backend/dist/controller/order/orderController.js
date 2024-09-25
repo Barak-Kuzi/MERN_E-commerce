@@ -7,15 +7,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const placeOrder = async (req, res) => {
     try {
         const userId = req.user?.id;
-        const { products, amount, address } = req.body;
+        const { products, amount, discount, couponCode, address } = req.body;
         const newOrder = new orderModel({
             userId,
             products,
             amount,
+            discount,
+            couponCode,
             address
         });
         await newOrder.save();
-        await userModel.findByIdAndUpdate(userId, { cart: [] });
+        await userModel.findByIdAndUpdate(userId, { cart: [], address: address });
         const line_items = products.map((product) => ({
             price_data: {
                 currency: 'usd',
@@ -40,6 +42,7 @@ const placeOrder = async (req, res) => {
         const session = await stripe.checkout.sessions.create({
             line_items: line_items,
             mode: 'payment',
+            allow_promotion_codes: true,
             success_url: `${process.env.FRONTEND_URL}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url: `${process.env.FRONTEND_URL}/verify?success=false&orderId=${newOrder._id}`
         });

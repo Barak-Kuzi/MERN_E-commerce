@@ -1,5 +1,5 @@
 .page_container {
-    margin: auto;
+    /*margin: auto;*/
     padding: 1rem;
 }
 
@@ -7,6 +7,7 @@
     display: grid;
     grid-template-columns: 200px 1fr;
     gap: 1rem;
+    /*border: #48D461 1px solid;*/
 }
 
 .filter_menu {
@@ -14,6 +15,7 @@
     padding: 0.5rem;
     width: 100%;
     background-color: #ffffff;
+    /*border: #DC2626 1px solid;*/
 }
 
 .filter_menu::-webkit-scrollbar {

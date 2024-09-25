@@ -24,7 +24,7 @@ export default function CategoryList(): React.JSX.Element {
                 {
                     productCategories.map((category, index) => {
                         return (
-                            <Link to={`/product-category?category=${category.name}`} className="category_link"
+                            <Link to={`/product-category?category=${category.name.toLowerCase()}`} className="category_link"
                                   key={category.name}>
                                 <div key={index} className="category_image">
                                     <img src={category.img} alt="category list"/>

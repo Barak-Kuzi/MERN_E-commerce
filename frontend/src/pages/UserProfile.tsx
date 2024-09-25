@@ -10,7 +10,6 @@ import {RootState} from "../store/store";
 import useInput from "../hooks/useInput";
 import SummaryApi from "../common";
 import {CustomResponse} from "../utils/CustomResponse";
-import imageToBase64 from "../utils/imageToBase64";
 import uploadImage from "../utils/uploadImage";
 import Loader from "../components/Loader";
 
@@ -65,8 +64,6 @@ function UserProfile() {
                 toast.error(`File size should not exceed ${maxSizeInMB}MB`);
                 return;
             }
-            // const base64 = await imageToBase64(file);
-            // setProfileImage(base64);
 
             setIsLoading(true);
             try {
@@ -124,7 +121,7 @@ function UserProfile() {
     return (
         <div className={styles.user_profile_page}>
             <div className={styles.user_profile_container}>
-                <h1>User Profile</h1>
+                <h1>My Profile</h1>
                 <h3>Personal Information</h3>
                 <hr className={styles.horizontal_line}/>
                 <form onSubmit={handleSubmit}>

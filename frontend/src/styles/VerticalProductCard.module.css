@@ -15,7 +15,24 @@
     display: grid;
     grid-template-columns: repeat(4, 21rem);
     row-gap: 4rem;
+}
 
+@media (max-width: 1580px) {
+    .product_card_inner_container {
+        grid-template-columns: repeat(3, 21rem);
+    }
+}
+
+@media (max-width: 1250px) {
+    .product_card_inner_container {
+        grid-template-columns: repeat(2, 21rem);
+    }
+}
+
+@media (max-width: 910px) {
+    .product_card_inner_container {
+        grid-template-columns: repeat(1, 21rem);
+    }
 }
 
 .product_card {

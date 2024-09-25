@@ -1,27 +1,30 @@
 import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import styles from '../styles/PlaceOrder.module.css';
-import CartTotalDetails from "../components/CartTotalDetails";
-import {useSelector} from "react-redux";
-import {RootState} from "../store/store";
+
 import SummaryApi from "../common";
+import {AppDispatch, RootState} from "../store/store";
 import {CustomResponse} from "../utils/CustomResponse";
+import CartTotalDetails from "../components/CartTotalDetails";
+import DeliveryAddressForm from "../components/DeliveryAddressForm";
+import {setCouponCode} from "../store/userSlice";
 
 function PlaceOrder(): React.JSX.Element {
-    const {products: userCartProducts, total} = useSelector((state: RootState) => state.user?.cart);
-
-    console.log(userCartProducts);
+    const dispatch = useDispatch<AppDispatch>();
+    const {products: userCartProducts, total, discount, couponCode} = useSelector((state: RootState) => state.user?.cart);
+    const userAddress = useSelector((state: RootState) => state.user?.address);
 
     const [data, setData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        street: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        country: '',
-        phone: ''
+        firstName: userAddress?.firstName || '',
+        lastName: userAddress?.lastName || '',
+        email: userAddress?.email || '',
+        street: userAddress?.street || '',
+        city: userAddress?.city || '',
+        state: userAddress?.state || '',
+        zipCode: userAddress?.zipCode || '',
+        country: userAddress?.country || '',
+        phone: userAddress?.phone || '',
     });
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +43,8 @@ function PlaceOrder(): React.JSX.Element {
         const orderData = {
             products: userCartProducts,
             amount: total,
+            discount: discount,
+            couponCode: couponCode,
             address: data,
         }
 
@@ -53,6 +58,7 @@ function PlaceOrder(): React.JSX.Element {
         });
         const resData: CustomResponse = await response.json();
         if (resData.success) {
+            dispatch(setCouponCode(''));
             const session_url = resData.data;
             window.location.replace(session_url);
         }
@@ -66,78 +72,10 @@ function PlaceOrder(): React.JSX.Element {
     return (
         <form className={styles.place_order_page} onSubmit={handleOnSubmit}>
             <div className={styles.place_order_left}>
-                <p className={styles.title}>Delivery Information</p>
-                <div className={styles.multi_fields}>
-                    <input type="text"
-                           placeholder="First name"
-                           name="firstName"
-                           value={data.firstName}
-                           onChange={handleOnChange}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Last name"
-                        name="lastName"
-                        value={data.lastName}
-                        onChange={handleOnChange}
-                    />
-                </div>
-                <input
-                    type="email"
-                    placeholder="Email address"
-                    name="email"
-                    value={data.email}
-                    onChange={handleOnChange}
-                />
-                <input
-                    type="text"
-                    placeholder="Street"
-                    name="street"
-                    value={data.street}
-                    onChange={handleOnChange}
-                />
-                <div className={styles.multi_fields}>
-                    <input
-                        type="text"
-                        placeholder="City"
-                        name="city"
-                        value={data.city}
-                        onChange={handleOnChange}
-                    />
-                    <input
-                        type="text"
-                        placeholder="State"
-                        name="state"
-                        value={data.state}
-                        onChange={handleOnChange}
-                    />
-                </div>
-                <div className={styles.multi_fields}>
-                    <input
-                        type="text"
-                        placeholder="Zip code"
-                        name="zipCode"
-                        value={data.zipCode}
-                        onChange={handleOnChange}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Country"
-                        name="country"
-                        value={data.country}
-                        onChange={handleOnChange}
-                    />
-                </div>
-                <input
-                    type="text"
-                    placeholder="phone"
-                    name="phone"
-                    value={data.phone}
-                    onChange={handleOnChange}
-                />
+                <DeliveryAddressForm userAddress={data} handleOnChange={handleOnChange}/>
             </div>
             <div className={styles.place_order_right}>
-                <CartTotalDetails type={'submit'} buttonText='Procceed to Payment'/>
+                <CartTotalDetails type={'submit'} buttonText='Procceed to Payment' isPlaceOrder={true}/>
             </div>
         </form>
     );

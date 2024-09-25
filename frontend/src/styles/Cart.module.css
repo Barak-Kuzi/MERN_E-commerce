@@ -1,5 +1,6 @@
 .cart_page_container {
     padding: 2rem 4rem 4rem 4rem;
+    font-family: Mulish, sans-serif;
 }
 
 .cart_items_title {
@@ -7,7 +8,7 @@
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
     align-items: center;
     color: black;
-    font-weight: 500;
+    font-weight: 600;
     font-size: max(1vw, 18px);
 }
 

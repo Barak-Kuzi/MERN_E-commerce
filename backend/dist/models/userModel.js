@@ -18,6 +18,44 @@ const wishlistSchema = new mongoose.Schema({
         required: true
     }
 });
+const addressSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    street: {
+        type: String,
+        required: true,
+    },
+    city: {
+        type: String,
+        required: true,
+    },
+    state: {
+        type: String,
+        required: true,
+    },
+    zipCode: {
+        type: String,
+        required: true,
+    },
+    country: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    }
+});
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -54,11 +92,10 @@ const userSchema = new mongoose.Schema({
         default: 'Unspecified',
     },
     cart: [cartItemSchema],
-    wishlist: [wishlistSchema]
+    wishlist: [wishlistSchema],
+    address: addressSchema
 }, {
     timestamps: true
 });
-// this line guarantees that a specific product can appear only once in a user's cart, preventing duplication.
-// userSchema.index({ 'cart.productId': 1, _id: 1 }, { unique: true });
 const userModel = mongoose.model("user", userSchema);
 export default userModel;

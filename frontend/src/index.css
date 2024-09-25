@@ -7,6 +7,8 @@
     --border: #3C3C3E;
     --error: #E3452F;
     --bg: #373739;
+    --disabled-bg: #d0d0d0;
+    --disabled-text: #ffffff;
 
     /* Colors of Login */
     --primary: #4978F0;

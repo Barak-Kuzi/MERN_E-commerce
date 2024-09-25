@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+ import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
+ // import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import styles from '../styles/Login.module.css';
 import google from "../assest/google.png";
@@ -13,9 +14,15 @@ import unlock from "../assest/unlock_icon.svg";
 
 import {AppDispatch} from "../store/store";
 import SummaryApi from "../common";
-import {setUserCart, setUserConnection, setUserDetails, setUserOrders, setUserWishlist} from "../store/userSlice";
+import {
+    setUserAddress,
+    setUserCart,
+    setUserConnection,
+    setUserDetails,
+    setUserOrders,
+    setUserWishlist
+} from "../store/userSlice";
 import {CustomResponse} from "../utils/CustomResponse";
-import {fetchCartProducts} from "../utils/fetchCartProducts";
 import fetchUserOrders from "../utils/fetchUserOrders";
 import Input from "../components/Input";
 import useInput from "../hooks/useInput";
@@ -78,14 +85,13 @@ function Login() {
                 if (secondResData.success) {
                     dispatch(setUserDetails(secondResData.data));
                     dispatch(setUserConnection(true));
-                    // const detailedCartProducts = await fetchCartProducts(secondResData.data.cart);
                     const detailedCartProducts = await fetchProducts(secondResData.data.cart);
                     dispatch(setUserCart(detailedCartProducts));
                     const userOrders = await fetchUserOrders();
                     dispatch(setUserOrders(userOrders.data));
                     const userWishlist = await fetchProducts(secondResData.data.wishlist);
                     dispatch(setUserWishlist(userWishlist));
-
+                    dispatch(setUserAddress(secondResData.data.address));
                     toast.success('Login successful');
                     navigate('/');
                 }

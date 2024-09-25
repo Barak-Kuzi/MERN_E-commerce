@@ -19,6 +19,8 @@ import UserPanel from "../pages/UserPanel";
 import UserProfile from "../pages/UserProfile";
 import UserOrders from "../pages/UserOrders";
 import UserWishlist from "../pages/UserWishlist";
+import UserSettings from "../pages/UserSettings";
+import UserDeliveryAddress from "../pages/UserDeliveryAddress";
 
 const router = createBrowserRouter([
     {
@@ -84,6 +86,14 @@ const router = createBrowserRouter([
                     {
                         path: "user-wishlist",
                         element: <UserWishlist/>
+                    },
+                    {
+                        path: "user-address",
+                        element: <UserDeliveryAddress/>
+                    },
+                    {
+                        path: "user-settings",
+                        element: <UserSettings/>
                     },
                 ]
             },

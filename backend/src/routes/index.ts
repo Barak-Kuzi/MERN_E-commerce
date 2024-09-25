@@ -19,6 +19,7 @@ import searchProductController from "../controller/product/searchProductControll
 import getFilteredProductsController from "../controller/product/getFilteredProductsController.js";
 import {placeOrder, verifyOrder, fetchOrders} from "../controller/order/orderController.js";
 import addToWishlistController from "../controller/user/addToWishlistController.js";
+import changePasswordController from "../controller/user/changePasswordController.js";
 
 const router = Router();
 
@@ -26,6 +27,7 @@ const router = Router();
 router.post("/signup", userSignUpController);
 router.post("/signin", userSignInController);
 router.get('/user-details', authToken, userDetailsController);
+router.post('/change-password', authToken, changePasswordController);
 router.get('/userLogout', userLogoutController);
 
 // Admin routes

@@ -227,7 +227,7 @@
 }
 
 .error_message {
-    color: #DC2626;
+    color: var(--error);
     font-size: 0.9rem;
     margin: 0.5rem 0 0 0.5rem;
 }

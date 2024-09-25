@@ -9,9 +9,12 @@ function UserPanel(): React.JSX.Element {
     return (
         <div className={styles.user_panel_page}>
             <aside className={styles.user_panel_sidebar}>
+                <span>User Panel</span>
                 <nav>
                     <ul className={styles.navigation_list}>
+                        <hr className={styles.horizontal_line}/>
                         <li className={location.pathname === "/user-panel/user-profile" ? `${styles.activeLink} ${styles.navigation_option}` : styles.navigation_option}>
+                            <div className={styles.activeStyle}></div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none"
                                  stroke="currentColor" strokeWidth="2" strokeLinecap="round"
@@ -25,7 +28,10 @@ function UserPanel(): React.JSX.Element {
                             <Link to={"user-profile"}>My Profile</Link>
                         </li>
 
+                        <hr className={styles.horizontal_line}/>
+
                         <li className={location.pathname === "/user-panel/user-wishlist" ? `${styles.activeLink} ${styles.navigation_option}` : styles.navigation_option}>
+                            <div className={styles.activeStyle}></div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 25"
                                  fill="none">
                                 <mask id="mask0_2_7" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse"
@@ -43,7 +49,10 @@ function UserPanel(): React.JSX.Element {
                             <Link to={"user-wishlist"}>My Wishlist</Link>
                         </li>
 
+                        <hr className={styles.horizontal_line}/>
+
                         <li className={location.pathname === "/user-panel/user-orders" ? `${styles.activeLink} ${styles.navigation_option}` : styles.navigation_option}>
+                            <div className={styles.activeStyle}></div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none">
                                 <mask id="mask0_6_17" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse"
@@ -59,6 +68,46 @@ function UserPanel(): React.JSX.Element {
                                 </g>
                             </svg>
                             <Link to={"user-orders"}>My Orders</Link>
+                        </li>
+
+                        <hr className={styles.horizontal_line}/>
+
+                        <li className={location.pathname === "/user-panel/user-address" ? `${styles.activeLink} ${styles.navigation_option}` : styles.navigation_option}>
+                            <div className={styles.activeStyle}></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" strokeWidth="1.25" strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 className="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                <mask id="mask0_18_41" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="0"
+                                      y="0"
+                                      width="24" height="24">
+                                    <rect x="0.5" y="0.5" width="23" height="23" fill="white" stroke="black"/>
+                                </mask>
+                                <g mask="url(#mask0_18_41)">
+                                    <path
+                                        d="M5.5 19V19.5H6H9H9.5V19V13.5H14.5V19V19.5H15H18H18.5V19V10V9.75L18.3 9.6L12.3 5.1L12 4.875L11.7 5.1L5.7 9.6L5.5 9.75V10V19ZM19.5 9.25V20.5H13.5V15V14.5H13H11H10.5V15V20.5H4.5V9.25L12 3.625L19.5 9.25Z"
+                                    />
+                                </g>
+                            </svg>
+                            <Link to={"user-address"}>My Address</Link>
+                        </li>
+
+                        <hr className={styles.horizontal_line}/>
+
+                        <li className={location.pathname === "/user-panel/user-settings" ? `${styles.activeLink} ${styles.navigation_option}` : styles.navigation_option}>
+                            <div className={styles.activeStyle}></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 className="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path
+                                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>
+                                <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+                            </svg>
+                            <Link to={"user-settings"}>User Settings</Link>
                         </li>
                     </ul>
                 </nav>

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {MdClear} from "react-icons/md";
@@ -8,14 +8,17 @@ import styles from '../styles/Cart.module.css';
 import useDeleteProductFromCart from "../hooks/useDeleteFromCart";
 import {Product} from "../models";
 import CartTotalDetails from "../components/CartTotalDetails";
-import {setUserCart} from "../store/userSlice";
+import {setCouponCode, setDiscount, setUserCart} from "../store/userSlice";
 import {AppDispatch, RootState} from "../store/store";
 
 function Cart(): React.JSX.Element {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const products = useSelector((state: RootState) => state.user?.cart.products);
+    const {subtotal} = useSelector((state: RootState) => state.user?.cart);
     const {deleteProductFromCart, isLoading: isDeleting, error} = useDeleteProductFromCart();
+    const [promoCode, setPromoCode] = useState<string>('');
+    const [couponApplied, setCouponApplied] = useState<boolean>(false);
 
     const handleRemoveProduct = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
         try {
@@ -31,6 +34,42 @@ function Cart(): React.JSX.Element {
     const handleCheckout = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         navigate('/place-order');
+    }
+
+    const handleOnChangePromoCode = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const code = event.target.value;
+        setPromoCode(code);
+    }
+
+    const handleApplyPromoCode = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        let discount: number = 0;
+        switch (promoCode) {
+            case 'save10':
+                discount = 0.1;
+                break;
+            case 'save20':
+                discount = 0.2;
+                break;
+            case 'save30':
+                discount = 0.3;
+                break;
+            case 'save40':
+                discount = 0.4;
+                break;
+            case 'SAVE50':
+                discount = 0.5;
+                break;
+            default:
+                break;
+        }
+        if (discount > 0) {
+            let updatedSubtotal: string = parseFloat(String((subtotal * discount))).toFixed(2);
+            dispatch(setDiscount(updatedSubtotal));
+            dispatch(setCouponCode(promoCode));
+            setCouponApplied(true);
+        }
     }
 
     console.log('Cart component rendered');
@@ -75,8 +114,14 @@ function Cart(): React.JSX.Element {
                     <div>
                         <p>If you have a promo code, Enter it here</p>
                         <div className={styles.promo_code_input}>
-                            <input type="text" placeholder="Enter Promo Code"/>
-                            <button>Apply</button>
+                            <input
+                                type="text"
+                                placeholder="Enter Promo Code"
+                                name={'promoCode'}
+                                value={promoCode}
+                                onChange={handleOnChangePromoCode}
+                            />
+                            <button onClick={handleApplyPromoCode} disabled={couponApplied}>Apply</button>
                         </div>
                     </div>
                 </div>

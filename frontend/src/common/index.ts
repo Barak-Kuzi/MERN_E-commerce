@@ -80,6 +80,10 @@ const SummaryApi = {
     addToWishlist: {
         url: `${backendDomain}/api/add-to-wishlist`,
         method: 'POST'
+    },
+    changePassword: {
+        url: `${backendDomain}/api/change-password`,
+        method: 'POST'
     }
 }
 

@@ -1,0 +1,13 @@
+.form_container {
+    width: 100%;
+    max-width: 23rem;
+    padding: 0.5rem 2rem 1.75rem 2.25rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 6px 26px 0;
+}
+
+.form_user_settings {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}

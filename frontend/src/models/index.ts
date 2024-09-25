@@ -25,22 +25,21 @@ export interface Product {
     lovedProduct?: boolean;
 }
 
-interface ProductsOrder {
-    productName: string;
-    quantity: number;
-    productPrice: number;
-    productImage: string;
-}
-
 export interface Order {
-    // products: ProductsOrder[];
     products: Product[];
     amount: number;
     status: string;
     _id: string;
 }
 
-export interface Wishlist {
-    _id: string;
-    products: Product[];
+export interface Address {
+    firstName: string;
+    lastName: string;
+    email: string;
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+    phone: string;
 }

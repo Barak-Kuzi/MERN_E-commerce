@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
-// import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 import styles from '../styles/Login.module.css';
 import emailIcon from "../assest/email_icon.svg";
@@ -15,36 +14,10 @@ import Input from "../components/Input";
 import useInput from "../hooks/useInput";
 import {validateName, validateEmail, validatePassword, validateConfirmPassword} from "../utils/validation";
 
-// interface data {
-//     name: string;
-//     email: string;
-//     password: string;
-//     confirmPassword: string;
-//     profileImage?: string;
-// }
-
 export default function SignUp(): React.JSX.Element {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-    // const [userData, setUserData] = useState<data>({
-    //     name: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //     profileImage: ""
-    // });
-
-    // const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const {name, value} = e.target;
-    //
-    //     setUserData((prevState) => {
-    //         return {
-    //             ...prevState,
-    //             [name]: value
-    //         }
-    //     });
-    // }
 
     const {
         enteredValue: name,
