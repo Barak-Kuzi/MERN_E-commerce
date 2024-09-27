@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 
 function UserDeliveryAddress() {
-    const userAddress = useSelector((state: RootState) => state.user?.address);
+    const userAddress = useSelector((state: RootState) => state.address?.address);
 
     return (
         <div className={styles.container}>

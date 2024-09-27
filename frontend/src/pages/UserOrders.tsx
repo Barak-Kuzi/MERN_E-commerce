@@ -1,15 +1,13 @@
 import React, {useState} from "react";
+import {useSelector} from "react-redux";
 
 import styles from '../styles/UserOrders.module.css';
 import parcel from '../assest/parcel_icon.png';
 
-import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 
 function UserOrders(): React.JSX.Element {
-    const userOrders = useSelector((state: RootState) => state.user?.orders);
-
-    console.log(userOrders);
+    const userOrders = useSelector((state: RootState) => state.order.ordersList);
 
     const [clickedOrderIndex, setClickedOrderIndex] = useState<number | null>(null);
     const handleImageClick = (index: number) => {

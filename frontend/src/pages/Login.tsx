@@ -13,21 +13,17 @@ import eye_slash from "../assest/eye_slash.webp";
 import {AppDispatch} from "../store/store";
 import SummaryApi from "../common";
 import {
-    setUserAddress,
-    setUserCart,
     setUserConnection,
     setUserDetails,
-    setUserOrders,
-    setUserWishlist
 } from "../store/userSlice";
+import {fetchUserCart} from "../store/cartSlice";
+import {fetchOrders} from "../store/orderSlice";
+import {fetchWishlistProducts} from "../store/wishlistSlice";
+import {setUserAddress} from "../store/addressSlice";
 import {CustomResponse} from "../utils/CustomResponse";
-import fetchUserOrders from "../utils/fetchUserOrders";
+import {validateEmail, validatePassword} from "../utils/validation";
 import Input from "../components/Input";
 import useInput from "../hooks/useInput";
-import {validateEmail, validatePassword} from "../utils/validation";
-import {fetchProducts} from "../utils/fetchProducts";
-
-import {fetchUserCart, setCart} from "../store/cartSlice";
 
 function Login() {
     const navigate = useNavigate();
@@ -89,16 +85,16 @@ function Login() {
 
                 const secondResData: CustomResponse = await secondResponse.json();
                 if (secondResData.success) {
+                    // userSlice
                     dispatch(setUserDetails(secondResData.data));
                     dispatch(setUserConnection(true));
-                    const detailedCartProducts = await fetchProducts(secondResData.data.cart);
-                    dispatch(setUserCart(detailedCartProducts));
-                    // dispatch(setCart(detailedCartProducts));
+                    // cartSlice
                     dispatch(fetchUserCart(secondResData.data.cart));
-                    const userOrders = await fetchUserOrders();
-                    dispatch(setUserOrders(userOrders.data));
-                    const userWishlist = await fetchProducts(secondResData.data.wishlist);
-                    dispatch(setUserWishlist(userWishlist));
+                    // orderSlice
+                    dispatch(fetchOrders());
+                    // wishlistSlice
+                    dispatch(fetchWishlistProducts(secondResData.data.wishlist));
+                    // addressSlice
                     dispatch(setUserAddress(secondResData.data.address));
                     toast.success('Login successful');
                     navigate('/');

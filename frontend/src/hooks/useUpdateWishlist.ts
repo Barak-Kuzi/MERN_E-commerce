@@ -4,14 +4,14 @@ import {toast} from "react-toastify";
 
 import addToWishlist from "../utils/addToWishlist";
 import {fetchProductById} from "../utils/fetchProductById";
-import {setUserWishlist} from "../store/userSlice";
+import {setWishlist} from "../store/wishlistSlice";
 import {AppDispatch, RootState} from "../store/store";
 import {CustomResponse} from "../utils/CustomResponse";
 import {Product} from "../models";
 
 const useUpdateWishlist = () => {
     const dispatch: AppDispatch = useDispatch();
-    const userWishlist = useSelector((state: RootState) => state.user?.wishlist);
+    const userWishlist = useSelector((state: RootState) => state.wishlist.wishlist);
 
     const handleAddToWishlistButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ const useUpdateWishlist = () => {
             toast.success(resData.message);
             if (resData.data === "remove") {
                 const updatedWishlist = userWishlist.filter(product => product._id !== productId);
-                dispatch(setUserWishlist(updatedWishlist));
+                dispatch(setWishlist(updatedWishlist));
                 return;
             }
             if (resData.data === "add") {
@@ -35,7 +35,7 @@ const useUpdateWishlist = () => {
                     let product: Product = resDataOfProduct.data;
                     product = {...product, lovedProduct: true};
                     const updatedWishlist: Product[] = [...userWishlist, product];
-                    dispatch(setUserWishlist(updatedWishlist));
+                    dispatch(setWishlist(updatedWishlist));
                 } else {
                     toast.error("Failed to fetch product details");
                 }

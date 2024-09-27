@@ -7,7 +7,7 @@ import styles from '../styles/CartIcon.module.css';
 import {RootState} from "../store/store";
 
 function CartIcon(): React.JSX.Element {
-    const quantityProductsInCart = useSelector((state: RootState) => state.user?.cart.products.length, shallowEqual);
+    const quantityProductsInCart = useSelector((state: RootState) => state.cart.products.length, shallowEqual);
     const userConnected = useSelector((state: RootState) => state.user?.userConnected, shallowEqual);
 
     const handleCartDetails = () => {

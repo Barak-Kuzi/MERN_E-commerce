@@ -1,8 +1,9 @@
 import {useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
+
 import {CustomResponse} from '../utils/CustomResponse';
 import {fetchProductsByCategory} from '../utils/fetchProductsByCategory';
 import {Product} from '../models';
-import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 
 export const useFetchProductsByCategory = (category: string) => {
@@ -10,7 +11,7 @@ export const useFetchProductsByCategory = (category: string) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState('');
     const userConnected = useSelector((state: RootState) => state.user?.userConnected);
-    const userWishlist = useSelector((state: RootState) => state.user?.wishlist);
+    const userWishlist = useSelector((state: RootState) => state.wishlist.wishlist);
 
     useEffect(() => {
         if (!category) return;

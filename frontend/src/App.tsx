@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Outlet, SubmitFunction, useLoaderData, useSubmit} from "react-router-dom";
-import {ToastContainer} from 'react-toastify';
+import {useDispatch} from "react-redux";
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "./components/Header";
@@ -9,43 +10,16 @@ import {getAuthToken, getTokenDuration} from "./utils/auth";
 import {CustomResponse} from "./utils/CustomResponse";
 import SummaryApi from "./common";
 import {
-    setUserAddress,
-    setUserCart,
     setUserConnection,
     setUserDetails,
-    setUserOrders,
-    setUserWishlist
 } from "./store/userSlice";
-import {fetchProducts} from "./utils/fetchProducts";
-import fetchUserOrders from "./utils/fetchUserOrders";
 import {AppDispatch} from "./store/store";
-import {useDispatch} from "react-redux";
 import {fetchUserCart} from "./store/cartSlice";
+import {fetchOrders} from "./store/orderSlice";
+import {fetchWishlistProducts} from "./store/wishlistSlice";
+import {setUserAddress} from "./store/addressSlice";
 
 function App() {
-    // const token = useLoaderData();
-    // const submit: SubmitFunction = useSubmit();
-    //
-    // console.log(token)
-    //
-    // useEffect(() => {
-    //     if (!token) {
-    //         return;
-    //     }
-    //
-    //     if (token === 'EXPIRED') {
-    //         submit(null, {action: '/logout', method: 'POST'});
-    //         return;
-    //     }
-    //
-    //     const tokenDuration: number | null = getTokenDuration();
-    //
-    //     setTimeout(() => {
-    //         submit(null, {action: '/logout', method: 'POST'})
-    //     }, tokenDuration ? tokenDuration : (60 * 60 * 1000));
-    // }, [token, submit]);
-
-
     const token = useLoaderData();
     const submit: SubmitFunction = useSubmit();
     const dispatch: AppDispatch = useDispatch();
@@ -53,7 +27,11 @@ function App() {
     useEffect(() => {
         const initializeUserSession = async () => {
             const authToken = getAuthToken();
-            if (!authToken || authToken === 'EXPIRED') {
+            if (!authToken) {
+                return;
+            }
+
+            if (token === 'EXPIRED') {
                 // submit(null, {action: '/logout', method: 'POST'});
                 return;
             }
@@ -69,31 +47,30 @@ function App() {
 
                 const resData: CustomResponse = await response.json();
                 if (resData.success) {
+                    // userSlice
                     dispatch(setUserDetails(resData.data));
                     dispatch(setUserConnection(true));
-                    // const detailedCartProducts = await fetchProducts(resData.data.cart);
-                    // dispatch(setUserCart(detailedCartProducts));
+                    // cartSlice
                     dispatch(fetchUserCart(resData.data.cart));
-                    const userOrders = await fetchUserOrders();
-                    dispatch(setUserOrders(userOrders.data));
-                    const userWishlist = await fetchProducts(resData.data.wishlist);
-                    dispatch(setUserWishlist(userWishlist));
+                    // orderSlice
+                    dispatch(fetchOrders());
+                    // wishlistSlice
+                    dispatch(fetchWishlistProducts(resData.data.wishlist));
+                    // addressSlice
                     dispatch(setUserAddress(resData.data.address));
-                } else {
-                    // submit(null, {action: '/logout', method: 'POST'});
+
+                }
+
+                if (resData.error) {
+                    console.error('Failed to fetch user details', resData.error);
+                    toast.error(resData.message);
                 }
             } catch (error) {
                 console.error('Failed to fetch user details', error);
-                // submit(null, {action: '/logout', method: 'POST'});
             }
         };
 
         initializeUserSession();
-
-        if (token === 'EXPIRED') {
-            // submit(null, {action: '/logout', method: 'POST'});
-            return;
-        }
 
         const tokenDuration: number | null = getTokenDuration();
         setTimeout(() => {

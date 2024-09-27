@@ -37,12 +37,11 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         setCart: (state, action: PayloadAction<Product[]>) => {
-            const products = action.payload;
-            const subtotal: number = products.reduce((acc: number, item: Product) => acc + (item.productSellingPrice as number * item.quantity!), 0);
+            state.products = action.payload;
+            const subtotal: number = state.products.reduce((acc: number, item: Product) => acc + (item.productSellingPrice as number * item.quantity!), 0);
             const deliveryFee: number = 10;
             const total: number = subtotal + deliveryFee;
 
-            state.products = products;
             state.subtotal = parseFloat(subtotal.toFixed(2));
             state.deliveryFee = parseFloat(deliveryFee.toFixed(2));
             state.total = parseFloat(total.toFixed(2));

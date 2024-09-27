@@ -8,17 +8,13 @@ import styles from '../styles/Cart.module.css';
 import useDeleteProductFromCart from "../hooks/useDeleteFromCart";
 import {Product} from "../models";
 import CartTotalDetails from "../components/CartTotalDetails";
-import {setCouponCode, setDiscount, setUserCart} from "../store/userSlice";
+import {setCouponCode, setDiscount, setCart} from "../store/cartSlice";
 import {AppDispatch, RootState} from "../store/store";
-
 
 function Cart(): React.JSX.Element {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const cart = useSelector((state: RootState) => state.cart);
-    console.log(cart);
-    const products = useSelector((state: RootState) => state.user?.cart.products);
-    const {subtotal} = useSelector((state: RootState) => state.user?.cart);
     const {deleteProductFromCart, isLoading: isDeleting, error} = useDeleteProductFromCart();
     const [promoCode, setPromoCode] = useState<string>('');
     const [couponApplied, setCouponApplied] = useState<boolean>(false);
@@ -27,12 +23,11 @@ function Cart(): React.JSX.Element {
         try {
             const productId = e.currentTarget.getAttribute('product-id');
             await deleteProductFromCart(productId!);
-            dispatch(setUserCart(products.filter((item: Product) => item._id !== productId)));
+            dispatch(setCart(cart.products.filter((item: Product) => item._id !== productId)));
         } catch (error) {
             console.error('Failed to remove product from cart', error);
         }
-    }, [deleteProductFromCart, dispatch, products]);
-
+    }, [deleteProductFromCart, dispatch, cart.products]);
 
     const handleCheckout = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -68,7 +63,7 @@ function Cart(): React.JSX.Element {
                 break;
         }
         if (discount > 0) {
-            let updatedSubtotal: string = parseFloat(String((subtotal * discount))).toFixed(2);
+            let updatedSubtotal: number = Number(parseFloat(String((cart.subtotal * discount))).toFixed(2));
             dispatch(setDiscount(updatedSubtotal));
             dispatch(setCouponCode(promoCode));
             setCouponApplied(true);

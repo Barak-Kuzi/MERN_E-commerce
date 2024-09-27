@@ -13,7 +13,9 @@ function ProtectedRoute({children, pathProtection}: ProtectedRouteProps): React.
     const userConnected = useSelector((state: RootState) => state.user.userConnected);
 
     if (!userConnected) {
-        return (<Navigate to={pathProtection} state={{from: location}} replace/>);
+        return (
+            <Navigate to={pathProtection} state={{from: location}} replace/>
+        );
     }
 
     return (

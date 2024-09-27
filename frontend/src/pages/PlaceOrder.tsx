@@ -4,16 +4,16 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from '../styles/PlaceOrder.module.css';
 
 import SummaryApi from "../common";
-import {AppDispatch, RootState} from "../store/store";
 import {CustomResponse} from "../utils/CustomResponse";
 import CartTotalDetails from "../components/CartTotalDetails";
 import DeliveryAddressForm from "../components/DeliveryAddressForm";
-import {setCouponCode} from "../store/userSlice";
+import {AppDispatch, RootState} from "../store/store";
+import {setCouponCode} from "../store/cartSlice";
 
 function PlaceOrder(): React.JSX.Element {
     const dispatch = useDispatch<AppDispatch>();
-    const {products: userCartProducts, total, discount, couponCode} = useSelector((state: RootState) => state.user?.cart);
-    const userAddress = useSelector((state: RootState) => state.user?.address);
+    const {products: userCartProducts, total, discount, couponCode} = useSelector((state: RootState) => state.cart);
+    const userAddress = useSelector((state: RootState) => state.address.address);
 
     const [data, setData] = useState({
         firstName: userAddress?.firstName || '',

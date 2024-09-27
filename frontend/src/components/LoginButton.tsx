@@ -4,8 +4,13 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 
 import styles from '../styles/LoginButton.module.css';
+
 import SummaryApi from "../common";
-import {setUserCart, setUserConnection, setUserDetails} from "../store/userSlice";
+import {setUserConnection, setUserDetails} from "../store/userSlice";
+import {setCart} from "../store/cartSlice";
+import {setWishlist} from "../store/wishlistSlice";
+import {setUserOrders} from "../store/orderSlice";
+import {setUserAddress} from "../store/addressSlice";
 
 function LoginButton(): React.JSX.Element {
     const dispatch = useDispatch();
@@ -26,8 +31,21 @@ function LoginButton(): React.JSX.Element {
             localStorage.removeItem('expiration');
 
             dispatch(setUserDetails(null));
-            dispatch(setUserCart([]));
             dispatch(setUserConnection(false));
+            dispatch(setCart([]));
+            dispatch(setWishlist([]));
+            dispatch(setUserOrders([]));
+            dispatch(setUserAddress({
+                firstName: '',
+                lastName: '',
+                email: '',
+                street: '',
+                city: '',
+                state: '',
+                zipCode: '',
+                country: '',
+                phone: ''
+            }));
 
             navigate('/');
         } else {
