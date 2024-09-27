@@ -16,7 +16,7 @@ interface UserAddress {
 
 interface DeliveryAddressFormProps {
     userAddress: UserAddress;
-    handleOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleOnChange: ((e: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
 }
 
 function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormProps): React.JSX.Element {
@@ -31,6 +31,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                            name="firstName"
                            value={userAddress.firstName}
                            onChange={handleOnChange}
+                           readOnly={!handleOnChange}
                     />
                 </div>
                 <div className={styles.text_field}>
@@ -40,6 +41,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                            name="lastName"
                            value={userAddress.lastName}
                            onChange={handleOnChange}
+                           readOnly={!handleOnChange}
                     />
                 </div>
             </div>
@@ -51,6 +53,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     name="email"
                     value={userAddress.email}
                     onChange={handleOnChange}
+                    readOnly={!handleOnChange}
                 />
             </div>
             <div className={styles.text_field}>
@@ -61,6 +64,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     name="street"
                     value={userAddress.street}
                     onChange={handleOnChange}
+                    readOnly={!handleOnChange}
                 />
             </div>
 
@@ -73,6 +77,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         name="city"
                         value={userAddress.city}
                         onChange={handleOnChange}
+                        readOnly={!handleOnChange}
                     />
                 </div>
                 <div className={styles.text_field}>
@@ -83,6 +88,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         name="state"
                         value={userAddress.state}
                         onChange={handleOnChange}
+                        readOnly={!handleOnChange}
                     />
                 </div>
             </div>
@@ -95,6 +101,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         name="zipCode"
                         value={userAddress.zipCode}
                         onChange={handleOnChange}
+                        readOnly={!handleOnChange}
                     />
                 </div>
                 <div className={styles.text_field}>
@@ -105,6 +112,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         name="country"
                         value={userAddress.country}
                         onChange={handleOnChange}
+                        readOnly={!handleOnChange}
                     />
                 </div>
             </div>
@@ -116,6 +124,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     name="phone"
                     value={userAddress.phone}
                     onChange={handleOnChange}
+                    readOnly={!handleOnChange}
                 />
             </div>
         </div>

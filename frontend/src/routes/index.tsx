@@ -21,11 +21,13 @@ import UserOrders from "../pages/UserOrders";
 import UserWishlist from "../pages/UserWishlist";
 import UserSettings from "../pages/UserSettings";
 import UserDeliveryAddress from "../pages/UserDeliveryAddress";
+import {loaderToken} from "../utils/auth";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
+        loader: loaderToken,
         children: [
             {
                 index: true,

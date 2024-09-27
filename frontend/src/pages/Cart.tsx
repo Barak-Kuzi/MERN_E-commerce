@@ -11,9 +11,12 @@ import CartTotalDetails from "../components/CartTotalDetails";
 import {setCouponCode, setDiscount, setUserCart} from "../store/userSlice";
 import {AppDispatch, RootState} from "../store/store";
 
+
 function Cart(): React.JSX.Element {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const cart = useSelector((state: RootState) => state.cart);
+    console.log(cart);
     const products = useSelector((state: RootState) => state.user?.cart.products);
     const {subtotal} = useSelector((state: RootState) => state.user?.cart);
     const {deleteProductFromCart, isLoading: isDeleting, error} = useDeleteProductFromCart();
@@ -87,7 +90,7 @@ function Cart(): React.JSX.Element {
                 </div>
                 <br/>
                 <hr/>
-                {products.map((product: Product, index: number) => {
+                {cart.products.map((product: Product, index: number) => {
                     return (
                         <div key={`${product.productName}_${index}`}>
                             <div className={`${styles.cart_items_title} ${styles.cart_items_item}`}>

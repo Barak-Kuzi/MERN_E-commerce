@@ -1,45 +1,77 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { emailValidation, passwordValidation } from "../../utils/validation.js";
+import { createToken } from "../../utils/auth.js";
 import userModel from "../../models/userModel.js";
-async function userSignInController(req, res) {
+const userSignInController = async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email) {
-            throw new Error("Email is required");
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Email is required"
+            });
         }
         if (!password) {
-            throw new Error("Password is required");
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Password is required"
+            });
+        }
+        if (!emailValidation(email)) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Invalid Email"
+            });
         }
         const user = await userModel.findOne({ email });
         if (!user) {
-            throw new Error("User not found");
+            return res.status(404).json({
+                success: false,
+                error: true,
+                message: "User Doesn't Exist"
+            });
         }
-        const checkPassword = bcrypt.compareSync(password, user.password);
-        if (!checkPassword) {
-            throw new Error("Invalid password");
+        if (!passwordValidation(password)) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Invalid Password Format"
+            });
         }
-        const tokenData = {
+        const passwordMatched = await bcrypt.compare(password, user.password);
+        if (!passwordMatched) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Invalid Password"
+            });
+        }
+        const authToken = createToken({
             id: user._id,
             email: user.email,
-        };
-        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: "8h" });
+        });
         const tokenOptions = {
             httpOnly: true,
             secure: true
         };
-        res.cookie("token", token, tokenOptions).json({
-            message: "User signed in successfully",
-            data: token,
+        res.status(200).cookie("token", authToken, tokenOptions).json({
             success: true,
-            error: false
+            error: false,
+            message: "User signed in successfully",
+            data: user,
+            token: authToken
         });
     }
     catch (error) {
-        res.json({
-            message: error.message,
+        console.log(error);
+        res.status(500).json({
+            message: error.message || 'Failed to sign in',
             error: true,
             success: false
         });
     }
-}
+};
 export default userSignInController;

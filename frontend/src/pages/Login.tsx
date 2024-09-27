@@ -1,16 +1,14 @@
- import React, {useState} from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
- // import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import styles from '../styles/Login.module.css';
 import google from "../assest/google.png";
 import apple from "../assest/apple.png";
 import emailIcon from "../assest/email_icon.svg";
-import passwordIcon from "../assest/password_icon.svg";
-import lock from "../assest/lock_icon.svg";
-import unlock from "../assest/unlock_icon.svg";
+import eye from "../assest/eye.svg";
+import eye_slash from "../assest/eye_slash.webp";
 
 import {AppDispatch} from "../store/store";
 import SummaryApi from "../common";
@@ -28,6 +26,8 @@ import Input from "../components/Input";
 import useInput from "../hooks/useInput";
 import {validateEmail, validatePassword} from "../utils/validation";
 import {fetchProducts} from "../utils/fetchProducts";
+
+import {fetchUserCart, setCart} from "../store/cartSlice";
 
 function Login() {
     const navigate = useNavigate();
@@ -75,6 +75,12 @@ function Login() {
             const resData: CustomResponse = await response.json();
 
             if (resData.success) {
+                const token: string = resData?.token!;
+                localStorage.setItem('token', token);
+
+                const expiration: Date = new Date();
+                expiration.setHours(expiration.getHours() + 1);
+                localStorage.setItem('expiration', expiration.toISOString());
 
                 const secondResponse = await fetch(SummaryApi.userDetails.url, {
                     method: SummaryApi.userDetails.method,
@@ -87,6 +93,8 @@ function Login() {
                     dispatch(setUserConnection(true));
                     const detailedCartProducts = await fetchProducts(secondResData.data.cart);
                     dispatch(setUserCart(detailedCartProducts));
+                    // dispatch(setCart(detailedCartProducts));
+                    dispatch(fetchUserCart(secondResData.data.cart));
                     const userOrders = await fetchUserOrders();
                     dispatch(setUserOrders(userOrders.data));
                     const userWishlist = await fetchProducts(secondResData.data.wishlist);
@@ -141,14 +149,20 @@ function Login() {
                     </Input>
                     <img
                         alt="Password Icon"
-                        src={showPassword ? unlock : lock}
+                        src={showPassword ? eye_slash : eye}
                         onClick={handleShowPassword}
                         style={{cursor: "pointer"}}
                     />
                     {(!passwordIsValid && passwordIsEdited) &&
                         <p className={styles.error_message}>{passwordErrorMessage}</p>}
                 </div>
-                <button type="submit" className={styles.form_button}>Login</button>
+                <button
+                    type="submit"
+                    className={styles.form_button}
+                    disabled={(!emailIsValid && emailIsEdited) || (!passwordIsValid && passwordIsEdited)}
+                >
+                    Login
+                </button>
                 <div className={styles.forgot_password_container}>
                     <p>Didn't remember your password?</p>
                     <Link to={'/forgot-password'} className={styles.forgot_password}>

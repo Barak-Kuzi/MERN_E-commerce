@@ -1,46 +1,74 @@
 import bcrypt from 'bcryptjs';
+import { emailValidation, passwordValidation } from "../../utils/validation.js";
+import { createToken } from "../../utils/auth.js";
 import userModel from '../../models/userModel.js';
-async function userSignUpController(req, res) {
+const userSignUpController = async (req, res) => {
     try {
         const { email, password, name } = req.body;
-        const userChecking = await userModel.findOne({ email });
-        if (userChecking) {
-            throw new Error("User already exists");
-        }
         if (!email) {
-            throw new Error("Email is required");
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Email is required"
+            });
+        }
+        if (!emailValidation(email)) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Invalid email"
+            });
+        }
+        const userExists = await userModel.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "User already exists"
+            });
         }
         if (!password) {
-            throw new Error("Password is required");
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Password is required"
+            });
         }
-        if (!name) {
-            throw new Error("Name is required");
+        if (!passwordValidation(password)) {
+            return res.status(400).json({
+                success: false,
+                error: true,
+                message: "Invalid password format"
+            });
         }
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-        if (!hashedPassword) {
-            throw new Error("Error in hashing password");
-        }
-        const payload = {
-            ...req.body,
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const newUser = new userModel({
+            email,
             password: hashedPassword,
+            name,
             role: 'GENERAL'
-        };
-        const userData = new userModel(payload);
-        const user = await userData.save();
+        });
+        const user = await newUser.save();
+        const authToken = createToken({
+            id: user._id,
+            email: user.email,
+        });
         res.status(201).json({
-            data: user,
             success: true,
             error: false,
-            message: "User created successfully"
+            message: "User created successfully",
+            data: user,
+            token: authToken
         });
     }
     catch (error) {
-        res.json({
-            message: error.message,
+        console.log(error);
+        res.status(500).json({
+            success: false,
             error: true,
-            success: false
+            message: error.message || 'Failed to create user'
         });
     }
-}
+};
 export default userSignUpController;

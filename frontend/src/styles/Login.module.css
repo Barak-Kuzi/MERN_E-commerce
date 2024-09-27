@@ -157,6 +157,13 @@
     box-shadow: 0 4px 10px rgba(0,0,0,.15);
 }
 
+.form_button:disabled {
+    background-color: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .forgot_password_container {
     display: flex;
     color: var(--secondary);

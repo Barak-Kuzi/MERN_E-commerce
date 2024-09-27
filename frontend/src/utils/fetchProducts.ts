@@ -13,14 +13,13 @@ export const fetchProducts = async (userProducts: FetchProductsProps[]): Promise
             const productDetailsResponse: CustomResponse = await fetchProductById(item.productId);
             if (productDetailsResponse.success) {
                 const productDetails: Product = productDetailsResponse.data;
-                console.log(item.quantity)
+
                 if (item.quantity) {
                     return { ...productDetails, quantity: item.quantity };
                 } else {
                     return { ...productDetails, lovedProduct: true };
                 }
             }
-            // return { ...productDetails.data, quantity: item.quantity };
         } catch (error) {
             console.error(`Failed to fetch details for product ID: ${item.productId}`, error);
             return null;

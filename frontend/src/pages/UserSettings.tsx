@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
 import styles from '../styles/UserSettings.module.css';
@@ -150,7 +150,11 @@ function UserSettings() {
                     </div>
                     <button
                         type="submit"
-                        disabled={(!currentPasswordIsValid) && (!newPasswordIsValid) && (!confirmNewPasswordIsValid)}
+                        disabled={
+                            (!currentPasswordIsValid && currentPasswordIsEdited) ||
+                            (!newPasswordIsValid && newPasswordIsEdited) ||
+                            (!confirmNewPasswordIsValid && confirmNewPasswordIsEdited)
+                        }
                         className={userProfileStyles.save_button}
                         style={{marginTop: "0.75rem"}}
                     >

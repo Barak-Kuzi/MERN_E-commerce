@@ -1,6 +1,10 @@
 import userModel from "../../models/userModel.js";
 async function userDetailsController(req, res) {
     try {
+        const reqUser = req.user;
+        console.log(reqUser);
+        const user2 = await userModel.findOne({ email: reqUser?.email });
+        console.log(user2);
         const user = await userModel.findById(req.user?.id);
         if (!user) {
             return res.status(404).json({

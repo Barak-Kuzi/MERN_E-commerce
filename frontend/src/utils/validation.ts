@@ -13,9 +13,10 @@ export const validateEmail = (value: string): string => {
 export const validatePassword = (value: string): string => {
     if (!value) return "Password is required.";
     if (value.length < 6) return "Password must be at least 6 characters.";
-    if (!/[A-Za-z]/.test(value)) return "Password must contain at least one letter.";
+    if (value.length > 12) return "Password must not exceed 12 characters.";
+    if (!/[a-z]/.test(value)) return "Password must contain at least one lowercase letter.";
+    if (!/[A-Z]/.test(value)) return "Password must contain at least one uppercase letter.";
     if (!/\d/.test(value)) return "Password must contain at least one number.";
-    if (!/\W/.test(value)) return "Password must contain at least one special character.";
     return "";
 };
 

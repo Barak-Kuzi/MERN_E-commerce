@@ -10,7 +10,7 @@ function UserDeliveryAddress() {
 
     return (
         <div className={styles.container}>
-            <DeliveryAddressForm userAddress={userAddress}/>
+            <DeliveryAddressForm userAddress={userAddress} handleOnChange={undefined}/>
         </div>
     );
 }

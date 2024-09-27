@@ -13,20 +13,25 @@ function LoginButton(): React.JSX.Element {
     const userConnected = useSelector((state: any) => state.user?.userConnected, shallowEqual);
 
     const handleLogout = useCallback(async () => {
-        const dataResponse = await fetch(SummaryApi.userLogout.url, {
+        const response = await fetch(SummaryApi.userLogout.url, {
             method: SummaryApi.userLogout.method,
             credentials: 'include',
         });
 
-        const dataApi = await dataResponse.json();
-        if (dataApi.success) {
-            toast(dataApi.message);
+        const resData = await response.json();
+        if (resData.success) {
+            toast(resData.message);
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('expiration');
+
             dispatch(setUserDetails(null));
             dispatch(setUserCart([]));
             dispatch(setUserConnection(false));
+
             navigate('/');
         } else {
-            toast.error(dataApi.message);
+            toast.error(resData.message);
         }
     }, [dispatch, navigate]);
 

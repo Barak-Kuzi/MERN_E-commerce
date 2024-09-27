@@ -13,7 +13,7 @@ interface CartTotalDetailsProps {
 }
 
 function CartTotalDetails({buttonText, type, onClick, isPlaceOrder}: CartTotalDetailsProps): React.JSX.Element {
-    const {subtotal, deliveryFee, total, discount} = useSelector((state: RootState) => state.user?.cart);
+    const {subtotal, deliveryFee, total, discount} = useSelector((state: RootState) => state.cart);
 
     return (
         <div className={styles.cart_total}>

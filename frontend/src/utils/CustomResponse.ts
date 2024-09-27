@@ -3,4 +3,5 @@ export interface CustomResponse extends Response {
     error?: boolean;
     message?: string;
     data?: any;
+    token?: string;
 }
