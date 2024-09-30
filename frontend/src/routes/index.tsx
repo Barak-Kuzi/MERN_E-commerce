@@ -21,7 +21,7 @@ import UserOrders from "../pages/UserOrders";
 import UserWishlist from "../pages/UserWishlist";
 import UserSettings from "../pages/UserSettings";
 import UserDeliveryAddress from "../pages/UserDeliveryAddress";
-import {loaderToken} from "../utils/auth";
+import {actionLogout, loaderToken} from "../utils/auth";
 
 const router = createBrowserRouter([
     {
@@ -36,10 +36,14 @@ const router = createBrowserRouter([
             {
                 path: "login",
                 element: (
-                    <ProtectedRoute pathProtection={"/"}>
+                    <ProtectedRoute pathProtection={"/"} isUserPanel={false}>
                         <Login/>
                     </ProtectedRoute>
                 )
+            },
+            {
+              path: "logout",
+              action: actionLogout
             },
             {
                 path: "forgot-password",
@@ -76,7 +80,7 @@ const router = createBrowserRouter([
             {
                 path: "user-panel",
                 element: (
-                    <ProtectedRoute pathProtection={"/login"}>
+                    <ProtectedRoute pathProtection={"/login"} isUserPanel={true}>
                         <UserPanel/>
                     </ProtectedRoute>
                 ),

@@ -10,7 +10,7 @@ import AppDownload from "../components/AppDownload";
 export default function Home(): React.JSX.Element {
 
     return (
-        <div>
+        <div className={styles.home_page_container}>
             <CategoryList/>
             <BannerSlider/>
             <div className={styles.products_container}>

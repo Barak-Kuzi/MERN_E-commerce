@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
+import styles from '../styles/CategoryList.module.css';
 import cp_cat from '../assest/productCategories/cp_cat.webp';
 import hd_cat from '../assest/productCategories/hp_cat.webp';
 import dt_cat from '../assest/productCategories/dt_cat.webp';
@@ -19,17 +20,18 @@ const productCategories = [
 
 export default function CategoryList(): React.JSX.Element {
     return (
-        <div className="category_list_container">
-            <div className="category_list_inner_container">
+        <div className={styles.category_list_container}>
+            <div className={styles.category_list_inner_container}>
                 {
                     productCategories.map((category, index) => {
                         return (
-                            <Link to={`/product-category?category=${category.name.toLowerCase()}`} className="category_link"
+                            <Link to={`/product-category?category=${category.name.toLowerCase()}`}
+                                  className={styles.category_link}
                                   key={category.name}>
-                                <div key={index} className="category_image">
+                                <div key={index} className={styles.category_image}>
                                     <img src={category.img} alt="category list"/>
                                 </div>
-                                <p className="category_title">
+                                <p className={styles.category_title}>
                                     {category.name}
                                 </p>
                             </Link>

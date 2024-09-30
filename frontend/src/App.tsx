@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import {getAuthToken, getTokenDuration} from "./utils/auth";
+import {getTokenDuration} from "./utils/auth";
 import {CustomResponse} from "./utils/CustomResponse";
 import SummaryApi from "./common";
 import {
@@ -26,13 +26,12 @@ function App() {
 
     useEffect(() => {
         const initializeUserSession = async () => {
-            const authToken = getAuthToken();
-            if (!authToken) {
+            if (!token) {
                 return;
             }
 
             if (token === 'EXPIRED') {
-                // submit(null, {action: '/logout', method: 'POST'});
+                submit(null, {action: '/logout', method: 'POST'});
                 return;
             }
 
@@ -41,7 +40,7 @@ function App() {
                     method: SummaryApi.userDetails.method,
                     credentials: 'include',
                     headers: {
-                        'Authorization': `Bearer ${authToken}`
+                        'Authorization': `Bearer ${token}`
                     }
                 });
 
@@ -72,10 +71,14 @@ function App() {
 
         initializeUserSession();
 
-        const tokenDuration: number | null = getTokenDuration();
-        setTimeout(() => {
-            // submit(null, {action: '/logout', method: 'POST'})
-        }, tokenDuration ? tokenDuration : (60 * 60 * 1000));
+        if (token && token !== 'EXPIRED') {
+            const tokenDuration: number | null = getTokenDuration();
+            const logoutTimeout = setTimeout(() => {
+                submit(null, {action: '/logout', method: 'POST'});
+            }, tokenDuration ? tokenDuration : (60 * 60 * 1000));
+            return () => clearTimeout(logoutTimeout);
+        }
+
     }, [token, submit, dispatch]);
 
     console.log('App component re-rendered');

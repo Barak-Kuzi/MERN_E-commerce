@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import styles from '../styles/Header.module.css';
 import logo from "../assest/my_logo.png";
@@ -9,19 +9,12 @@ import CartIcon from "./CartIcon";
 import UserMenuIcon from "./UserMenuIcon";
 import SearchBar from "./SearchBar";
 
-// interface HeaderProps {
-//     onSearch?: (query: string) => void;
-// }
-
-// function Header({onSearch}: HeaderProps): React.JSX.Element {
 function Header(): React.JSX.Element {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSearch = (query: string) => {
         navigate(`/search?query=${query}`);
-        // if (onSearch) {
-        //     onSearch(query);
-        // }
     };
 
     console.log('Header component re-rendered');
@@ -35,13 +28,17 @@ function Header(): React.JSX.Element {
                     </Link>
                 </div>
 
-                <SearchBar onSearch={handleSearch}/>
+                {location.pathname === '/login' ? null : (
+                    <SearchBar onSearch={handleSearch}/>
+                )}
 
-                <div className={styles.header_icons_container}>
-                    <CartIcon/>
-                    <UserMenuIcon/>
-                    <LoginButton/>
-                </div>
+                {location.pathname === '/login' ? null : (
+                    <div className={styles.header_icons_container}>
+                        <CartIcon/>
+                        <UserMenuIcon/>
+                        <LoginButton/>
+                    </div>
+                )}
             </div>
         </header>
     );

@@ -19,6 +19,7 @@ import getFilteredProductsController from "../controller/product/getFilteredProd
 import { placeOrder, verifyOrder, fetchOrders } from "../controller/order/orderController.js";
 import addToWishlistController from "../controller/user/addToWishlistController.js";
 import changePasswordController from "../controller/user/changePasswordController.js";
+import ratingProductController from "../controller/product/ratingProductController.js";
 const router = Router();
 // User routes
 router.post("/signup", userSignUpController);
@@ -39,6 +40,7 @@ router.get('/product-details/:productId', getProductByIdController);
 router.get('/search', searchProductController);
 router.post('/filter-products', getFilteredProductsController);
 router.post('/add-to-wishlist', authToken, addToWishlistController);
+router.post('/rate-product', authToken, ratingProductController);
 // Cart routes
 router.post('/add-to-cart', authToken, addToCartController);
 router.post('/delete-product-from-cart', authToken, deleteFromCartController);

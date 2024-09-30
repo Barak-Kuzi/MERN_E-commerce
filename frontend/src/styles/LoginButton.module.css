@@ -1,12 +1,30 @@
 .login_button {
-    font-size: 15px;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+    padding: 0.4rem 0.95rem;
+    border-radius: 0.5rem;
     color: #ffffff;
     background-color: #48D461;
     text-decoration: none;
+    font-family: Mulish, sans-serif;
 }
 
 .login_button:hover {
     background-color: #4b8152;
+}
+
+@media (max-width: 768px) {
+    .login_button {
+        padding: 0.4rem 0.8rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 364px) {
+    .login_button {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.85rem;
+
+    }
 }

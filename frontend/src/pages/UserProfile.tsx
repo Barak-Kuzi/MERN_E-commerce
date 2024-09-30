@@ -14,8 +14,7 @@ import uploadImage from "../utils/uploadImage";
 import Loader from "../components/Loader";
 
 function UserProfile() {
-    const userConnected = useSelector((state: RootState) => state.user.userConnected);
-    const userDetails = useSelector((state: RootState) => state.user.user);
+    const {userConnected, user: userDetails} = useSelector((state: RootState) => state.user);
 
     const [firstNameUser, lastNameUser]: [string, string] = userConnected ? userDetails?.name.split(" ") as [string, string] : ["", ""];
 

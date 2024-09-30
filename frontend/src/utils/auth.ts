@@ -1,5 +1,8 @@
 import {redirect} from "react-router-dom";
 
+import {store, AppDispatch} from "../store/store";
+import {handleUserLogout} from "./handleUserLogout";
+
 const getTokenDuration = (): number | null => {
     const storedExpirationDate = localStorage.getItem('expiration');
 
@@ -38,4 +41,10 @@ const checkAuthLoader = () => {
     return null;
 }
 
-export {loaderToken, checkAuthLoader, getTokenDuration, getAuthToken};
+const actionLogout = () => {
+    const dispatch: AppDispatch = store.dispatch;
+    handleUserLogout(dispatch);
+    return redirect('/')
+}
+
+export {loaderToken, checkAuthLoader, getTokenDuration, getAuthToken, actionLogout};

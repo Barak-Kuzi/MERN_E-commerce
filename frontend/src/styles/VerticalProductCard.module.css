@@ -2,6 +2,8 @@
     position: relative;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
+    font-family: Mulish, sans-serif;
 }
 
 .title_page {
@@ -9,31 +11,64 @@
     font-size: 1.75rem;
     line-height: 2rem;
     font-weight: 600;
+    letter-spacing: 0.03rem;
 }
 
 .product_card_inner_container {
     display: grid;
-    grid-template-columns: repeat(4, 21rem);
+    grid-template-columns: repeat(4, 22rem);
     row-gap: 4rem;
 }
 
-@media (max-width: 1580px) {
+/* Media Query to ProductDetails */
+@media (max-width: 1400px) {
     .product_card_inner_container {
         grid-template-columns: repeat(3, 21rem);
     }
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1000px) {
     .product_card_inner_container {
-        grid-template-columns: repeat(2, 21rem);
+        grid-template-columns: repeat(2, 22rem);
     }
 }
 
-@media (max-width: 910px) {
+@media (max-width: 690px) {
     .product_card_inner_container {
-        grid-template-columns: repeat(1, 21rem);
+        grid-template-columns: repeat(1, 20rem);
+    }
+
+    .vertical_product_card_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product_card_inner_container {
+        align-items: center;
+        margin-left: 2rem;
     }
 }
+
+
+/* Media Query to CategoryProducts */
+/*@media (max-width: 1580px) {*/
+/*    .product_card_inner_container {*/
+/*        grid-template-columns: repeat(3, 21rem);*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 1250px) {*/
+/*    .product_card_inner_container {*/
+/*        grid-template-columns: repeat(2, 21rem);*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 910px) {*/
+/*    .product_card_inner_container {*/
+/*        grid-template-columns: repeat(1, 21rem);*/
+/*    }*/
+/*}*/
 
 .product_card {
     overflow: hidden;
@@ -71,12 +106,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-weight: 600;
 }
 
 .product_selling_price {
     font-size: 1.25rem;
     line-height: 1.75rem;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 0.25rem;
 }
 
@@ -108,9 +144,9 @@
     align-items: center;
 }
 
-.product_rating img {
-    width: 1.5rem;
-    height: 1.5rem;
+.product_rating svg {
+    width: 1.4rem;
+    height: 1.4rem;
 }
 
 .product_reviews {

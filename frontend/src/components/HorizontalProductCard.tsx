@@ -3,15 +3,13 @@ import {Link} from "react-router-dom";
 import {FaAngleLeft, FaAngleRight} from 'react-icons/fa6'
 
 import styles from '../styles/HorizontalProductCard.module.css';
-import star from "../assest/star.svg";
-import half_star from "../assest/star-half-fill.svg";
-import empty_star from "../assest/star-no-fill.svg";
 
 import {Product} from "../models";
 import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
 import useAddToCart from "../hooks/useAddToCart";
 import useUpdateWishlist from "../hooks/useUpdateWishlist";
 import useUpdateLovedProducts from "../hooks/useUpdateLovedProduct";
+import StarRating from "./StarRating";
 
 interface HorizontalProductCardProps {
     title: string;
@@ -108,11 +106,7 @@ export default function HorizontalProductCard({title, category}: HorizontalProdu
                                             </div>
 
                                             <div className={styles.rating}>
-                                                <img src={star} alt={"rating"}/>
-                                                <img src={star} alt={"rating"}/>
-                                                <img src={star} alt={"rating"}/>
-                                                <img src={half_star} alt={"rating"}/>
-                                                <img src={empty_star} alt={"rating"}/>
+                                                <StarRating totalStars={5} ratingProduct={3.5 || product.averageRating || 0} isClickable={false} />
                                                 <span className={styles.reviews}>
                                                 20k reviews
                                                 </span>

@@ -6,13 +6,14 @@ import {RootState} from '../store/store';
 interface ProtectedRouteProps {
     children: React.ReactNode;
     pathProtection: string;
+    isUserPanel: boolean;
 }
 
-function ProtectedRoute({children, pathProtection}: ProtectedRouteProps): React.JSX.Element {
+function ProtectedRoute({children, pathProtection, isUserPanel}: ProtectedRouteProps): React.JSX.Element {
     const location = useLocation();
     const userConnected = useSelector((state: RootState) => state.user.userConnected);
 
-    if (!userConnected) {
+    if (!userConnected && isUserPanel) {
         return (
             <Navigate to={pathProtection} state={{from: location}} replace/>
         );

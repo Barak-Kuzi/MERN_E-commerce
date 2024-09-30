@@ -17,26 +17,6 @@ function Verify(): React.JSX.Element {
     const orderId = searchParams.get('orderId');
     const navigate = useNavigate();
 
-    // const verifyOrder = async () => {
-    //     const response = await fetch(SummaryApi.verifyOrder.url, {
-    //         method: SummaryApi.verifyOrder.method,
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({orderId, success})
-    //     });
-    //     const resData: CustomResponse = await response.json();
-    //     if (resData.success) {
-    //         dispatch(setCart([]));
-    //         dispatch(setUserConnection(true));
-    //         navigate('/user-panel/user-orders');
-    //     }
-    //     if (resData.error) {
-    //         console.error(resData.message);
-    //         navigate('/');
-    //     }
-    // }
-
     useEffect(() => {
         const verifyOrder = async () => {
             const response = await fetch(SummaryApi.verifyOrder.url, {

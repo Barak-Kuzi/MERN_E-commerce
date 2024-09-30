@@ -2,9 +2,6 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 import styles from '../styles/VerticalProductCard.module.css';
-import star from '../assest/star.svg';
-import half_star from '../assest/star-half-fill.svg';
-import empty_star from '../assest/star-no-fill.svg';
 import eye from '../assest/eye.svg';
 
 import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
@@ -13,18 +10,21 @@ import {Product} from "../models";
 import ScrollTopPage from "../utils/scrollTopPage";
 import useUpdateWishlist from "../hooks/useUpdateWishlist";
 import useUpdateLovedProduct from "../hooks/useUpdateLovedProduct";
+import StarRating from '../components/StarRating';
 
 
 interface VerticalProductCardProps {
     title?: string;
     category?: string;
     products?: Product[];
+    customClassName?: string;
 }
 
 export default function VerticalProductCard({
                                                 title,
                                                 category,
-                                                products: propProducts
+                                                products: propProducts,
+                                                customClassName
                                             }: VerticalProductCardProps): React.JSX.Element {
 
     const {products: productsByCategory, isLoading, error} = useFetchProductsByCategory(category || '');
@@ -35,7 +35,8 @@ export default function VerticalProductCard({
     const updatedProducts = useUpdateLovedProduct(products);
 
     return (
-        <div className={styles.vertical_product_card_container}>
+        // <div className={styles.vertical_product_card_container}>
+        <div className={`${styles.vertical_product_card_container} ${customClassName}`}>
             {title && <h2 className={styles.title_page}>{title}</h2>}
             <div className={styles.product_card_inner_container}>
                 {
@@ -65,11 +66,11 @@ export default function VerticalProductCard({
                                     </div>
 
                                     <div className={styles.product_rating}>
-                                        <img src={star} alt={"rating"}/>
-                                        <img src={star} alt={"rating"}/>
-                                        <img src={star} alt={"rating"}/>
-                                        <img src={half_star} alt={"rating"}/>
-                                        <img src={empty_star} alt={"rating"}/>
+                                        <StarRating
+                                            totalStars={5}
+                                            ratingProduct={product.averageRating || 0}
+                                            isClickable={false}
+                                        />
                                         <span className={styles.product_reviews}>20k reviews</span>
                                     </div>
 

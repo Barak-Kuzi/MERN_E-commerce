@@ -1,5 +1,19 @@
 import mongoose from "mongoose";
 
+const ratingSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
+    rating: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 5
+    }
+});
+
 const productSchema = new mongoose.Schema({
     productName: {
         type: String,
@@ -28,6 +42,14 @@ const productSchema = new mongoose.Schema({
     productBrand: {
         type: String,
         required: true,
+    },
+    ratings: {
+        type: [ratingSchema],
+        default: [],
+    },
+    averageRating: {
+        type: Number,
+        default: 0.0
     }
 }, {
     timestamps: true
@@ -46,7 +68,12 @@ export interface Product {
     productSellingPrice: number;
     productImages: string[];
     productBrand: string;
+    quantity?: number;
+    ratings: {
+        userId: string;
+        rating: number;
+    }[];
+    averageRating: number;
     createdAt?: Date;
     updatedAt?: Date;
-    quantity?: number;
 }

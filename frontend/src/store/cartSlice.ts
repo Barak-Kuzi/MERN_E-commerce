@@ -32,20 +32,31 @@ export const fetchUserCart = createAsyncThunk(
     }
 );
 
+const calculateCartTotals = (products: Product[]) => {
+    const subtotal: number = products.reduce((acc: number, item: Product) =>
+        acc + (item.productSellingPrice as number * item.quantity!), 0);
+    const deliveryFee: number = 10;
+    const total: number = subtotal + deliveryFee;
+
+    return {
+        subtotal: parseFloat(subtotal.toFixed(2)),
+        deliveryFee: parseFloat(deliveryFee.toFixed(2)),
+        total: parseFloat(total.toFixed(2)),
+        discount: 0
+    };
+};
+
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
         setCart: (state, action: PayloadAction<Product[]>) => {
             state.products = action.payload;
-            const subtotal: number = state.products.reduce((acc: number, item: Product) => acc + (item.productSellingPrice as number * item.quantity!), 0);
-            const deliveryFee: number = 10;
-            const total: number = subtotal + deliveryFee;
-
-            state.subtotal = parseFloat(subtotal.toFixed(2));
-            state.deliveryFee = parseFloat(deliveryFee.toFixed(2));
-            state.total = parseFloat(total.toFixed(2));
-            state.discount = 0;
+            const {subtotal, deliveryFee, total, discount} = calculateCartTotals(state.products);
+            state.subtotal = subtotal;
+            state.deliveryFee = deliveryFee;
+            state.total = total;
+            state.discount = discount;
         },
         setDiscount: (state, action: PayloadAction<number>) => {
             state.discount = action.payload;
@@ -58,14 +69,11 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchUserCart.fulfilled, (state, action) => {
             state.products = action.payload;
-            const subtotal: number = state.products.reduce((acc: number, item: Product) => acc + (item.productSellingPrice as number * item.quantity!), 0);
-            const deliveryFee: number = 10;
-            const total: number = subtotal + deliveryFee;
-
-            state.subtotal = parseFloat(subtotal.toFixed(2));
-            state.deliveryFee = parseFloat(deliveryFee.toFixed(2));
-            state.total = parseFloat(total.toFixed(2));
-            state.discount = 0
+            const {subtotal, deliveryFee, total, discount} = calculateCartTotals(state.products);
+            state.subtotal = subtotal;
+            state.deliveryFee = deliveryFee;
+            state.total = total;
+            state.discount = discount;
         });
     }
 });

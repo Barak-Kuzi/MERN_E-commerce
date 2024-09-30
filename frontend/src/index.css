@@ -17,6 +17,12 @@
     --background: #F4F1FF;
     --login-text: #1F2346;
     --login-text2: #8893A5;
+
+    --rating-star: #e5b30d
+}
+
+* {
+    /*border: #DC2626 solid 1px;*/
 }
 
 body {
@@ -550,125 +556,4 @@ code {
     color: white;
     font-size: 18px;
     font-weight: 600;
-}
-
-.category_list_container {
-    padding: 1rem;
-}
-
-.category_list_inner_container {
-    display: flex;
-    overflow: hidden;
-    gap: 1.25rem;
-    align-items: center;
-}
-
-.category_link {
-    text-decoration: none;
-    color: black;
-    font-weight: 400;
-    width: 5.5rem;
-}
-
-.category_image {
-    display: flex;
-    overflow: hidden;
-    padding: 1rem;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    border-radius: 9999px;
-    width: 3rem;
-    height: 3rem;
-    background-color: #ffffff;
-    border: lightgray solid 1px;
-}
-
-.category_image img {
-    object-fit: scale-down;
-    height: 4rem;
-    border-radius: 9999px;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-    mix-blend-mode: multiply;
-}
-
-.category_title {
-    font-size: 0.95rem;
-    line-height: 1.25rem;
-    text-align: center;
-    text-transform: capitalize;
-    margin-top: 0.5rem;
-    margin-bottom: -0.05rem;
-}
-
-.category_link:hover img {
-    transform: scale(1.15);
-}
-
-.category_link:hover {
-    font-weight: 600;
-    font-size: 18px;
-    transition: ease 0.3s;
-}
-
-.banner_slider_container {
-    margin: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 0.25rem;
-}
-
-.banner_slider_inner_container {
-    position: relative;
-    width: 100%;
-    height: 20rem;
-}
-
-.banner_slider_buttons_container {
-    display: flex;
-    position: absolute;
-    z-index: 10;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 0 0.5rem;
-    width: calc(100% - 1rem);
-
-}
-
-.banner_slider_buttons_container button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.25rem;
-    border-radius: 50%;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    font-size: 1.5rem;
-    line-height: 2rem;
-}
-
-.banner_slider_buttons_container button:hover {
-    background-color: #f2f2f2;
-}
-
-.banner_slider_image_container {
-    overflow: hidden;
-    width: 100%;
-    height: 20rem;
-}
-
-.banner_slider_image {
-    width: 100%;
-    height: 100%;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-}
-
-.banner_slider_image img {
-    width: 100%;
-    height: 100%;
 }

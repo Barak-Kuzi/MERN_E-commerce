@@ -23,6 +23,7 @@ export interface Product {
     productBrand: string;
     quantity?: number;
     lovedProduct?: boolean;
+    averageRating?: number;
 }
 
 export interface Order {

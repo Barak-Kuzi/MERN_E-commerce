@@ -6,11 +6,7 @@ import {toast} from "react-toastify";
 import styles from '../styles/LoginButton.module.css';
 
 import SummaryApi from "../common";
-import {setUserConnection, setUserDetails} from "../store/userSlice";
-import {setCart} from "../store/cartSlice";
-import {setWishlist} from "../store/wishlistSlice";
-import {setUserOrders} from "../store/orderSlice";
-import {setUserAddress} from "../store/addressSlice";
+import {handleUserLogout} from "../utils/handleUserLogout";
 
 function LoginButton(): React.JSX.Element {
     const dispatch = useDispatch();
@@ -26,27 +22,7 @@ function LoginButton(): React.JSX.Element {
         const resData = await response.json();
         if (resData.success) {
             toast(resData.message);
-
-            localStorage.removeItem('token');
-            localStorage.removeItem('expiration');
-
-            dispatch(setUserDetails(null));
-            dispatch(setUserConnection(false));
-            dispatch(setCart([]));
-            dispatch(setWishlist([]));
-            dispatch(setUserOrders([]));
-            dispatch(setUserAddress({
-                firstName: '',
-                lastName: '',
-                email: '',
-                street: '',
-                city: '',
-                state: '',
-                zipCode: '',
-                country: '',
-                phone: ''
-            }));
-
+            handleUserLogout(dispatch);
             navigate('/');
         } else {
             toast.error(resData.message);

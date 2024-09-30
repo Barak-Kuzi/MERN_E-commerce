@@ -84,6 +84,10 @@ const SummaryApi = {
     changePassword: {
         url: `${backendDomain}/api/change-password`,
         method: 'POST'
+    },
+    rateProduct: {
+        url: `${backendDomain}/api/rate-product`,
+        method: 'POST'
     }
 }
 

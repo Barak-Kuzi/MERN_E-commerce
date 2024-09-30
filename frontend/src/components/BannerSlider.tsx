@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {FaAngleRight} from "react-icons/fa6";
 import {FaAngleLeft} from "react-icons/fa6";
 
+import styles from '../styles/BannerSlider.module.css';
 import banner1 from "../assest/bannersProjcet/banner_1.webp";
 import banner2 from "../assest/bannersProjcet/banner_2.webp";
 import banner3 from "../assest/bannersProjcet/banner_3.webp";
@@ -53,9 +54,9 @@ export default function BannerSlider(): React.JSX.Element {
     }, [currentImage])
 
     return (
-        <div className="banner_slider_container">
-            <div className="banner_slider_inner_container">
-                <div className="banner_slider_buttons_container">
+        <div className={styles.banner_slider_container}>
+            <div className={styles.banner_slider_inner_container}>
+                <div className={styles.banner_slider_buttons_container}>
                     <button onClick={prevImage}>
                         <FaAngleLeft/>
                     </button>
@@ -64,11 +65,11 @@ export default function BannerSlider(): React.JSX.Element {
                     </button>
                 </div>
 
-                <div className="banner_slider_image_container">
+                <div className={styles.banner_slider_image_container}>
                     {bannerImages.map((image, index) => (
                         <div
                             key={index}
-                            className={`banner_slider_image`}
+                            className={styles.banner_slider_image}
                             style={{display: index === currentImage ? 'block' : 'none'}}
                         >
                             <img src={image.img} alt="banner"/>

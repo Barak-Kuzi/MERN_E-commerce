@@ -6,6 +6,7 @@
     border-width: 1px;
     width: 100%;
     max-width: 24rem;
+    margin-right: 0.5rem;
 }
 
 .search_bar_input {
@@ -36,5 +37,19 @@
 @media (max-width: 1024px) {
     .search_bar_container {
         max-width: 16rem;
+        margin-right: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .search_bar_container {
+        display: none;
+    }
+
+}
+
+@media (max-width: 384px) {
+    .search_bar_container {
+        display: none;
     }
 }
