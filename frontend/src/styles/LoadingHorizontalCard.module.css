@@ -1,0 +1,27 @@
+.loading_container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 3rem;
+    font-family: Mulish, sans-serif;
+}
+
+.category_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.category_container > h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.03rem;
+    margin: 0;
+}
+
+.products_container {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}

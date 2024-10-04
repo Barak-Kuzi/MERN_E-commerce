@@ -3,11 +3,12 @@
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+    margin-top: 0.5rem;
 }
 
 .category_list_inner_container {
     display: inline-flex;
-    gap: 1.25rem;
+    gap: 1.5rem;
     align-items: center;
 }
 
@@ -48,8 +49,10 @@
     line-height: 1.25rem;
     text-align: center;
     text-transform: capitalize;
+    letter-spacing: 0.02rem;
     margin-top: 0.5rem;
     margin-bottom: -0.05rem;
+    font-family: Mulish, sans-serif;
 }
 
 .category_link:hover img {
@@ -57,7 +60,10 @@
 }
 
 .category_link:hover {
+    transition: ease 0.3s;
+}
+
+.category_link:hover .category_title {
     font-weight: 600;
     font-size: 18px;
-    transition: ease 0.3s;
 }

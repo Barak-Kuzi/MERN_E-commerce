@@ -88,6 +88,14 @@ const SummaryApi = {
     rateProduct: {
         url: `${backendDomain}/api/rate-product`,
         method: 'POST'
+    },
+    getWishlist: {
+        url: `${backendDomain}/api/wishlist`,
+        method: 'GET'
+    },
+    getCategorizedProducts: {
+        url: `${backendDomain}/api/categorized-products`,
+        method: 'GET'
     }
 }
 

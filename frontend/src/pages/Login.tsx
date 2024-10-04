@@ -87,6 +87,7 @@ function Login() {
                 if (secondResData.success) {
                     // userSlice
                     dispatch(setUserDetails(secondResData.data));
+                    localStorage.setItem('userId', secondResData.data._id);
                     dispatch(setUserConnection(true));
                     // cartSlice
                     dispatch(fetchUserCart(secondResData.data.cart));

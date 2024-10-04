@@ -3,10 +3,10 @@ import {useSelector} from "react-redux";
 
 import styles from '../styles/SearchProduct.module.css';
 
-import VerticalProductCard from "../components/VerticalProductCard";
 import {Product} from "../models";
 import SummaryApi from "../common";
 import {RootState} from "../store/store";
+import VerticalProductCard from "../components/VerticalProductCard";
 
 function SearchProduct(): React.JSX.Element {
     const [products, setProducts] = useState<Product[]>([]);
@@ -65,7 +65,13 @@ function SearchProduct(): React.JSX.Element {
 
             {
                 products.length !== 0 && !isLoading && (
-                    <VerticalProductCard products={products}/>
+                    <div className={styles.search_products}>
+                        {products.map((product, index) => {
+                            return (
+                                <VerticalProductCard key={`${product.productName}_${index}`} product={product}/>
+                            );
+                        })}
+                    </div>
                 )
             }
         </div>

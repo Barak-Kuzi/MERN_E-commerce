@@ -1,10 +1,11 @@
 .banner_slider_container {
-    margin: auto;
+    /*margin: auto;*/
     padding-left: 1rem;
     padding-right: 1rem;
     border-radius: 0.25rem;
     width: 100%;
     box-sizing: border-box;
+    margin: 1rem 0;
 }
 
 .banner_slider_inner_container {

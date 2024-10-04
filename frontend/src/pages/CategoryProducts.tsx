@@ -4,10 +4,10 @@ import {useNavigate, useLocation} from "react-router-dom";
 import styles from '../styles/CategoryProducts.module.css';
 
 import SummaryApi from "../common";
-import productCategory from "../utils/productCategory";
-import VerticalProductCard from "../components/VerticalProductCard";
-import {CustomResponse} from "../utils/CustomResponse";
 import {Product} from "../models";
+import productCategory from "../utils/productCategory";
+import {CustomResponse} from "../utils/CustomResponse";
+import VerticalProductCard from "../components/VerticalProductCard";
 
 export default function CategoryProducts(): React.JSX.Element {
     const location = useLocation();
@@ -50,7 +50,7 @@ export default function CategoryProducts(): React.JSX.Element {
     }, [fetchProducts]);
 
     const handleOnChangeSortBy = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
+        const {value} = e.target;
         setSortBy(value);
 
         setFilteredProducts((prevState: Product[]) => {
@@ -83,7 +83,6 @@ export default function CategoryProducts(): React.JSX.Element {
         const params = new URLSearchParams(location.search);
         const categories = params.getAll('category');
         setSelectedCategories(categories);
-        console.log('CategoryProducts useEffect');
     }, [location.search]);
 
     console.log('CategoryProducts re-rendered');
@@ -137,7 +136,11 @@ export default function CategoryProducts(): React.JSX.Element {
                     <div className={styles.filtered_products_container}>
                         {
                             filteredProducts.length !== 0 && !isLoading && (
-                                <VerticalProductCard products={filteredProducts}/>
+                                filteredProducts.map((product, index) => {
+                                    return (
+                                        <VerticalProductCard key={`${product.productName}_${index}`} product={product}/>
+                                    );
+                                })
                             )
                         }
                     </div>

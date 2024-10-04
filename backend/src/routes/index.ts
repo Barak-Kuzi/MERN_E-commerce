@@ -22,6 +22,9 @@ import addToWishlistController from "../controller/user/addToWishlistController.
 import changePasswordController from "../controller/user/changePasswordController.js";
 import ratingProductController from "../controller/product/ratingProductController.js";
 
+import getWishlistController from "../controller/user/getWishlistController.js";
+import getCategorizedProducts from "../controller/product/getCategorizedProducts.js";
+
 const router = Router();
 
 // User routes
@@ -30,6 +33,7 @@ router.post("/signin", userSignInController);
 router.get('/user-details', authToken, userDetailsController);
 router.post('/change-password', authToken, changePasswordController);
 router.get('/userLogout', userLogoutController);
+router.get('/wishlist', authToken, getWishlistController);
 
 // Admin routes
 router.get('/all-users', authToken, allUsersController);
@@ -46,6 +50,7 @@ router.get('/search', searchProductController);
 router.post('/filter-products', getFilteredProductsController);
 router.post('/add-to-wishlist', authToken, addToWishlistController);
 router.post('/rate-product', authToken, ratingProductController);
+router.get('/categorized-products', getCategorizedProducts);
 
 // Cart routes
 router.post('/add-to-cart', authToken, addToCartController);

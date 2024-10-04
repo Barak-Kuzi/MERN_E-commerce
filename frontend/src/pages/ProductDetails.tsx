@@ -1,28 +1,31 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 
-import customStyles from '../styles/ProductDetailsVerCard.module.css';
 import styles from '../styles/ProductDetails.module.css';
 
-import LoadingProductDetails from "../components/LoadingProductDetails";
-import displayCurrency from "../utils/displayCurrency";
-import ProductImages from "../components/ProductImages";
+import SummaryApi from "../common";
 import VerticalProductCard from "../components/VerticalProductCard";
+import LoadingProductDetails from "../components/LoadingProductDetails";
+import ProductImages from "../components/ProductImages";
+import StarRating from "../components/StarRating";
+import {CustomResponse} from "../utils/CustomResponse";
+import displayCurrency from "../utils/displayCurrency";
+import {useFetchProductsByCategory} from "../hooks/useFetchProductsByCategory";
 import useFetchProductById from "../hooks/useFetchProductById";
 import useAddToCart from "../hooks/useAddToCart";
-import SummaryApi from "../common";
-import {CustomResponse} from "../utils/CustomResponse";
-import StarRating from "../components/StarRating";
+import LoadingVerticalCard from "../components/LoadingVerticalCard";
 
 const ProductDetails: React.FC = () => {
     const {productId} = useParams();
     const {product, isLoading, error} = useFetchProductById(productId!);
     const {handleAddToCartButton} = useAddToCart();
+    const loadingList = new Array(3).fill(0);
+    const {
+        products,
+        isLoading: isLoadingProductsCategory
+    } = useFetchProductsByCategory({category: product?.productCategory as string, productDetailsLoading: isLoading});
 
     console.log('ProductDetails component re-rendered');
-
-    if (isLoading)
-        return (<p>Loading...</p>);
 
     const handleRatingProduct = async (starValue: number) => {
         const response = await fetch(SummaryApi.rateProduct.url, {
@@ -98,10 +101,27 @@ const ProductDetails: React.FC = () => {
                     )
                 }
             </div>
-            {
-                product && (<VerticalProductCard title={'Recommended Products'} category={product?.productCategory}
-                                                 customClassName={customStyles.vertical_product_card_container}/>)
-            }
+
+            <h2 className={styles.title_page}>Recommended Products</h2>
+            <div className={styles.products_category_container}>
+                {
+                    isLoadingProductsCategory &&
+                    loadingList.map((_, index) => {
+                        return <LoadingVerticalCard key={index}/>
+
+                    })
+                }
+                {
+                    !isLoadingProductsCategory &&
+                    products && (
+                        products.map((product, index) => {
+                            return (
+                                <VerticalProductCard key={`${product.productName}_${index}`} product={product}/>
+                            )
+                        })
+                    )
+                }
+            </div>
         </div>
     );
 }

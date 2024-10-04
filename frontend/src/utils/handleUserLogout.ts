@@ -9,6 +9,7 @@ export const handleUserLogout = (dispatch: AppDispatch) => {
     // Clear localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('userId');
 
     // Clear Redux store data
     dispatch(setUserDetails(null));

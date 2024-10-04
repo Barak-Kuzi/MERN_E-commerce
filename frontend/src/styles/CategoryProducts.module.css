@@ -1,6 +1,6 @@
 .page_container {
-    /*margin: auto;*/
     padding: 1rem;
+    font-family: Mulish, sans-serif;
 }
 
 .category_products_inner_container {
@@ -15,7 +15,6 @@
     padding: 0.5rem;
     width: 100%;
     background-color: #ffffff;
-    /*border: #DC2626 1px solid;*/
 }
 
 .filter_menu::-webkit-scrollbar {
@@ -56,20 +55,26 @@
 }
 
 .products_container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin: 0 2rem;
+
 }
 
 .search_results_title {
-    margin: 0.5rem 0 1rem 1rem;
-    font-size: 1.125rem;
+    margin: 0.75rem 0 1.5rem 1rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.03rem;
     line-height: 1.75rem;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .filtered_products_container {
     overflow-y: scroll;
-    min-height: calc(100vh - 120px);
-    max-height: calc(100vh - 120px);
     padding-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.filtered_products_container::-webkit-scrollbar {
+    display: none;
 }

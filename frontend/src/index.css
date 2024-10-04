@@ -18,7 +18,8 @@
     --login-text: #1F2346;
     --login-text2: #8893A5;
 
-    --rating-star: #e5b30d
+    --rating-star: #e5b30d;
+    --loading-green: #8de5a1;
 }
 
 * {

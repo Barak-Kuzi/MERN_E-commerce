@@ -10,6 +10,7 @@ export interface User {
     createdAt?: Date;
     firstName?: string;
     lastName?: string;
+    wishlist?: Wishlist[];
 }
 
 export interface Product {
@@ -24,6 +25,7 @@ export interface Product {
     quantity?: number;
     lovedProduct?: boolean;
     averageRating?: number;
+    inUsersWishlist?: WishlistUsers[];
 }
 
 export interface Order {
@@ -43,4 +45,14 @@ export interface Address {
     zipCode: string;
     country: string;
     phone: string;
+}
+
+interface Wishlist {
+    productId: string;
+    _id: string;
+}
+
+interface WishlistUsers {
+    userId: string;
+    _id: string;
 }

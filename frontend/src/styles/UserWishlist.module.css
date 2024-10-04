@@ -1,7 +1,7 @@
 .user_wishlist_page {
     display: flex;
-    /*justify-content: center;*/
     align-items: center;
-    margin: -2rem 0 0 1rem;
+    gap: 3rem;
+    margin: -1rem 0 0 2rem;
     font-family: Mulish, sans-serif;
 }

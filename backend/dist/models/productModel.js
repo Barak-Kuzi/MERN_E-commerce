@@ -1,4 +1,11 @@
 import mongoose from "mongoose";
+const lovedProductSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
+});
 const ratingSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -48,6 +55,10 @@ const productSchema = new mongoose.Schema({
     averageRating: {
         type: Number,
         default: 0.0
+    },
+    inUsersWishlist: {
+        type: [lovedProductSchema],
+        default: [],
     }
 }, {
     timestamps: true

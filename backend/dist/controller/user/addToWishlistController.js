@@ -1,4 +1,5 @@
 import userModel from "../../models/userModel.js";
+import productModel from "../../models/productModel.js";
 const addToWishlistController = async (req, res) => {
     try {
         const userSession = req.user?.id;
@@ -26,6 +27,15 @@ const addToWishlistController = async (req, res) => {
             });
         }
         const productIndex = user.wishlist.findIndex(item => item.productId.toString() === productId);
+        const product = await productModel.findById(productId);
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                error: true,
+                message: "Product not found"
+            });
+        }
+        const productLovedByUser = product.inUsersWishlist.findIndex(lovedProduct => lovedProduct.userId.toString() === userSession);
         let message;
         let wishlistAction;
         if (productIndex > -1) {
@@ -38,12 +48,22 @@ const addToWishlistController = async (req, res) => {
             message = "Product added to wishlist successfully";
             wishlistAction = "add";
         }
+        if (productLovedByUser > -1) {
+            product.inUsersWishlist.splice(productLovedByUser, 1);
+        }
+        else {
+            product.inUsersWishlist.push({ userId: userSession });
+        }
         await user.save();
+        await product.save();
         return res.status(200).json({
             success: true,
             error: false,
             message: message,
-            data: wishlistAction,
+            data: {
+                action: wishlistAction,
+                product
+            }
         });
     }
     catch (error) {
