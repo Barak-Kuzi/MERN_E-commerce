@@ -1,37 +1,44 @@
 # TechMarket
 
-**TechMarket** is a comprehensive web application designed to facilitate seamless online shopping experiences. Built with modern web development practices, TechMarket offers a user-friendly interface and robust features to enhance the shopping journey.
+**TechMarket** is a full-stack e-commerce web application designed to deliver a seamless online shopping experience. The project is built using the MERN stack (MongoDB, Express, React, Node.js) and integrates a variety of modern technologies to provide efficient product management, secure transactions, and smooth user navigation.
 
 ## Key Features
 
-- **Secure User Authentication**: Reliable sign-up and login processes ensure user data security.
-- **Edit Profile**: Updating user profile information and uploading profile pictures.
+- **Secure User Authentication**: Secure login, registration, and session management with JWT.
+- **User Management**: Updating user profile information, uploading profile pictures, and changing a password.
 - **Product Management**: Admin capabilities to add, edit, and manage products.
-- **Cart Management**: Efficiently add, remove, and update products in the cart.
-- **Order History**: View past orders and purchase history.
-- **Wishlist**: Save products for future reference.
+- **Product Rating and Reviews**: Users can rate products from 1 to 5 stars, with dynamic average rating calculations.
+- **Cart Management**: Add, remove, and manage products in the cart with live updates.
+- **Discounts**: Apply discounts during checkout.
+- **Order Management**: Users can place orders, view order details, and track order history.
+- **Wishlist**: Add and manage favorite products.
 - **Search Product**: Easily search for products using the search bar and filtering by categories.
 - **Real-Time Data Syncing**: Synchronized data updates and offline persistence.
+- **Real-time Notifications**: Get updates and notifications for actions like adding to the cart or completing purchases.
+- **Responsive Design**: Optimized for mobile, tablet, and desktop screens.
 
 ## Technology Stack
 
 ### Frontend
 
-- **TypeScript**: Primary language for frontend development.
-- **React**: Library for building user interfaces.
-- **Redux**: State management.
-- **React Router**: For routing.
+- **TypeScript**: Strongly typed JavaScript for better development experience.
+- **React**: React is used to build dynamic user interfaces in web applications.
+- **Redux**: For state management across the application.
+- **React Router**: For client-side routing.
 - **React Toastify**: For notifications.
-- **CSS Modules**: For styling.
+- **HTML5/CSS3**: Markup and styling.
+- **CSS Modules**: For scoped styling.
 
 ### Backend
 
 - **Node.js**: JavaScript runtime for backend development.
 - **Express**: Web framework for Node.js.
 - **MongoDB**: NoSQL database.
-- **Mongoose**: ODM for MongoDB.
-- **JWT**: For authentication.
-- **Bcrypt**: For password hashing.
+- **Mongoose**: ODM to interact with MongoDB.
+- **JWT (JSON Web Tokens)**: For secure authentication and authorization.
+- **Bcrypt**: For password encryption.
+- **Dotenv**: For environment variable management.
+- **Stripe API**: For handling payments and transactions.
 
 ## Project Architecture
 
@@ -42,36 +49,41 @@ The project is organized for scalability and maintainability:
 - **Components**: Reusable UI components.
 - **Pages**: Different pages of the application.
 - **Hooks**: Custom hooks for various functionalities.
-- **Store**: Redux store configuration.
-- **Styles**: CSS modules for styling.
-- **Utils**: Utility functions.
+- **Store**: Redux store configuration and Redux slices for managing different application states.
+- **Styles**: CSS modules for styling individual components and pages.
+- **Utils**: Utility functions and helpers used across the app.
 
 ### Backend
 
 - **Controllers**: Handle incoming requests and return responses.
 - **Models**: Mongoose models representing the application's data.
 - **Routes**: Define the API endpoints.
-- **Middlewares**: Custom middleware functions.
-- **Config**: Configuration files.
+- **Middlewares**: Middleware functions for authentication, error handling, etc.
+- **Config**: Configuration files, including database connection settings.
+- **Utils**: Utility functions and helpers used across the app.
 
 ## External Libraries
 
 ### Frontend
 
-- **react**: Library for building user interfaces.
-- **react-redux**: Official React bindings for Redux.
-- **react-router-dom**: DOM bindings for React Router.
-- **react-toastify**: For notifications.
+- **react**: Core library for building the user interface.
+- **@types/react**: Type definitions for React.
+- **react-redux**: Integration of Redux with React for state management.
+- **redux-toolkit**: Simplified Redux development with modern patterns.
+- **react-router-dom**: Routing for different pages in the application.
+- **react-toastify**: For notification popups.
 - **axios**: Promise-based HTTP client.
 
 ### Backend
 
 - **express**: Web framework for Node.js.
-- **mongoose**: ODM for MongoDB.
-- **jsonwebtoken**: For authentication.
-- **bcryptjs**: For password hashing.
-- **cors**: For enabling CORS.
-- **dotenv**: For environment variables.
+- **nodemon**: For auto-restarting the server during development.
+- **mongoose**: ODM library for MongoDB to manage database models and queries.
+- **jsonwebtoken**: For creating and verifying JWTs.
+- **bcryptjs**: For hashing and securely storing user passwords.
+- **cors**: For enabling CORS across different origins.
+- **dotenv**: For environment variable management.
+- **stripe**: Stripe API integration for handling payments.
 
 ## Prerequisites
 
@@ -142,6 +154,7 @@ Special thanks to the following resources:
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Mongoose](https://mongoosejs.com/)
+- [Stripe](https://stripe.com/)
 
 ## Contact
 
