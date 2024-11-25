@@ -96,7 +96,15 @@ const SummaryApi = {
     getCategorizedProducts: {
         url: `${backendDomain}/api/categorized-products`,
         method: 'GET'
-    }
+    },
+    forgotPassword: {
+        url: `${backendDomain}/api/forgot-password`,
+        method: 'POST',
+    },
+    resetPassword: {
+        url: `${backendDomain}/api/reset-password`,
+        method: 'PUT',
+    },
 }
 
 export default SummaryApi;

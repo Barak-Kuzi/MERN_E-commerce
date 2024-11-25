@@ -22,6 +22,7 @@ import changePasswordController from "../controller/user/changePasswordControlle
 import ratingProductController from "../controller/product/ratingProductController.js";
 import getWishlistController from "../controller/user/getWishlistController.js";
 import getCategorizedProducts from "../controller/product/getCategorizedProducts.js";
+import { forgotPassword, resetPassword } from "../controller/user/authContorller.js";
 const router = Router();
 // User routes
 router.post("/signup", userSignUpController);
@@ -30,6 +31,8 @@ router.get('/user-details', authToken, userDetailsController);
 router.post('/change-password', authToken, changePasswordController);
 router.get('/userLogout', userLogoutController);
 router.get('/wishlist', authToken, getWishlistController);
+router.post('/forgot-password', forgotPassword);
+router.put('/reset-password/:token', resetPassword);
 // Admin routes
 router.get('/all-users', authToken, allUsersController);
 router.post('/update-user', authToken, updateUserController);

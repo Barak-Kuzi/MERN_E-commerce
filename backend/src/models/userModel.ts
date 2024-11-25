@@ -98,7 +98,9 @@ const userSchema = new mongoose.Schema({
     },
     cart: [cartItemSchema],
     wishlist: [wishlistSchema],
-    address: addressSchema
+    address: addressSchema,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date
 }, {
     timestamps: true
 });
@@ -129,6 +131,8 @@ export interface User {
         country: string;
         phone: string;
     };
+    resetPasswordToken?: string;
+    resetPasswordExpire?: Date;
     createdAt?: Date;
     updatedAt?: Date;
 }

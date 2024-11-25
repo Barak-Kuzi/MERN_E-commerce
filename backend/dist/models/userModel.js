@@ -93,7 +93,9 @@ const userSchema = new mongoose.Schema({
     },
     cart: [cartItemSchema],
     wishlist: [wishlistSchema],
-    address: addressSchema
+    address: addressSchema,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date
 }, {
     timestamps: true
 });

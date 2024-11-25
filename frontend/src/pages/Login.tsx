@@ -166,21 +166,24 @@ function Login() {
                         Reset password
                     </Link>
                 </div>
-                <div className={styles.horizontal_line_container}>
-                    <div className={styles.horizontal_line}></div>
-                    Or
-                    <div className={styles.horizontal_line}></div>
-                </div>
-                <div className={styles.social_media_container}>
-                    <div>
-                        <img src={google} alt={"Google"}/>
-                        Sign in with Google
-                    </div>
-                    <div>
-                        <img src={apple} alt={"Apple"}/>
-                        Sign in with Apple
-                    </div>
-                </div>
+
+                {/*Sign In via Google or Apple*/}
+                {/*<div className={styles.horizontal_line_container}>*/}
+                {/*    <div className={styles.horizontal_line}></div>*/}
+                {/*    Or*/}
+                {/*    <div className={styles.horizontal_line}></div>*/}
+                {/*</div>*/}
+                {/*<div className={styles.social_media_container}>*/}
+                {/*    <div>*/}
+                {/*        <img src={google} alt={"Google"}/>*/}
+                {/*        Sign in with Google*/}
+                {/*    </div>*/}
+                {/*    <div>*/}
+                {/*        <img src={apple} alt={"Apple"}/>*/}
+                {/*        Sign in with Apple*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+
                 <div className={styles.signup_container}>
                     <p>Don't have an account?</p>
                     <Link to={"/sign-up"} className={styles.signup_button}>Sign Up</Link>

@@ -104,21 +104,23 @@ export default function SignUp(): React.JSX.Element {
                         <h1>Get Started Now</h1>
                         <p>Enter your credentials to access your account</p>
                     </div>
-                    <div className={styles.social_media_container_signup}>
-                        <div>
-                            <img src={google} alt={"Google"}/>
-                            Sign up with Google
-                        </div>
-                        <div>
-                            <img src={apple} alt={"Apple"}/>
-                            Sign up with Apple
-                        </div>
-                    </div>
-                    <div className={styles.horizontal_line_container}>
-                        <div className={styles.horizontal_line}></div>
-                        Or
-                        <div className={styles.horizontal_line}></div>
-                    </div>
+
+                    {/*Sign Up via Google or Apple*/}
+                    {/*<div className={styles.social_media_container_signup}>*/}
+                    {/*    <div>*/}
+                    {/*        <img src={google} alt={"Google"}/>*/}
+                    {/*        Sign up with Google*/}
+                    {/*    </div>*/}
+                    {/*    <div>*/}
+                    {/*        <img src={apple} alt={"Apple"}/>*/}
+                    {/*        Sign up with Apple*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    {/*<div className={styles.horizontal_line_container}>*/}
+                    {/*    <div className={styles.horizontal_line}></div>*/}
+                    {/*    Or*/}
+                    {/*    <div className={styles.horizontal_line}></div>*/}
+                    {/*</div>*/}
 
                     <div className={styles.text_field}>
                         <Input

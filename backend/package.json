@@ -22,6 +22,7 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.4",
+    "nodemailer": "^6.9.16",
     "stripe": "^16.10.0"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.5.0",
+    "@types/nodemailer": "^6.4.17",
     "i": "^0.3.7",
     "nodemon": "^3.1.4",
     "typescript": "^5.5.4"

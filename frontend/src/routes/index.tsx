@@ -22,6 +22,7 @@ import UserWishlist from "../pages/UserWishlist";
 import UserSettings from "../pages/UserSettings";
 import UserDeliveryAddress from "../pages/UserDeliveryAddress";
 import {actionLogout, loaderToken} from "../utils/auth";
+import ResetPassword from "../pages/ResetPassword";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
             {
                 path: "forgot-password",
                 element: <ForgotPassword/>
+            },
+            {
+                path: "reset-password/:token",
+                element: <ResetPassword />
             },
             {
                 path: "sign-up",
