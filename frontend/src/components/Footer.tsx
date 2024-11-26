@@ -6,6 +6,7 @@ import my_logo from '../assest/my_logo.png';
 import Facebook from '../assest/facebook_icon.png';
 import Twitter from '../assest/twitter_icon.png';
 import Linkedin from '../assest/linkedin_icon.png';
+import {Link} from "react-router-dom";
 
 export default function Footer(): React.JSX.Element {
 
@@ -17,25 +18,25 @@ export default function Footer(): React.JSX.Element {
                 <div className={styles.footer_content_left}>
                     <img src={my_logo} alt="logo" className={styles.logo}/>
                     <p>{content}</p>
-                    <div className={styles.social_media_icons}>
-                        <img src={Facebook} alt="Facebook icon"/>
-                        <img src={Twitter} alt="Twitter icon"/>
-                        <img src={Linkedin} alt="Linkedin icon"/>
-                    </div>
+                    {/*<div className={styles.social_media_icons}>*/}
+                    {/*    <img src={Facebook} alt="Facebook icon"/>*/}
+                    {/*    <img src={Twitter} alt="Twitter icon"/>*/}
+                    {/*    <img src={Linkedin} alt="Linkedin icon"/>*/}
+                    {/*</div>*/}
                 </div>
                 <div className={styles.footer_content_center}>
                     <h2>COMPANY</h2>
                     <ul>
-                        <li>Home</li>
-                        <li>About Us</li>
-                        <li>Delivery</li>
-                        <li>Privacy Policy</li>
+                        <li><Link to="/" className={styles.footer_link}>Home</Link></li>
+                        <li><Link to="/about-us" className={styles.footer_link}>About Us</Link></li>
+                        {/*<li>Delivery</li>*/}
+                        {/*<li>Privacy Policy</li>*/}
                     </ul>
                 </div>
                 <div className={styles.footer_content_right}>
                     <h2>GET IN TOUCH</h2>
                     <ul>
-                        <li>Address: 123 Street Name, City, England</li>
+                        <li>Address: Street Name, Tel-Aviv, Israel</li>
                         <li>Phone: +123 456 789</li>
                         <li>Email: contant@tech-market.com</li>
                     </ul>

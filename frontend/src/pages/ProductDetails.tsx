@@ -77,7 +77,7 @@ const ProductDetails: React.FC = () => {
                                     isClickable={true}
                                     onRate={handleRatingProduct}
                                 />
-                                <span className={styles.product_reviews}>20k reviews</span>
+                                {/*<span className={styles.product_reviews}>20k reviews</span>*/}
                             </div>
 
                             <div className={styles.product_prices_container}>
@@ -95,7 +95,7 @@ const ProductDetails: React.FC = () => {
                                         onClick={handleAddToCartButton}>
                                     Add To Cart
                                 </button>
-                                <button className={styles.buy_button}>Buy Now</button>
+                                {/*<button className={styles.buy_button}>Buy Now</button>*/}
                             </div>
                         </div>
                     )

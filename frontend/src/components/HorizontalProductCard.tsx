@@ -42,20 +42,20 @@ export default function HorizontalProductCard({product}: HorizontalProductCardPr
 
                 <div className={styles.product_card_details_prices_container}>
                     <div className={styles.old_price_and_discount_container}>
-                                            <span className={styles.selling_price}>
-                                                {`$` + product?.productSellingPrice}
-                                            </span>
+                        <span className={styles.selling_price}>
+                            {`$` + product?.productSellingPrice}
+                        </span>
                         <span className={styles.old_price}>
-                                                {`$` + product?.productPrice}
-                                            </span>
+                            {`$` + product?.productPrice}
+                        </span>
                     </div>
 
                     <div className={styles.rating}>
-                        <StarRating totalStars={5} ratingProduct={3.5 || product?.averageRating || 0}
+                        <StarRating totalStars={5} ratingProduct={product?.averageRating || 0}
                                     isClickable={false}/>
-                        <span className={styles.reviews}>
-                                                20k reviews
-                                                </span>
+                        {/*<span className={styles.reviews}>*/}
+                        {/*    20k reviews*/}
+                        {/*</span>*/}
                     </div>
                 </div>
 
@@ -65,7 +65,6 @@ export default function HorizontalProductCard({product}: HorizontalProductCardPr
                         Add To Cart
                     </button>
                     <button
-                        // className={`${styles.heart_icon_button} ${product?.lovedProduct ? styles.in_wishlist : ""}`}
                         className={`${styles.heart_icon_button} ${(lovedProduct) ? styles.in_wishlist : ""}`}
                         onClick={handleWishlistButton} product-id={product?._id}
                     >

@@ -31,6 +31,10 @@ export default function VerticalProductCard({product}: VerticalProductCardProps)
         }
     }
 
+    const discountPercentage = typeof product?.productPrice === 'number' && typeof product?.productSellingPrice === 'number'
+        ? ((product.productPrice - product.productSellingPrice) / product.productPrice) * 100
+        : 0;
+
     return (
         <Link className={styles.product_card} key={`${product?.productName}`}
               to={`/product-details/${product?._id}`}>
@@ -51,7 +55,9 @@ export default function VerticalProductCard({product}: VerticalProductCardProps)
                         <span className={styles.product_old_price}>
                             {`$${product?.productPrice}`}
                         </span>
-                        <span className={styles.product_discount_percent}>save 25%</span>
+                        <span className={styles.product_discount_percent}>
+                            {`save ${discountPercentage.toFixed(0)}%`}
+                        </span>
                     </div>
                 </div>
 
@@ -61,7 +67,7 @@ export default function VerticalProductCard({product}: VerticalProductCardProps)
                         ratingProduct={product?.averageRating || 0}
                         isClickable={false}
                     />
-                    <span className={styles.product_reviews}>20k reviews</span>
+                    {/*<span className={styles.product_reviews}>20k reviews</span>*/}
                 </div>
 
                 <div className={styles.buttons_container}>
@@ -86,9 +92,10 @@ export default function VerticalProductCard({product}: VerticalProductCardProps)
                             </g>
                         </svg>
                     </button>
-                    <button className={styles.icon_button}>
+                    <Link className={styles.icon_button} key={`${product?.productName}`}
+                          to={`/product-details/${product?._id}`}>
                         <img src={eye} alt={"Add to Wishlist"}/>
-                    </button>
+                    </Link>
                 </div>
             </div>
         </Link>

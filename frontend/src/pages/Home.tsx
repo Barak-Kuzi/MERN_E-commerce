@@ -68,20 +68,6 @@ export default function Home(): React.JSX.Element {
         fetchProducts();
     }, [userConnected]);
 
-    // return (
-    //     <div className={styles.home_page_container}>
-    //         <CategoryList/>
-    //         <BannerSlider/>
-    //             <OldHorizontalProductCard title={'Phones'} category={'phones'}/>
-    //             <OldHorizontalProductCard title={'Headphones'} category={'headphones'}/>
-    //             <OldHorizontalProductCard title={'Desktops'} category={'desktops'}/>
-    //             <OldHorizontalProductCard title={'Watches'} category={'watches'}/>
-    //             <OldHorizontalProductCard title={'Laptops'} category={'laptops'}/>
-    //             <OldHorizontalProductCard title={'Televisions'} category={'televisions'}/>
-    //         <AppDownload/>
-    //     </div>
-    // );
-
     return (
         <div className={styles.home_page_container}>
             <CategoryList/>
@@ -114,7 +100,7 @@ export default function Home(): React.JSX.Element {
                     );
                 })}
             </div>}
-            <AppDownload/>
+            {/*<AppDownload/>*/}
         </div>
     );
 }

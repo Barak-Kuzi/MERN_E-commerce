@@ -23,6 +23,7 @@ import UserSettings from "../pages/UserSettings";
 import UserDeliveryAddress from "../pages/UserDeliveryAddress";
 import {actionLogout, loaderToken} from "../utils/auth";
 import ResetPassword from "../pages/ResetPassword";
+import AboutUs from "../pages/AboutUs";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
                 element: <Home/>
             },
             {
+                path: "about-us",
+                element: <AboutUs/>
+            },
+            {
                 path: "login",
                 element: (
                     <ProtectedRoute pathProtection={"/"} isUserPanel={false}>
@@ -43,8 +48,8 @@ const router = createBrowserRouter([
                 )
             },
             {
-              path: "logout",
-              action: actionLogout
+                path: "logout",
+                action: actionLogout
             },
             {
                 path: "forgot-password",
@@ -52,7 +57,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "reset-password/:token",
-                element: <ResetPassword />
+                element: <ResetPassword/>
             },
             {
                 path: "sign-up",

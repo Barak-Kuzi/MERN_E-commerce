@@ -18,6 +18,16 @@
     gap: 80px;
 }
 
+.footer_link {
+    color: white;
+    text-decoration: none;
+}
+
+.footer_link:hover {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
 .footer_content_left, .footer_content_center, .footer_content_right {
     display: flex;
     flex-direction: column;

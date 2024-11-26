@@ -15,11 +15,12 @@ interface UserAddress {
 }
 
 interface DeliveryAddressFormProps {
-    userAddress: UserAddress;
+    userAddress: UserAddress | undefined;
     handleOnChange: ((e: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
 }
 
 function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormProps): React.JSX.Element {
+
     return (
         <div className={styles.form_container}>
             <p className={styles.title}>Delivery Address</p>
@@ -29,7 +30,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     <input type="text"
                            placeholder="First name"
                            name="firstName"
-                           value={userAddress.firstName}
+                           value={userAddress?.firstName || ''}
                            onChange={handleOnChange}
                            readOnly={!handleOnChange}
                     />
@@ -39,7 +40,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     <input type="text"
                            placeholder="Last name"
                            name="lastName"
-                           value={userAddress.lastName}
+                           value={userAddress?.lastName || ''}
                            onChange={handleOnChange}
                            readOnly={!handleOnChange}
                     />
@@ -51,7 +52,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     type="email"
                     placeholder="Email address"
                     name="email"
-                    value={userAddress.email}
+                    value={userAddress?.email || ''}
                     onChange={handleOnChange}
                     readOnly={!handleOnChange}
                 />
@@ -62,7 +63,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     type="text"
                     placeholder="Street"
                     name="street"
-                    value={userAddress.street}
+                    value={userAddress?.street || ''}
                     onChange={handleOnChange}
                     readOnly={!handleOnChange}
                 />
@@ -75,7 +76,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         type="text"
                         placeholder="City"
                         name="city"
-                        value={userAddress.city}
+                        value={userAddress?.city || ''}
                         onChange={handleOnChange}
                         readOnly={!handleOnChange}
                     />
@@ -86,7 +87,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         type="text"
                         placeholder="State"
                         name="state"
-                        value={userAddress.state}
+                        value={userAddress?.state || ''}
                         onChange={handleOnChange}
                         readOnly={!handleOnChange}
                     />
@@ -99,7 +100,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         type="text"
                         placeholder="Zip code"
                         name="zipCode"
-                        value={userAddress.zipCode}
+                        value={userAddress?.zipCode || ''}
                         onChange={handleOnChange}
                         readOnly={!handleOnChange}
                     />
@@ -110,7 +111,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                         type="text"
                         placeholder="Country"
                         name="country"
-                        value={userAddress.country}
+                        value={userAddress?.country || ''}
                         onChange={handleOnChange}
                         readOnly={!handleOnChange}
                     />
@@ -122,7 +123,7 @@ function DeliveryAddressForm({userAddress, handleOnChange}: DeliveryAddressFormP
                     type="text"
                     placeholder="phone"
                     name="phone"
-                    value={userAddress.phone}
+                    value={userAddress?.phone || ''}
                     onChange={handleOnChange}
                     readOnly={!handleOnChange}
                 />

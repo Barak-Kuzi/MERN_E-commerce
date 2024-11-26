@@ -1,21 +1,22 @@
 import React, {useRef, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 
 import styles from "../styles/UserProfile.module.css";
 import default_profile_image from "../assest/default_profile_image.webp";
 
 import Input from "../components/Input";
-import {RootState} from "../store/store";
+import {AppDispatch, RootState} from "../store/store";
 import useInput from "../hooks/useInput";
 import SummaryApi from "../common";
 import {CustomResponse} from "../utils/CustomResponse";
 import uploadImage from "../utils/uploadImage";
 import Loader from "../components/Loader";
+import {setUserDetails} from "../store/userSlice";
 
 function UserProfile() {
     const {userConnected, user: userDetails} = useSelector((state: RootState) => state.user);
-
+    const dispatch: AppDispatch = useDispatch();
     const [firstNameUser, lastNameUser]: [string, string] = userConnected ? userDetails?.name.split(" ") as [string, string] : ["", ""];
 
     const {
@@ -106,6 +107,7 @@ function UserProfile() {
 
             if (resData.success) {
                 toast.success(resData.message);
+                dispatch(setUserDetails(resData.data));
             }
 
             if (resData.error) {
