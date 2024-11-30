@@ -9,10 +9,7 @@ import Footer from "./components/Footer";
 import {getTokenDuration} from "./utils/auth";
 import {CustomResponse} from "./utils/CustomResponse";
 import SummaryApi from "./common";
-import {
-    setUserConnection,
-    setUserDetails,
-} from "./store/userSlice";
+import {setUserConnection, setUserDetails,} from "./store/userSlice";
 import {AppDispatch} from "./store/store";
 import {fetchUserCart} from "./store/cartSlice";
 import {fetchOrders} from "./store/orderSlice";
@@ -80,8 +77,6 @@ function App() {
         }
 
     }, [token, submit, dispatch]);
-
-    console.log('App component re-rendered');
 
     return (
         <>

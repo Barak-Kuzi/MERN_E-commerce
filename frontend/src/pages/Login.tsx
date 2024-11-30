@@ -1,21 +1,18 @@
 import React, {useState} from 'react';
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 
 import styles from '../styles/Login.module.css';
-import google from "../assest/google.png";
-import apple from "../assest/apple.png";
+// import google from "../assest/google.png";
+// import apple from "../assest/apple.png";
 import emailIcon from "../assest/email_icon.svg";
 import eye from "../assest/eye.svg";
 import eye_slash from "../assest/eye_slash.webp";
 
 import {AppDispatch} from "../store/store";
 import SummaryApi from "../common";
-import {
-    setUserConnection,
-    setUserDetails,
-} from "../store/userSlice";
+import {setUserConnection, setUserDetails,} from "../store/userSlice";
 import {fetchUserCart} from "../store/cartSlice";
 import {fetchOrders} from "../store/orderSlice";
 import {fetchWishlistProducts} from "../store/wishlistSlice";

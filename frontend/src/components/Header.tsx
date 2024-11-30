@@ -17,8 +17,6 @@ function Header(): React.JSX.Element {
         navigate(`/search?query=${query}`);
     };
 
-    console.log('Header component re-rendered');
-
     return (
         <header className={styles.header_container}>
             <div className={styles.header_inner_container}>

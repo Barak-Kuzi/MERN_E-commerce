@@ -32,7 +32,7 @@ function UserOrders(): React.JSX.Element {
                                     <p>${order.amount}</p>
                                     <p>Items: {order.products.length}</p>
                                     <p><span>&#x25cf;</span><b>{order.status}</b></p>
-                                    <button>Track Order</button>
+                                    {/*<button>Track Order</button>*/}
 
                                 </div>
                                 {clickedOrderIndex === index && (

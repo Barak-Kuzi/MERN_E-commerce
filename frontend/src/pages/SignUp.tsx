@@ -4,8 +4,8 @@ import {toast} from 'react-toastify';
 
 import styles from '../styles/Login.module.css';
 import emailIcon from "../assest/email_icon.svg";
-import google from "../assest/google.png";
-import apple from "../assest/apple.png";
+// import google from "../assest/google.png";
+// import apple from "../assest/apple.png";
 import lock from "../assest/lock_icon.svg";
 import unlock from "../assest/unlock_icon.svg";
 

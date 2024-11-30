@@ -9,7 +9,7 @@ import {RootState} from "../store/store";
 import {Product} from "../models";
 import CategoryList from "../components/CategoryList";
 import BannerSlider from "../components/BannerSlider";
-import AppDownload from "../components/AppDownload";
+// import AppDownload from "../components/AppDownload";
 import HorizontalProductCard from "../components/HorizontalProductCard";
 import {CustomResponse} from "../utils/CustomResponse";
 import LoadingHorizontalCard from "../components/LoadingHorizontalCard";
@@ -23,7 +23,6 @@ export default function Home(): React.JSX.Element {
     const userConnected = useSelector((state: RootState) => state.user.userConnected);
     const [products, setProducts] = useState<ProductsHomePage[] | []>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>('');
 
     const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
@@ -60,7 +59,7 @@ export default function Home(): React.JSX.Element {
                 }
 
             } catch (error: any) {
-                setError(error.message);
+                console.error('Failed to fetch products', error);
             } finally {
                 setIsLoading(false);
             }

@@ -3,9 +3,9 @@ import React from 'react';
 import styles from '../styles/Footer.module.css';
 
 import my_logo from '../assest/my_logo.png';
-import Facebook from '../assest/facebook_icon.png';
-import Twitter from '../assest/twitter_icon.png';
-import Linkedin from '../assest/linkedin_icon.png';
+// import Facebook from '../assest/facebook_icon.png';
+// import Twitter from '../assest/twitter_icon.png';
+// import Linkedin from '../assest/linkedin_icon.png';
 import {Link} from "react-router-dom";
 
 export default function Footer(): React.JSX.Element {

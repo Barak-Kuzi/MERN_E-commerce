@@ -25,8 +25,6 @@ const ProductDetails: React.FC = () => {
         isLoading: isLoadingProductsCategory
     } = useFetchProductsByCategory({category: product?.productCategory as string, productDetailsLoading: isLoading});
 
-    console.log('ProductDetails component re-rendered');
-
     const handleRatingProduct = async (starValue: number) => {
         const response = await fetch(SummaryApi.rateProduct.url, {
             method: SummaryApi.rateProduct.method,

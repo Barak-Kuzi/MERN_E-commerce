@@ -8,7 +8,7 @@ async function authToken(req: CustomRequest, res: CustomResponse, next: NextFunc
         const token = req.cookies?.token;
 
         if (!token) return res.status(401).json({
-            message: 'Access Denied',
+            message: 'Access denied, please log in first',
             error: true,
             success: false
         });
