@@ -5,6 +5,7 @@
 ## Key Features
 
 - **Secure User Authentication**: Secure login, registration, and session management with JWT.
+- **Forgot Password**: Password recovery by sending an email.
 - **User Management**: Updating user profile information, uploading profile pictures, and changing a password.
 - **Product Management**: Admin capabilities to add, edit, and manage products.
 - **Product Rating and Reviews**: Users can rate products from 1 to 5 stars, with dynamic average rating calculations.
@@ -17,15 +18,16 @@
 - **Real-time Notifications**: Get updates and notifications for actions like adding to the cart or completing purchases.
 - **Responsive Design**: Optimized for mobile, tablet, and desktop screens.
 
-## Technology Stack
+## Technology Stack (including libraries)
 
 ### Frontend
 
 - **TypeScript**: Strongly typed JavaScript for better development experience.
 - **React**: React is used to build dynamic user interfaces in web applications.
-- **Redux**: For state management across the application.
-- **React Router**: For client-side routing.
-- **React Toastify**: For notifications.
+- **Redux**: This is for state management across the application.
+- **Redux Toolkit**: Simplified Redux development with modern patterns.
+- **React Router**: Routing for different pages in the application.
+- **React Toastify**: For notification popups.
 - **HTML5/CSS3**: Markup and styling.
 - **CSS Modules**: For scoped styling.
 
@@ -34,11 +36,14 @@
 - **Node.js**: JavaScript runtime for backend development.
 - **Express**: Web framework for Node.js.
 - **MongoDB**: NoSQL database.
-- **Mongoose**: ODM to interact with MongoDB.
-- **JWT (JSON Web Tokens)**: For secure authentication and authorization.
-- **Bcrypt**: For password encryption.
-- **Dotenv**: For environment variable management.
-- **Stripe API**: For handling payments and transactions.
+- **Mongoose**: ODM library for MongoDB to manage database models and queries.
+- **Cors**: This is for enabling CORS across different origins.
+- **JWT (JSON Web Tokens)**: For secure authentication and authorization (creating and verifying JWTs).
+- **Bcrypt**: This is for the encryption and decryption of passwords (hashing and securely storing user passwords).
+- **Dotenv**: This is for environment variable management.
+- **Stripe API**: Used for secure and seamless payment processing, supporting credit card transactions and other payment methods.
+- **Cloudinary API**: Handles image storage in the cloud, enabling scalable and efficient management of product images.
+- **Nodemailer**: Facilitates sending emails for features like password recovery.
 
 ## Project Architecture
 
@@ -61,29 +66,6 @@ The project is organized for scalability and maintainability:
 - **Middlewares**: Middleware functions for authentication, error handling, etc.
 - **Config**: Configuration files, including database connection settings.
 - **Utils**: Utility functions and helpers used across the app.
-
-## External Libraries
-
-### Frontend
-
-- **react**: Core library for building the user interface.
-- **@types/react**: Type definitions for React.
-- **react-redux**: Integration of Redux with React for state management.
-- **redux-toolkit**: Simplified Redux development with modern patterns.
-- **react-router-dom**: Routing for different pages in the application.
-- **react-toastify**: For notification popups.
-- **axios**: Promise-based HTTP client.
-
-### Backend
-
-- **express**: Web framework for Node.js.
-- **nodemon**: For auto-restarting the server during development.
-- **mongoose**: ODM library for MongoDB to manage database models and queries.
-- **jsonwebtoken**: For creating and verifying JWTs.
-- **bcryptjs**: For hashing and securely storing user passwords.
-- **cors**: For enabling CORS across different origins.
-- **dotenv**: For environment variable management.
-- **stripe**: Stripe API integration for handling payments.
 
 ## Prerequisites
 
@@ -111,12 +93,15 @@ git clone https://github.com/Barak-Kuzi/TechMarket.git
     ```
 3. Create a `.env` file and add the following environment variables:
     ```env
-    MONGO_URI=<your_mongodb_uri>
-    JWT_SECRET=<your_jwt_secret>
+    PORT=
+    MONGO_URI=
+    TOKEN_SECRET_KEY=
+    FRONTEND_URL=
+    STRIPE_SECRET_KEY=
     ```
 4. Start the backend server:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ### Frontend Setup
@@ -129,7 +114,11 @@ git clone https://github.com/Barak-Kuzi/TechMarket.git
     ```bash
     npm install
     ```
-3. Start the frontend development server:
+3. Create a `.env` file and add the following environment variables:
+    ```env
+    REACT_APP_CLOUDINARY_CLOUD_NAME=
+    ```
+4. Start the frontend development client:
     ```bash
     npm start
     ```
@@ -155,6 +144,7 @@ Special thanks to the following resources:
 - [MongoDB](https://www.mongodb.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [Stripe](https://stripe.com/)
+- [Cloudinary](https://cloudinary.com/)
 
 ## Contact
 
