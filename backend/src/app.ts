@@ -29,7 +29,8 @@ app.use((req, res, next) => {
         sameSite: 'none',
         secure: true,
         httpOnly: true,
-        domain: `.${domain}`
+        domain: `.${domain}`,
+        path: "/"
     });
     next();
 });
