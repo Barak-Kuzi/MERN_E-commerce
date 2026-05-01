@@ -63,13 +63,16 @@ const userSignInController = async (req: CustomRequest, res: CustomResponse) => 
             id: user._id,
             email: user.email,
         });
+        const frontendUrl = process.env.FRONTEND_URL || "";
+        const domain = new URL(frontendUrl).hostname;
 
-        const tokenOptions = {
+        res.status(200).cookie("token", authToken, {
             httpOnly: true,
-            secure: true
-        }
-
-        res.status(200).cookie("token", authToken, tokenOptions).json({
+            secure: true,
+            domain: `.${domain}`,
+            path: "/",
+            sameSite: "none"
+        }).json({
             success: true,
             error: false,
             message: "User signed in successfully",
