@@ -16,11 +16,14 @@ app.use(cookieParser());
 // Increase the payload size limit
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+const frontendUrl = process.env.FRONTEND_URL || "";
+const domain = new URL(frontendUrl).hostname;
 app.use((req, res, next) => {
     res.cookie('cookieName', 'cookieValue', {
-        sameSite: 'strict',
+        sameSite: 'none',
         secure: true,
-        httpOnly: true
+        httpOnly: true,
+        domain: `.${domain}`
     });
     next();
 });
