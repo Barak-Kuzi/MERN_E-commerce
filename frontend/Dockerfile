@@ -20,6 +20,8 @@ FROM nginx:alpine
 # העתקת הקבצים הבנויים
 COPY --from=build /app/build /usr/share/nginx/html
 
+RUN touch /usr/share/nginx/html/env.js
+
 # פתיחת פורט
 EXPOSE 80
 
